@@ -25,8 +25,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'com.kosa.classmangerapp'
-    mainClass = 'com.kosa.classmangerapp.HelloApplication'
+    mainModule = 'com.kosa.classmanagerapp'
+    mainClass = 'com.kosa.classmanagerapp.MainApplication'
 }
 
 javafx {
@@ -37,10 +37,12 @@ javafx {
 dependencies {
     // mybatis (데이터 접근 프레임워크)
     implementation('org.mybatis:mybatis:3.5.16')
-    // SQLite JDBC Driver (DB연결)
-    implementation('org.xerial:sqlite-jdbc:3.45.1.0')
+    // PostgreSQL JDBC Driver
+    implementation('org.postgresql:postgresql:42.7.3')
     // bootstrapFX
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+    // JBCrypt 라이브러리
+    implementation('org.mindrot:jbcrypt:0.4')
     // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

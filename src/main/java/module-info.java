@@ -1,9 +1,10 @@
-module com.kosa.classmangerapp {
+module com.kosa.classmanagerapp {
     requires javafx.controls;
     requires javafx.fxml;
 
     requires org.kordamp.bootstrapfx.core;
+    requires org.mybatis;
 
-    opens com.kosa.classmangerapp to javafx.fxml;
-    exports com.kosa.classmangerapp;
+    opens com.kosa.classmanagerapp to javafx.fxml;
+    exports com.kosa.classmanagerapp;
 }

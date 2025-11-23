@@ -1,4 +1,4 @@
-package com.kosa.classmangerapp;
+package com.kosa.classmanagerapp;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

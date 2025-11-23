@@ -1,4 +1,4 @@
-package com.kosa.classmangerapp;
+package com.kosa.classmanagerapp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
