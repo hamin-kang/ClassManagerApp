@@ -17,7 +17,7 @@ jobs:
         run: |
           PREFIX="feat" # 기본값
           for label in ${{ join(github.event.issue.labels.*.name, ' ') }}; do
-            if [[ "$label" =~ ^(feat|bug|refactor|chore)$ ]]; then
+            if [[ "$label" =~ ^(feat|docs|chore)$ ]]; then
               PREFIX=$label
               break
             fi
