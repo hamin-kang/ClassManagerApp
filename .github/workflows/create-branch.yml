@@ -48,7 +48,10 @@ jobs:
           CUSTOM=${{ steps.custom.outputs.custom_name }}
 
           # 공백 제거 및 소문자 변환
-          CUSTOM=$(echo "$CUSTOM" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-')
+          CUSTOM=$(echo "$CUSTOM" \
+          | sed 's/^[ \t]*//;s/[ \t]*$//' \
+          | tr '[:upper:]' '[:lower:]' \
+          | tr -cs 'a-z0-9' '-')
 
           BRANCH_NAME="${PREFIX}/${CUSTOM}-#${ISSUE_NUMBER}"
 
