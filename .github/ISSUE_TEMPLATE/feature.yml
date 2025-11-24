@@ -20,4 +20,12 @@ body:
       value: "/branch-name 기능명"
     validations:
       required: true
+  - type: input
+    id: name
+    attributes:
+      label: 브랜치 이름
+      description: 생성할 브랜치 명을 영어 소문자로 작성해주세요
+      placeholder: "예 : login"
+    validations:
+      required: true    
 
