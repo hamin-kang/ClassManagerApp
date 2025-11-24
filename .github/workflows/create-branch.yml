@@ -27,7 +27,7 @@ jobs:
       - name: Get custom branch name from issue body
         id: custom
         run: |
-          CUSTOM=$(echo "${{ github.event.issue.body }}" | grep -oP '(?<=/branch-name ).*' || true)
+          CUSTOM=$(echo "${{ github.event.issue.body }}" | grep -oP '(?<=name:\s*).*' || true)
           if [ -n "$CUSTOM" ]; then
             echo "custom_name=$CUSTOM" >> $GITHUB_OUTPUT
           else
@@ -37,25 +37,23 @@ jobs:
       - name: Create branch
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          
-          # 영어/숫자만 남기고, 나머지는 - 로 치환
-          SANITIZED_TITLE=$(echo "$ISSUE_TITLE" | iconv -t ascii//translit | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-')
-          
-          if [ -n "${{ steps.custom.outputs.custom_name }}" ]; then
-            RAW_NAME="${{ steps.custom.outputs.custom_name }}"
-            CUSTOM_NAME=$(echo "$RAW_NAME" | xargs)
-            BRANCH_NAME="${{ steps.prefix.outputs.prefix }}/${CUSTOM_NAME}-${ISSUE_NUMBER}"
-            else
-            BRANCH_NAME="${{ steps.prefix.outputs.prefix }}/${SANITIZED_TITLE}-${ISSUE_NUMBER}"
-          fi
-          
+          PREFIX=${{ steps.prefix.outputs.prefix }}
+          CUSTOM=${{ steps.custom.outputs.custom_name }}
+
+          # 공백 제거 및 소문자 변환
+          CUSTOM=$(echo "$CUSTOM" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-')
+
+          BRANCH_NAME="${PREFIX}/${CUSTOM}-#${ISSUE_NUMBER}"
+
           echo "Creating branch: $BRANCH_NAME"
-          
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
+
           DEFAULT_BRANCH=${{ github.event.repository.default_branch }}
           git fetch origin $DEFAULT_BRANCH
           git checkout -b "$BRANCH_NAME" origin/$DEFAULT_BRANCH
           git push origin "$BRANCH_NAME"
+          
+         
+          
