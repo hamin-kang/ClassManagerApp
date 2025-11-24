@@ -30,8 +30,11 @@ jobs:
           echo "===== ISSUE BODY ====="
           echo "${{ github.event.issue.body }}"
           CUSTOM=$(echo "${{ github.event.issue.body }}" \
-            | awk '/브랜치 이름/ {getline; print $0}' \
+            | awk '
+                /브랜치 이름/ {getline; getline; print; exit}
+              ' \
             | xargs)
+
           if [ -n "$CUSTOM" ]; then
             echo "custom_name=$CUSTOM" >> $GITHUB_OUTPUT
           else
