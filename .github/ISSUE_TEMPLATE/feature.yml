@@ -20,12 +20,5 @@ body:
       value: 
     validations:
       required: true
-  - type: input
-    id: name
-    attributes:
-      label: 브랜치 이름
-      description: 생성할 브랜치 명을 영어 소문자로 작성, 띄어쓰기는 하이픈(-)
-      placeholder: "예 : login-create"
-    validations:
-      required: true    
+ 
 
