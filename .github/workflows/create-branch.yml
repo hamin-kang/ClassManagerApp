@@ -53,7 +53,7 @@ jobs:
           | tr '[:upper:]' '[:lower:]' \
           | tr -cs 'a-z0-9' '-')
 
-          BRANCH_NAME="${PREFIX}/${CUSTOM}-#${ISSUE_NUMBER}"
+          BRANCH_NAME="${PREFIX}/${CUSTOM}#${ISSUE_NUMBER}"
 
           echo "Creating branch: $BRANCH_NAME"
 
