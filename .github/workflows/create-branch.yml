@@ -27,6 +27,8 @@ jobs:
       - name: Get custom branch name from issue body
         id: custom
         run: |
+          echo "===== ISSUE BODY ====="
+          echo "${{ github.event.issue.body }}"
           CUSTOM=$(echo "${{ github.event.issue.body }}" \
             | awk '/브랜치 이름/ {getline; print $0}' \
             | xargs)
