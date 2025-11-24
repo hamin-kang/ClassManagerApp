@@ -44,11 +44,10 @@ jobs:
           
           if [ -n "${{ steps.custom.outputs.custom_name }}" ]; then
             RAW_NAME="${{ steps.custom.outputs.custom_name }}"
-            # 앞뒤 공백 제거
             CUSTOM_NAME=$(echo "$RAW_NAME" | xargs)
-            BRANCH_NAME="${{ steps.prefix.outputs.prefix }}/${ISSUE_NUMBER}-${CUSTOM_NAME}"
-          else
-            BRANCH_NAME="${{ steps.prefix.outputs.prefix }}/${ISSUE_NUMBER}-${SANITIZED_TITLE}"
+            BRANCH_NAME="${{ steps.prefix.outputs.prefix }}/${CUSTOM_NAME}-${ISSUE_NUMBER}"
+            else
+            BRANCH_NAME="${{ steps.prefix.outputs.prefix }}/${SANITIZED_TITLE}-${ISSUE_NUMBER}"
           fi
           
           echo "Creating branch: $BRANCH_NAME"
