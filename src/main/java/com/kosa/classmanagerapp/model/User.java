@@ -1,6 +1,6 @@
 package com.kosa.classmanagerapp.model;
 
-public class Users {
+public class User {
     private Integer user_id; // DB 관리용 번호, 앱에서 입력했을 때는 null 이고 DB 에서 자동 생성
     private String user_name; // 아이디
     private String password_hash; // 비밀번호
