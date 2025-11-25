@@ -19,9 +19,12 @@
                        promptText="username"
                        prefWidth="180" />
 
+
             <Button text="확인"
                     onAction="#onLoginButtonClick"
                     prefWidth="100" />
+
+
         </VBox>
     </children>
 

@@ -21,6 +21,7 @@ public class UserController {
     }
     @FXML
     private TextField usernameField;  // ← username 입력칸
+
     @FXML
     protected void onLoginButtonClick() throws Exception {
         MainController main = MainApplication.getMainController();
