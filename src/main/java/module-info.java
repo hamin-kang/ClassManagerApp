@@ -6,6 +6,7 @@ module com.kosa.classmanagerapp {
     requires org.mybatis;
     requires org.postgresql.jdbc;
     requires javafx.graphics;
+//    requires com.kosa.classmanagerapp;
 
     opens com.kosa.classmanagerapp to javafx.fxml;
     opens com.kosa.classmanagerapp.util to javafx.fxml;
