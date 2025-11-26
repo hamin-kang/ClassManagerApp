@@ -11,14 +11,72 @@
             fx:controller="com.kosa.classmanagerapp.controller.AdminController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <Button text="과제생성 페이지 입니다"
-            prefWidth="130" />
+    <Label text= "과제 생성" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
     <Button text="뒤로가기"
             onAction="#adminButtonClick"
             prefWidth="100"
             layoutY="50"
     />
+
+
+    <VBox layoutX="100" layoutY="30" spacing="10" prefWidth="650"
+          style="-fx-border-color: black; -fx-padding: 15;">
+
+        <VBox fx:id="middlebox" alignment="CENTER" style= "-fx-padding: 5; ">
+        <!-- 과제 제목 -->
+        <HBox spacing="10" alignment="CENTER_LEFT"  style= "-fx-padding: 5; ">
+            <Label text="과제 제출:"/>
+            <TextField fx:id="taskTitle" prefWidth="300"/>
+        </HBox>
+
+        <!-- 과제 내용 -->
+        <HBox spacing="10" alignment="CENTER_LEFT"  style= "-fx-padding: 5; ">
+            <Label text="내  용 :"/>
+            <TextField fx:id="taskContent" prefWidth="300"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT"  style= "-fx-padding: 5; ">
+            <CheckBox fx:id="AlgorithmCheckBox" text="알고리즘"/>
+            <CheckBox fx:id="Mini_CheckBox" text="미니과제"/>
+            <CheckBox fx:id="Presentation" text="발표"/>
+            <CheckBox fx:id="finalCheckBox" text="final프로젝트"/>
+        </HBox>
+
+        <!-- 마감 날짜 -->
+        <HBox spacing="10" alignment="CENTER_LEFT"  style= "-fx-padding: 5; ">
+            <Label text="마감 날짜:"/>
+            <DatePicker fx:id="deadlinePicker" prefWidth="150"/>
+        </HBox>
+
+        </VBox>
+
+    </VBox>
+
+
+
+    <!-- ▼ 과제 -->
+    <VBox  layoutX="100" layoutY="200" spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
+        <Label text="과제" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <HBox spacing="10">
+            <Label text="과제 선택:"/>
+            <ComboBox fx:id="taskComboBox" prefWidth="150"/>
+        </HBox>
+
+        <TableView fx:id="TaskTable" prefHeight="160" prefWidth="600">
+            <columns>
+                <TableColumn text="순번" prefWidth="50"/>
+                <TableColumn text="과제명" prefWidth="150"/>
+                <TableColumn text="내용" prefWidth="150"/>
+                <TableColumn text="마감날짜" prefWidth="150"/>
+            </columns>
+        </TableView>
+
+
+
+    </VBox>
+
 
 
 
