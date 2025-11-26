@@ -9,13 +9,14 @@ public class Submission extends BaseEntity{
     private long submitter_user_id;
     private String content;
     private LocalDate submitted_ad;
-
+    private boolean is_submitted;
     // --- Builder ---
     public static class Builder {
         private long assignment_id;
         private long submitter_user_id;
         private String content;
         private LocalDate submitted_ad;
+        private boolean is_submitted;
 
         public Builder assignmentId(long assignment_id) {
             this.assignment_id = assignment_id;
@@ -37,6 +38,10 @@ public class Submission extends BaseEntity{
             return this;
         }
 
+        public Builder isSubmitted(boolean is_submitted) {
+            this.is_submitted = is_submitted;
+            return this;
+        }
         public Submission build() {
             return new Submission(this);
         }
@@ -48,5 +53,20 @@ public class Submission extends BaseEntity{
         this.submitter_user_id = builder.submitter_user_id;
         this.content = builder.content;
         this.submitted_ad = builder.submitted_ad;
+        this.is_submitted = builder.is_submitted;
+    }
+
+    public LocalDate getSubmittedAt(){
+        return submitted_ad;
+    }
+    public long getAssignmentId(){
+        return assignment_id;
+    }
+    public void setIsSubmitted(boolean is_submitted){
+        this.is_submitted = is_submitted;
+
+    }
+    public boolean getIsSubmitted(){
+        return is_submitted;
     }
 }
