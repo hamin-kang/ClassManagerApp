@@ -11,8 +11,7 @@
             fx:controller="com.kosa.classmanagerapp.controller.AdminController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <Button text="과제생성 페이지 입니다"
-            prefWidth="130" />
+    <Label text= "과제 생성" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
     <Button text="뒤로가기"
             onAction="#adminButtonClick"

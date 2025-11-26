@@ -1,63 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.kosa.classmanagerapp.controller.AdminController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefWidth="900" prefHeight="600">
 
-    <Button text="팀 생성"
-            onAction="#teamCreateButtonClick"
-            prefWidth="200" />
-
-
-    <Button text="과제 생성"
-            onAction="#taskCreateButtonClick"
-            prefWidth="200"
-            layoutY="50"
-            />
-
-
-    <Button text="발표순서"
-            onAction="#turnOrderButtonClick"
-            prefWidth="200"
-            layoutY="100"/>
-
-
-    <!--출석 과제 박스 -->
-    <VBox spacing="10"  layoutY="15" layoutX="230" style="-fx-border-color: black; -fx-padding: 15;">
-        <Label text= "출석" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-        <TableView fx:id="attendanceTable" prefHeight="160">
-            <columns>
-                <TableColumn text="출석여부" prefWidth="120"/>
-                <TableColumn text="이름" prefWidth="180"/>
-                <TableColumn text="날짜" prefWidth="180"/>
-            </columns>
-        </TableView>
-
-        <Label text= "과제" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-        <ComboBox fx:id="taskComboBox"
-                prefWidth="150" />
-
-        <TableView fx:id="TaskTable" prefHeight="160">
-            <columns>
-                <TableColumn text="제출여부" prefWidth="120"/>
-                <TableColumn text="과제이름" prefWidth="180"/>
-                <TableColumn text="마감날짜" prefWidth="180"/>
-            </columns>
-        </TableView>
-
-        <HBox alignment="CENTER_RIGHT">
-            <Button text="제출" styleClass="black-button" />
-        </HBox>
+    <!-- 좌측 버튼 메뉴 -->
+    <VBox spacing="15" layoutX="20" layoutY="20">
+        <Button text="팀 생성" prefWidth="150" onAction="#teamCreateButtonClick"/>
+        <Button text="과제 생성" prefWidth="150" onAction="#taskCreateButtonClick"/>
+        <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick"/>
     </VBox>
 
+    <!-- 메인 콘텐츠 -->
+    <VBox spacing="25" layoutX="200" layoutY="20" prefWidth="650">
+
+        <!-- ▼ 팀 선택 -->
+        <HBox spacing="10">
+        </HBox>
+
+        <!-- ▼ 출석 -->
+        <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
+            <Label text="출석" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+
+            <!-- 출석 테이블 -->
+            <TableView fx:id="attendanceTable" prefHeight="160" >
+
+
+
+                <columns>
+                    <TableColumn text="학생명"  />
+                    <TableColumn text="출석일수"  />
+                    <TableColumn text="출석률"  />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ▼ 과제 -->
+        <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
+            <Label text="과제" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="10">
+                <Label text="과제 선택:"/>
+                <ComboBox fx:id="taskComboBox" prefWidth="150"/>
+            </HBox>
+
+            <TableView fx:id="TaskTable" prefHeight="160">
+                <columns>
+                    <TableColumn text="이름" prefWidth="150"/>
+                    <TableColumn text="과제명" prefWidth="150"/>
+                    <TableColumn text="제출여부" prefWidth="150"/>
+                    <TableColumn text="마감날짜" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="제출" styleClass="black-button"/>
+            </HBox>
+        </VBox>
+
+    </VBox>
 
 </AnchorPane>
+

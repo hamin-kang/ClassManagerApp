@@ -11,9 +11,7 @@
             fx:controller="com.kosa.classmanagerapp.controller.AdminController"
             prefHeight="400.0" prefWidth="600.0">
 
-
-    <Button text=" 발표순서 페이지 입니다"
-            prefWidth="100" />
+    <Label text= "팀 생성" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
 
     <Button text="뒤로가기"

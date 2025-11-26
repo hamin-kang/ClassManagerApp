@@ -2,9 +2,9 @@ package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
 import javafx.application.Platform;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 
 public class AdminController {
@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @FXML
-    private ComboBox<String> taskComboBox;
+    private ComboBox<String> taskComboBox; //과제 드롭다운
     private void TaskList() {
         // 실제로 팀을 DB나 서비스에서 가져오는 것처럼 구성 가능
         // 여기서는 예제로 1~5팀 추가
@@ -66,11 +66,24 @@ public class AdminController {
     }
 
     @FXML
+    private TableView<?> attendanceTable;
+
+    @FXML
+    private TableView<?> TaskTable;
+
+    @FXML
     public void initialize() { // 드롭다운
         //fxml 로딩 후 안전하게 실행
         Platform.runLater(() -> loadTeamList());
         Platform.runLater(() -> TaskList());
+
+        attendanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        TaskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
     }
+
+
+
 
 
 
