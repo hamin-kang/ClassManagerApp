@@ -29,11 +29,35 @@
             layoutY="100"/>
 
 
+    <!--출석 과제 박스 -->
+    <VBox spacing="10"  layoutY="15" layoutX="230" style="-fx-border-color: black; -fx-padding: 15;">
+        <Label text= "출석" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
 
-    <TextArea fx:id="adminTextArea"
-              text="admin"
-              layoutX="210"
-              layoutY="20"
-              prefWidth="260"
-              prefHeight="160"/>
+        <TableView fx:id="attendanceTable" prefHeight="160">
+            <columns>
+                <TableColumn text="출석여부" prefWidth="120"/>
+                <TableColumn text="이름" prefWidth="180"/>
+                <TableColumn text="날짜" prefWidth="180"/>
+            </columns>
+        </TableView>
+
+        <Label text= "과제" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <ComboBox fx:id="taskComboBox"
+                prefWidth="150" />
+
+        <TableView fx:id="TaskTable" prefHeight="160">
+            <columns>
+                <TableColumn text="제출여부" prefWidth="120"/>
+                <TableColumn text="과제이름" prefWidth="180"/>
+                <TableColumn text="마감날짜" prefWidth="180"/>
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="제출" styleClass="black-button" />
+        </HBox>
+    </VBox>
+
+
 </AnchorPane>
