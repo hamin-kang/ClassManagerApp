@@ -1,40 +1,95 @@
 package com.kosa.classmanagerapp.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class User {
-    private Integer user_id; // DB 관리용 번호, 앱에서 입력했을 때는 null 이고 DB 에서 자동 생성
-    private String user_name; // 아이디
-    private String password_hash; // 비밀번호
-    private String full_name; // 이름
+    // id BIGINT
+    private Long id;
 
-    public String getUser_name() {
-        return user_name;
+    // user_name VARCHAR(50) -> userName
+    private String userName;
+
+    // password_hash VARCHAR(255) -> passwordHash
+    private String passwordHash;
+
+    // full_name VARCHAR(100) -> fullName
+    private String fullName;
+
+    // team_id BIGINT (FK) -> teamId
+    private Long teamId;
+
+    // birthday DATE -> birthday
+    private LocalDate birthday;
+
+    // authorization ENUM('ADMIN', 'USER') -> authorization
+    private UserAuthorization authorization;
+
+    // created_at DATETIME -> createdAt
+    private LocalDateTime createdAt;
+
+
+    public Long getId() {
+        return id;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPassword_hash() {
-        return password_hash;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
-    public String getName() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public UserAuthorization getAuthorization() {
+        return authorization;
+    }
+
+    public void setAuthorization(UserAuthorization authorization) {
+        this.authorization = authorization;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

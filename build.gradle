@@ -37,8 +37,8 @@ javafx {
 dependencies {
     // mybatis (데이터 접근 프레임워크)
     implementation('org.mybatis:mybatis:3.5.16')
-    // PostgreSQL JDBC Driver
-    implementation('org.postgresql:postgresql:42.7.3')
+    // MySQL JDBC Driver
+    implementation('mysql:mysql-connector-java:8.4.0')
     // bootstrapFX
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
     // JBCrypt 라이브러리
