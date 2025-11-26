@@ -16,7 +16,21 @@ import java.io.IOException;
 
 public class UserController {
     @FXML
-    protected void loginButtonClick() throws Exception {
+    protected void logoutClick() throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/login/login-view.fxml");
+
+    }
+
+    @FXML
+    protected void submitPrivate() throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/login/login-view.fxml");
+
+    }
+
+    @FXML
+    protected void submitTeam() throws Exception {
         MainController main = MainApplication.getMainController();
         main.loadView("view/login/login-view.fxml");
 
