@@ -1,6 +1,7 @@
 package com.kosa.classmanagerapp;
 
 import com.kosa.classmanagerapp.controller.MainController;
+import com.kosa.classmanagerapp.util.SqlSessionManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,10 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException { // 앱 실행됐을 때 처음 나오는 화면
+        // DB 연결 테스트 코드: 클래스를 참조하여 static 블록을 강제 실행
+        // 이 코드를 추가하면 start() 메서드 초기에 DB 연결 시도
+        SqlSessionManager.getSqlSessionFactory();
+
         System.out.println("path " + MainApplication.class.getResource("view/main-view.fxml"));
 
         FXMLLoader fxmlLoader = new FXMLLoader(

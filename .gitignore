@@ -41,3 +41,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# db.properties 파일은 개인 정보(DB 비밀번호)를 포함하므로 Git 추적 대상에서 제외
+src/main/resources/config/db.properties
