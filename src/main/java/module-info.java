@@ -15,5 +15,6 @@ module com.kosa.classmanagerapp {
 
     exports com.kosa.classmanagerapp;
     exports com.kosa.classmanagerapp.controller;
+    opens com.kosa.classmanagerapp.model.assignment to javafx.fxml, org.mybatis;
 
 }
