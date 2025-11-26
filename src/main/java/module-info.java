@@ -4,16 +4,16 @@ module com.kosa.classmanagerapp {
 
     requires java.sql;
     requires org.mybatis;
-    requires org.postgresql.jdbc;
     requires javafx.graphics;
 
-    opens com.kosa.classmanagerapp to javafx.fxml;
-    opens com.kosa.classmanagerapp.util to javafx.fxml;
-    opens com.kosa.classmanagerapp.model to javafx.fxml;
+    // mybatis 가 model, util, controller 에 접근하여 매핑할 수 있도록 opens 추가
+    opens com.kosa.classmanagerapp to javafx.fxml, org.mybatis;
+    opens com.kosa.classmanagerapp.util to javafx.fxml, org.mybatis;
+    opens com.kosa.classmanagerapp.model to javafx.fxml, org.mybatis;
+    opens com.kosa.classmanagerapp.controller to javafx.fxml, org.mybatis;
+    opens com.kosa.classmanagerapp.util.Toast to javafx.fxml;
 
     exports com.kosa.classmanagerapp;
     exports com.kosa.classmanagerapp.controller;
-    opens com.kosa.classmanagerapp.controller to javafx.fxml;
-    opens com.kosa.classmanagerapp.util.Toast to javafx.fxml;
 
 }
