@@ -31,12 +31,10 @@
             <!-- 출석 테이블 -->
             <TableView fx:id="attendanceTable" prefHeight="160" >
 
-
-
                 <columns>
-                    <TableColumn text="학생명"  />
-                    <TableColumn text="출석일수"  />
-                    <TableColumn text="출석률"  />
+                    <TableColumn text="학생명" prefWidth="120" />
+                    <TableColumn text="출석일수" prefWidth="120"  />
+                    <TableColumn text="출석률" prefWidth="120"  />
                 </columns>
             </TableView>
         </VBox>
@@ -50,7 +48,7 @@
                 <ComboBox fx:id="taskComboBox" prefWidth="150"/>
             </HBox>
 
-            <TableView fx:id="TaskTable" prefHeight="160">
+            <TableView fx:id="TaskTable" prefHeight="160" prefWidth="600">
                 <columns>
                     <TableColumn text="이름" prefWidth="150"/>
                     <TableColumn text="과제명" prefWidth="150"/>
@@ -59,9 +57,6 @@
                 </columns>
             </TableView>
 
-            <HBox alignment="CENTER_RIGHT">
-                <Button text="제출" styleClass="black-button"/>
-            </HBox>
         </VBox>
 
     </VBox>

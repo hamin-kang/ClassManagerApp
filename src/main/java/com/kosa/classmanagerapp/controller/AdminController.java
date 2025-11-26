@@ -66,20 +66,25 @@ public class AdminController {
     }
 
     @FXML
-    private TableView<?> attendanceTable;
-
-    @FXML
     private TableView<?> TaskTable;
 
     @FXML
+    private TableView<?> attendanceTable;
+
+    @FXML
     public void initialize() { // 드롭다운
+
+        if (TaskTable != null) {
+            // TableView 폭에 맞춰 컬럼 폭 자동 조절
+            TaskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        }
+        if (attendanceTable != null) {
+            attendanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        }
         //fxml 로딩 후 안전하게 실행
         Platform.runLater(() -> loadTeamList());
         Platform.runLater(() -> TaskList());
-
-        attendanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        TaskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
     }
 
 
