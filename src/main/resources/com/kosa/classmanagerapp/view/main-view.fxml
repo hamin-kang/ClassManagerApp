@@ -13,7 +13,8 @@
     <HBox fx:id="headerArea"
           style="-fx-background-color: black;"
           alignment="CENTER"
-          prefHeight="70">
+          prefHeight="70"
+          onMouseClicked="#onHeaderClick">
         <Label text="Assignment Helper"
                style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" />
     </HBox>
