@@ -9,6 +9,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.kosa.classmanagerapp.controller.UserController"
+            fx:id="root"
             prefHeight="400.0" prefWidth="600.0">
 
     <TextArea fx:id="userTextArea"
@@ -17,6 +18,11 @@
               layoutY="20"
               prefWidth="560"
               prefHeight="360"/>
-
+    <Button text="로그인페이지로"
+            onAction="#loginButtonClick"
+            prefWidth="100"
+            layoutY="50"
+            styleClass="black-button"
+    />
 
 </AnchorPane>
