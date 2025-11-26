@@ -5,20 +5,20 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.kosa.classmanagerapp.controller.MainController">
-<!--    <padding>-->
-<!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
-<!--    </padding>-->
-
-<!--    <Label fx:id="welcomeText"/>-->
-<!--    <Button text="Hello!" onAction="#onHelloButtonClick"/>-->
-<!--    <Button text="Admin!" onAction="#onAdminButtonClick"/>-->
-<!--    <Button text="Student!" onAction="#onStudentButtonClick"/>-->
+<VBox alignment="CENTER" spacing="0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.kosa.classmanagerapp.controller.MainController"
+      stylesheets="@/style/main.css"
+      prefWidth="800" prefHeight="600">
     <!-- header -->
-    <HBox style="-fx-background-color: #444;">
-        <Label text="Class Manager App" style="-fx-text-fill: white; -fx-padding: 10;" />
+    <HBox fx:id="headerArea"
+          style="-fx-background-color: black;"
+          alignment="CENTER"
+          prefHeight="70">
+        <Label text="Assignment Helper"
+               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" />
     </HBox>
     <!-- content 영역 -->
-    <StackPane fx:id="contentArea" />
+    <StackPane fx:id="contentArea"
+               VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white;" />
 </VBox>
