@@ -12,7 +12,7 @@ public class SqlSessionManager {
     private static SqlSessionFactory sqlSessionFactory;
     // 클래스가 로드될 때(가장 처음에) 딱 한번만 실행됨
     static {
-        // 설정 파일 경로: src/main/resources/config/mybatis-config.xml
+        // 설정 파일 경로: src/main/resources/mybatis-config.xml
         String resource = "mybatis-config.xml";
         Reader reader = null;
         try {
