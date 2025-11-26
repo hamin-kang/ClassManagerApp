@@ -56,9 +56,8 @@ public class AdminController {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() { // 드롭다운
         //fxml 로딩 후 안전하게 실행
-
         Platform.runLater(() -> loadTeamList());
     }
 
