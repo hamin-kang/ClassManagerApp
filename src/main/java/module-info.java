@@ -5,7 +5,6 @@ module com.kosa.classmanagerapp {
     requires java.sql;
     requires org.mybatis;
     requires javafx.graphics;
-//    requires com.kosa.classmanagerapp;
 
     // mybatis 가 model, util, controller 에 접근하여 매핑할 수 있도록 opens 추가
     opens com.kosa.classmanagerapp to javafx.fxml, org.mybatis;

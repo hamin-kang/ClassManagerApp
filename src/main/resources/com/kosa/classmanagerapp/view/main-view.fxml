@@ -5,9 +5,10 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<VBox alignment="CENTER" spacing="0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER" spacing="0"
+      stylesheets="@../style/main.css"
+      xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.kosa.classmanagerapp.controller.MainController"
-      stylesheets="@/style/main.css"
       prefWidth="800" prefHeight="600">
     <!-- header -->
     <HBox fx:id="headerArea"
