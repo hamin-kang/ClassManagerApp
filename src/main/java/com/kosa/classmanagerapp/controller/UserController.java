@@ -1,6 +1,8 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
+import com.kosa.classmanagerapp.util.Toast.Toast;
+import com.kosa.classmanagerapp.util.Toast.ToastColor;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
@@ -8,31 +10,30 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class UserController {
-    public TextArea userTextArea;
     @FXML
-    private AnchorPane root;
-
-    @FXML
-    public void initialize() throws Exception {
-    }
-    @FXML
-    private TextField usernameField;  // ← username 입력칸
-    @FXML
-    protected void onLoginButtonClick() throws Exception {
+    protected void logoutClick() throws Exception {
         MainController main = MainApplication.getMainController();
+        main.loadView("view/login/login-view.fxml");
 
-        System.out.println("onLoginButtonClick username " + usernameField);
-        String username = usernameField.getText().trim();
+    }
 
-        if (username.equalsIgnoreCase("admin")) {
-            main.loadView("view/admin/admin-view.fxml");
-        } else {
-            main.loadView("view/user/user-view.fxml");
-        }
+    @FXML
+    protected void submitPrivate() throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/login/login-view.fxml");
+
+    }
+
+    @FXML
+    protected void submitTeam() throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/login/login-view.fxml");
+
     }
 
 }

@@ -1,0 +1,19 @@
+/* 일반 상태 */
+.black-button {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 20;
+    -fx-background-radius: 4;
+}
+
+/* Hover 상태 */
+.black-button:hover {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+}
+
+/* Pressed(클릭) 상태 */
+.black-button:pressed {
+    -fx-background-color: #555555;
+}
