@@ -1,9 +1,11 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
+import com.kosa.classmanagerapp.global.AppContext;
 import com.kosa.classmanagerapp.model.User;
 import com.kosa.classmanagerapp.model.UserAuthorization;
 import com.kosa.classmanagerapp.service.SessionService;
+import com.kosa.classmanagerapp.service.UserService;
 import com.kosa.classmanagerapp.util.Toast.Toast;
 import com.kosa.classmanagerapp.util.Toast.ToastColor;
 import javafx.fxml.FXML;
@@ -13,6 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class LoginController {
+    private final UserService userService = AppContext.USER_SERVICE;
+
     public TextArea userTextArea;
     @FXML
     private StackPane root;
@@ -30,18 +34,7 @@ public class LoginController {
 
         System.out.println("onLoginButtonClick username " + usernameField);
         String username = usernameField.getText().trim();
-        //-start db가 없어서 더미로 생성
-        User user = new User();
-        if(username.equalsIgnoreCase("admin")){
-            user.setId(2L);
-            user.setUserName("admin");
-            user.setAuthorization(UserAuthorization.ADMIN);
-        }else if(username.equalsIgnoreCase("user")){
-            user.setId(1L);
-            user.setUserName("user");
-            user.setAuthorization(UserAuthorization.USER);
-        }
-        //-end
+        User user = userService.findByUserName(username);
 
         if (user.getAuthorization() == UserAuthorization.ADMIN) {
             SessionService.setUser(user);

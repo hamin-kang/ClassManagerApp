@@ -19,30 +19,37 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserController {
 
     SubmissionService submissionService = new SubmissionService();
+    //체크박스 임시 저장용 Map, 제출 버튼 클릭 시 실제 값 반영
+    private final Map<Long, Boolean> pendingSubmittedMap = new HashMap<>();
     @FXML private TableView<Submission> privateTaskTable;
     @FXML private TableColumn<Submission, Boolean> colSubmitted;
     @FXML private TableColumn<Submission, String> colTitle;
     @FXML private TableColumn<Submission, LocalDate> colDate;
 
+    // 테이블 데이터 전용 리스트
+    private final javafx.collections.ObservableList<Submission> privateTaskItems =
+            FXCollections.observableArrayList();
+
     @FXML
     public void initialize() throws Exception {
-        //해당 유저의 개인과제 제출 리스트를 가져온다
-        User user = SessionService.getUser();
-        if (user != null) {
-            System.out.println("Current User " + user.getUserName());
-        }
-        List<Submission> userSubmissions = submissionService.findByUserId(user.getId());
-        if(!userSubmissions.isEmpty()){
-            setPrivateTable(userSubmissions);
-        }
-        //해당 유저의 팀과제 제출 리스트를 가져온다
+        setupPrivateTableColumns();
+        loadPrivateTableData();
 
-
+    }
+    @FXML
+    public void refreshPrivate() throws Exception {
+        loadPrivateTableData();
+    }
+    @FXML
+    public void refreshTeam() throws Exception {
+        loadPrivateTableData();
     }
     @FXML
     protected void logoutClick() throws Exception {
@@ -55,8 +62,22 @@ public class UserController {
 
     @FXML
     protected void submitPrivate() throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/login/login-view.fxml");
+        // 테이블에 있는 모든 행 기준으로
+        for (Submission s : privateTaskItems) {
+            Boolean newVal = pendingSubmittedMap.get(s.getAssignmentId());
+            if (newVal != null && newVal != s.isSubmitted()) {
+                // 실제 엔티티에 반영
+                s.setSubmitted(newVal);
+                // DB 반영 (메서드 이름은 프로젝트에 맞게 수정)
+//                submissionService.updateSubmittedStatus(s.getId(), newVal);
+            }
+        }
+
+        // 임시 변경사항 비우기
+        pendingSubmittedMap.clear();
+
+        // 필요하면 새로 로딩
+        loadPrivateTableData();
 
     }
 
@@ -68,39 +89,61 @@ public class UserController {
     }
 
     @FXML
-    protected void setPrivateTable(List<Submission> userSubmissions) {
-        // 제출 여부
-        colSubmitted.setCellValueFactory(cell ->
-                new SimpleObjectProperty<>(cell.getValue().getIsSubmitted())
-        );
+    protected void setupPrivateTableColumns() {
+        privateTaskTable.setEditable(true);
+        colSubmitted.setEditable(true);
 
-        colSubmitted.setCellFactory(tc -> new CheckBoxTableCell<>(index -> {
-            Submission item = privateTaskTable.getItems().get(index);
+        colSubmitted.setCellValueFactory(cellData -> {
+            Submission s = cellData.getValue();
 
-            BooleanProperty bp = new SimpleBooleanProperty(item.getIsSubmitted());
+            // 이미 바꾼 값이 있으면 그 값, 없으면 원래 DB 값 사용
+            boolean initialValue = pendingSubmittedMap.getOrDefault(
+                    s.getAssignmentId(),
+                    s.isSubmitted()
+            );
 
-            // UI 체크박스를 클릭하면 모델에도 반영
-            bp.addListener((obs, oldVal, newVal) -> {
-                item.setIsSubmitted(newVal);
-                System.out.println("Click new " + newVal + " old " + oldVal);
+            BooleanProperty prop = new SimpleBooleanProperty(initialValue);
 
+            // 체크박스 클릭해서 값 바뀔 때마다 임시 Map 에만 반영
+            prop.addListener((obs, oldVal, newVal) -> {
+                pendingSubmittedMap.put(s.getAssignmentId(), newVal);
             });
 
-            return bp;
-        }));
+            return prop;
+        });
+        colSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colSubmitted));
 
-        // 과제 이름
         colTitle.setCellValueFactory(cell ->
                 new SimpleStringProperty("과제 " + cell.getValue().getAssignmentId())
         );
 
-        // 제출 날짜(LocalDate)
         colDate.setCellValueFactory(cell ->
                 new SimpleObjectProperty<>(cell.getValue().getSubmittedAt())
         );
 
-        // TableView 채우기
-        privateTaskTable.setItems(FXCollections.observableArrayList(userSubmissions));
+        // 여기서 한 번만 items 바인딩
+        privateTaskTable.setItems(privateTaskItems);
     }
 
+    private void loadPrivateTableData() {
+        System.out.println("***Load***");
+        pendingSubmittedMap.clear();
+        User user = SessionService.getUser();
+        if (user == null) {
+            privateTaskItems.clear();
+            return;
+        }
+
+        List<Submission> userSubmissions =
+                submissionService.findByUserId(user.getId());
+        for (int i = 0; i < userSubmissions.size(); i++) {
+            System.out.println(
+                    userSubmissions.get(i).getAssignmentId() + " " +
+                            userSubmissions.get(i).isSubmitted()
+            );
+        }
+
+        // 기존 데이터 싹 지우고 새로 채움 (clear + addAll과 같음)
+        privateTaskItems.setAll(userSubmissions);
+    }
 }

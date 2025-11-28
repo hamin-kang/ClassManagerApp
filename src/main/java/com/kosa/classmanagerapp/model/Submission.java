@@ -1,22 +1,25 @@
 package com.kosa.classmanagerapp.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import java.time.LocalDate;
 
-public class Submission extends BaseEntity{
-    //Assignment(id)
+public class Submission extends BaseEntity {
+
     private long assignment_id;
-    //User(id)
     private long submitter_user_id;
     private String content;
-    private LocalDate submitted_ad;
-    private boolean is_submitted;
+    private LocalDate submitted_at;
+
+    // UI Property용, DB에는 저장 안함
+    private final BooleanProperty submitted = new SimpleBooleanProperty(false);
+
     // --- Builder ---
     public static class Builder {
         private long assignment_id;
         private long submitter_user_id;
         private String content;
-        private LocalDate submitted_ad;
-        private boolean is_submitted;
+        private LocalDate submitted_at;
 
         public Builder assignmentId(long assignment_id) {
             this.assignment_id = assignment_id;
@@ -33,15 +36,12 @@ public class Submission extends BaseEntity{
             return this;
         }
 
-        public Builder submittedAd(LocalDate submitted_ad) {
-            this.submitted_ad = submitted_ad;
+        public Builder submittedAt(LocalDate submitted_at) {
+            this.submitted_at = submitted_at;
             return this;
         }
 
-        public Builder isSubmitted(boolean is_submitted) {
-            this.is_submitted = is_submitted;
-            return this;
-        }
+
         public Submission build() {
             return new Submission(this);
         }
@@ -52,21 +52,36 @@ public class Submission extends BaseEntity{
         this.assignment_id = builder.assignment_id;
         this.submitter_user_id = builder.submitter_user_id;
         this.content = builder.content;
-        this.submitted_ad = builder.submitted_ad;
-        this.is_submitted = builder.is_submitted;
+        this.submitted_at = builder.submitted_at;
+
+        // submitted_at 기준으로 Property 초기화
+        this.submitted.set(this.submitted_at != null);
     }
 
-    public LocalDate getSubmittedAt(){
-        return submitted_ad;
+    // Getter,Setter
+    public LocalDate getSubmittedAt() {
+        return submitted_at;
     }
-    public long getAssignmentId(){
+
+    public long getAssignmentId() {
         return assignment_id;
     }
-    public void setIsSubmitted(boolean is_submitted){
-        this.is_submitted = is_submitted;
+    public long getSubmitterUserId() {
+        return submitter_user_id;
+    }
+    // BooleanProperty 기반 getter/setter
+    public boolean isSubmitted() {
+        return submitted.get();
+    }
 
+    public void setSubmitted(boolean value) {
+        submitted.set(value);
+
+        if (value) {
+            this.submitted_at = (this.submitted_at != null) ? this.submitted_at : LocalDate.now();
+        } else {
+            this.submitted_at = null;
+        }
     }
-    public boolean getIsSubmitted(){
-        return is_submitted;
-    }
+
 }
