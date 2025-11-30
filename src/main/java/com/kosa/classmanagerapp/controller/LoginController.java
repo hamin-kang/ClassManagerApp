@@ -18,7 +18,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginController {
-    public TextArea userTextArea;
     @FXML
     private StackPane root;
 
