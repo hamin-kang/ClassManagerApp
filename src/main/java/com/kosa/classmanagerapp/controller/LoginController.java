@@ -85,27 +85,5 @@ public class LoginController {
             Stage stage = (Stage) root.getScene().getWindow();
             Toast.show(stage, "로그인 처리 중 오류 발생", ToastColor.ERROR);
         }
-
-//        User user = new User();
-//        if(username.equalsIgnoreCase("admin")){
-//            user.setId(2L);
-//            user.setUserName("admin");
-//            user.setAuthorization(UserAuthorization.ADMIN);
-//        } else if(username.equalsIgnoreCase("user")) {
-//            user.setId(1L);
-//            user.setUserName("user");
-//            user.setAuthorization(UserAuthorization.USER);
-//        }
-//        //-end
-//
-//        if (user.getAuthorization() == UserAuthorization.ADMIN) {
-//            SessionService.setUser(user);
-//            main.loadView("view/admin/admin-view.fxml");
-//        } else {
-//            SessionService.setUser(user);
-//            Stage stage = (Stage) root.getScene().getWindow();
-//            Toast.show(stage,user.getUserName() + " 안녕하세요", ToastColor.SUCCESS);
-//            main.loadView("view/user/user-view.fxml");
-//        }
     }
 }
