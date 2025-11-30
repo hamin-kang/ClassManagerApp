@@ -9,7 +9,7 @@ import java.io.Reader;
 
 public class SqlSessionManager {
     // SqlSession 객체를 생성해주는 팩토리
-    private static SqlSessionFactory sqlSessionFactory;
+    private static final SqlSessionFactory sqlSessionFactory;
     // 클래스가 로드될 때(가장 처음에) 딱 한번만 실행됨
     static {
         // 설정 파일 경로: src/main/resources/mybatis-config.xml
@@ -36,7 +36,7 @@ public class SqlSessionManager {
         }
     }
 
-    // SqlSessionFactory 를 반환하는 getter 메서드를 추가하여 테스트에 활용
+    // SqlSessionFactory 를 반환하는 getter 메소드
     public static SqlSessionFactory getSqlSessionFactory() {
         return sqlSessionFactory;
     }
