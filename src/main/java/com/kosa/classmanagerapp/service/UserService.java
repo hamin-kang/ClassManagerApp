@@ -13,7 +13,6 @@ public class UserService {
         // initData에서 더미 데이터 로드
         System.out.println("User Dummy Create");
         users.addAll(initData.createDummyUsers());
-
     }
 
     public List<User> findAll() {

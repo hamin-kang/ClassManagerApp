@@ -30,5 +30,7 @@
     </environments>
 
     <mappers>
+        <mapper class="com.kosa.classmanagerapp.dao.UserMapper"/>
+
     </mappers>
 </configuration>

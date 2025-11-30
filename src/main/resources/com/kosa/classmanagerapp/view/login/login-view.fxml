@@ -13,18 +13,19 @@
             prefHeight="400.0" prefWidth="600.0">
 
     <VBox spacing="15" alignment="CENTER" maxWidth="300">
-        <Label text="Username 입력" style="-fx-font-size: 16px;" />
-
-        <TextField fx:id="usernameField"
-                   promptText="username"
+        <Label text="아이디 입력" style="-fx-font-size: 16px;" />
+        <TextField fx:id="userNameField"
+                   promptText="아이디"
                    prefWidth="180" />
-
+        <Label text="비밀번호 입력" style="-fx-font-size: 16px;"/>
+        <PasswordField fx:id="passwordField"
+                   promptText="비밀번호"
+                   prefWidth="180" />
 
         <Button text="확인"
                 onAction="#onLoginButtonClick"
                 prefWidth="100"
                 styleClass="black-button"/>
-
 
     </VBox>
 
