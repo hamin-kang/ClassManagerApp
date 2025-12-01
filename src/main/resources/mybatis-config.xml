@@ -33,12 +33,11 @@
 
     <mappers>
         <mapper class="com.kosa.classmanagerapp.dao.UserMapper"/>
-
-
         <mapper class="com.kosa.classmanagerapp.dao.ProjectMapper"/>
         <mapper class="com.kosa.classmanagerapp.dao.TeamMapper"/>
         <mapper class="com.kosa.classmanagerapp.dao.SubmissionMapper"/>
         <mapper class="com.kosa.classmanagerapp.dao.AssignmentMapper"/>
+        <mapper class = "com.kosa.classmanagerapp.dao.AttendanceMapper"/>
 
     </mappers>
 </configuration>

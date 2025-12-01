@@ -1,11 +1,19 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
+import com.kosa.classmanagerapp.model.attendance.Attendance;
+import com.kosa.classmanagerapp.service.AttendanceService;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.List;
 
 public class AdminController {
     public TextArea adminTextArea;
@@ -71,24 +79,58 @@ public class AdminController {
     @FXML
     private TableView<?> attendanceTable;
 
+//    @FXML
+//    public void initialize() { // 드롭다운
+//
+//        if (TaskTable != null) {
+//            // TableView 폭에 맞춰 컬럼 폭 자동 조절
+//            TaskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        }
+//        if (attendanceTable != null) {
+//            attendanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//
+//        }
+//        //fxml 로딩 후 안전하게 실행
+//        Platform.runLater(() -> loadTeamList());
+//        Platform.runLater(() -> TaskList());
+//    }
+//-----------------------------------------------
+
+
+
+
     @FXML
-    public void initialize() { // 드롭다운
+    private TableView<Attendance> tableView;
 
-        if (TaskTable != null) {
-            // TableView 폭에 맞춰 컬럼 폭 자동 조절
-            TaskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        }
-        if (attendanceTable != null) {
-            attendanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    @FXML
+    private TableColumn<Attendance, Integer> colId;
+    @FXML
+    private TableColumn<Attendance, Integer> colUserId;
+    @FXML
+    private TableColumn<Attendance, String> colUserName;
+    @FXML
+    private TableColumn<Attendance, String> colSessionDate;
+    @FXML
+    private TableColumn<Attendance, String> colStatus;
 
-        }
-        //fxml 로딩 후 안전하게 실행
-        Platform.runLater(() -> loadTeamList());
-        Platform.runLater(() -> TaskList());
+    private final AttendanceService attendanceService = new AttendanceService();
+
+    @FXML
+    public void initialize() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
+        colUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        colSessionDate.setCellValueFactory(new PropertyValueFactory<>("sessionDate"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        loadData();
     }
 
-
-
+    private void loadData() {
+        List<Attendance> list = attendanceService.getAttendanceList();
+        ObservableList<Attendance> obsList = FXCollections.observableArrayList(list);
+        tableView.setItems(obsList);
+    }
 
 
 
