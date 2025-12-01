@@ -6,7 +6,7 @@ import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
 import com.kosa.classmanagerapp.service.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class InitDataDB {
 //        User admin = new User();
 //        admin.setId(1L);
 //        admin.setUserName("admin");
-//        admin.setBirthday(LocalDate.now());
+//        admin.setBirthday(LocalDateTime .now());
 //        admin.setAuthorization(UserAuthorization.ADMIN);
 //        userService.save(admin);
 //
@@ -73,7 +73,7 @@ public class InitDataDB {
 //            User user = new User();
 //            user.setId(i);
 //            user.setUserName("user" + (i - 1));
-//            user.setBirthday(LocalDate.now());
+//            user.setBirthday(LocalDateTime .now());
 //            user.setAuthorization(UserAuthorization.USER);
 //
 //            userService.save(user);
@@ -89,7 +89,7 @@ public class InitDataDB {
                 .creatorId(1L)
                 .assignmentType(AssignmentType.INDIVIDUAL)
                 .isClose(false)
-                .dueDate(LocalDate.now().plusDays(3))
+                .dueDate(LocalDateTime .now().plusDays(3))
                 .build();
 
         Assignment a2 = Assignment.builder()
@@ -99,7 +99,7 @@ public class InitDataDB {
                 .assignmentType(AssignmentType.TEAM)
                 .isClose(false)
                 .presentationOrderTeamId("1,2")
-                .dueDate(LocalDate.now().plusDays(7))
+                .dueDate(LocalDateTime .now().plusDays(7))
                 .build();
 
         assignmentService.save(a1);
@@ -110,37 +110,33 @@ public class InitDataDB {
     public void createDummySubmissions() {
 
         // 개인 과제 (assignmentId = 1)
-        for (long userId = 2; userId <= 5; userId++) {
+        Submission user1 = new Submission.Builder()
+                .assignmentId(1L)
+                .submitterUserId(2L)
+                .content("개인 과제 1 제출 - user1" )
+                .submittedAt(LocalDateTime .now())
+                .build();
 
-            boolean submitted = (userId == 2L || userId == 4L);
+        Submission user3 = new Submission.Builder()
+                .assignmentId(1L)
+                .submitterUserId(4L)
+                .content("개인 과제 1 제출 - user3" )
+                .submittedAt(LocalDateTime .now())
+                .build();
 
-            Submission.Builder builder = new Submission.Builder()
-                    .assignmentId(1L)
-                    .submitterUserId(userId)
-                    .content("개인 과제 1 제출 - user" + (userId - 1));
+        submissionService.save(user1);
+        submissionService.save(user3);
 
-            if (submitted) {
-                builder.submittedAt(LocalDate.now().minusDays(userId));
-            }
-
-            submissionService.save(builder.build());
-        }
 
         // 팀과제 (assignmentId = 2)
         Submission team1 = new Submission.Builder()
                 .assignmentId(2L)
                 .submitterUserId(2L)
                 .content("팀1 팀 과제 제출본")
-                .submittedAt(LocalDate.now())
-                .build();
-
-        Submission team2 = new Submission.Builder()
-                .assignmentId(2L)
-                .submitterUserId(4L)
-                .content("팀2 팀 과제 (미제출)")
+                .teamId(1L)
+                .submittedAt(LocalDateTime .now())
                 .build();
 
         submissionService.save(team1);
-        submissionService.save(team2);
     }
 }
