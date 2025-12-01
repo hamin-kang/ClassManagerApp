@@ -31,6 +31,6 @@
 
     <mappers>
         <mapper class="com.kosa.classmanagerapp.dao.UserMapper"/>
-
+        <mapper class="com.kosa.classmanagerapp.dao.AttendaneMapper"/>
     </mappers>
 </configuration>

@@ -5,7 +5,7 @@ VALUES ( -- 관리자용 insert 문
            '관리자',
            NULL,
            '2000-01-01',
-           'ADMIN'
+           'ADMINa'
        );
 
 INSERT INTO user (user_name, password_hash, full_name, team_id, birthday, authorization)
