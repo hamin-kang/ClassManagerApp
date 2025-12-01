@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class Submission extends BaseEntity {
 
     private Long assignmentId;
-    private Long submitterdUserId;
+    private Long submitterUserId;
     private String content;
     private LocalDate submittedAt;
 
@@ -17,7 +17,7 @@ public class Submission extends BaseEntity {
     // --- Builder ---
     public static class Builder {
         private Long assignmentId;
-        private Long submitterdUserId;
+        private Long submitterUserId;
         private String content;
         private LocalDate submittedAt;
 
@@ -26,8 +26,8 @@ public class Submission extends BaseEntity {
             return this;
         }
 
-        public Builder submitterUserId(Long submitterdUserId) {
-            this.submitterdUserId = submitterdUserId;
+        public Builder submitterUserId(Long submitterUserId) {
+            this.submitterUserId = submitterUserId;
             return this;
         }
 
@@ -50,7 +50,7 @@ public class Submission extends BaseEntity {
     // --- private constructor ---
     private Submission(Builder builder) {
         this.assignmentId = builder.assignmentId;
-        this.submitterdUserId = builder.submitterdUserId;
+        this.submitterUserId = builder.submitterUserId;
         this.content = builder.content;
         this.submittedAt = builder.submittedAt;
 
@@ -67,7 +67,7 @@ public class Submission extends BaseEntity {
         return assignmentId;
     }
     public Long getSubmitterUserId() {
-        return submitterdUserId;
+        return submitterUserId;
     }
     // BooleanProperty 기반 getter/setter
     public boolean isSubmitted() {

@@ -1,4 +1,4 @@
-package com.kosa.classmanagerapp.global;
+package com.kosa.classmanagerapp.global.initData;
 
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitData {
+public class InitDataMemory {
 
     public static List<Project> createDummyProjects() {
         List<Project> list = new ArrayList<>();

@@ -55,7 +55,6 @@ public class MainController {
         }
     }
     public void loadView(String path) throws IOException {
-        System.out.println("mainController " + MainApplication.class.getResource(path));
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(path));
         Parent view = loader.load();
         contentArea.getChildren().setAll(view);
