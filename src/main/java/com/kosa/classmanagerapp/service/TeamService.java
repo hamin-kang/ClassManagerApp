@@ -1,7 +1,11 @@
 package com.kosa.classmanagerapp.service;
 
+import com.kosa.classmanagerapp.dao.ProjectMapper;
+import com.kosa.classmanagerapp.dao.TeamMapper;
 import com.kosa.classmanagerapp.model.Team;
-import com.kosa.classmanagerapp.global.initData;
+import com.kosa.classmanagerapp.global.initData.InitDataMemory;
+import com.kosa.classmanagerapp.util.SqlSessionManager;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +14,7 @@ public class TeamService {
 
     private final List<Team> teams = new ArrayList<>();
 
-    public TeamService() {
-        teams.addAll(initData.createDummyTeams());
-    }
+    public TeamService() {}
 
     public List<Team> findAll() {
         return teams;
@@ -20,7 +22,21 @@ public class TeamService {
 
     public List<Team> findByProjectId(long projectId) {
         return teams.stream()
-                .filter(t -> t.getProject_id() == projectId)
+                .filter(t -> t.getProjectId() == projectId)
                 .toList();
     }
+
+    public void save(Team team){
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
+            TeamMapper mapper = session.getMapper(TeamMapper.class);
+            mapper.save(team);
+        }
+    }
+    public boolean isEmpty() {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            TeamMapper mapper = session.getMapper(TeamMapper.class);
+            return mapper.count() == 0;
+        }
+    }
+
 }

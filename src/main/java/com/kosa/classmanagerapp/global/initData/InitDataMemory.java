@@ -1,4 +1,4 @@
-package com.kosa.classmanagerapp.global;
+package com.kosa.classmanagerapp.global.initData;
 
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class initData {
+public class InitDataMemory {
 
     public static List<Project> createDummyProjects() {
         List<Project> list = new ArrayList<>();
@@ -60,10 +60,10 @@ public class initData {
                 Assignment.builder()
                         .title("개인 과제 1")
                         .content("개인 과제 1 내용")
-                        .creator_id(1L) // admin
+                        .creatorId(1L) // admin
                         .assignmentType(AssignmentType.INDIVIDUAL) // enum 값에 맞게
-                        .is_close(false)
-                        .due_Date(LocalDate.now().plusDays(3))
+                        .isClose(false)
+                        .dueDate(LocalDate.now().plusDays(3))
                         .build()
         );
 
@@ -71,11 +71,11 @@ public class initData {
                 Assignment.builder()
                         .title("팀 과제 1")
                         .content("팀 과제 1 내용")
-                        .creator_id(1L)
+                        .creatorId(1L)
                         .assignmentType(AssignmentType.TEAM)
-                        .is_close(false)
-                        .presentation_order_team_id("1,2")
-                        .due_Date(LocalDate.now().plusDays(7))
+                        .isClose(false)
+                        .presentationOrderTeamId("1,2")
+                        .dueDate(LocalDate.now().plusDays(7))
                         .build()
         );
 
@@ -84,7 +84,7 @@ public class initData {
     public static List<Submission> createDummySubmissions() {
         List<Submission> list = new ArrayList<>();
 
-        // 1) 개인 과제 (assignment_id = 1)
+        // 1) 개인 과제 (assignmentId = 1)
         // 유저 2, 3, 4, 5 중 2, 4만 제출
         for (long userId = 2; userId <= 5; userId++) {
             boolean submitted = (userId == 2L || userId == 4L);
@@ -102,7 +102,7 @@ public class initData {
             list.add(builder.build());
         }
 
-        // 2) 팀 과제 (assignment_id = 2)
+        // 2) 팀 과제 (assignmentId = 2)
         // 팀1 리더(2번)는 제출함
         Submission team1Submission = new Submission.Builder()
                 .assignmentId(2L)
