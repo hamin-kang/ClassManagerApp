@@ -21,5 +21,9 @@
         #{submittedAt}
         );
     </insert>
-
+    <select id="findByUserId" parameterType="Long" resultType="Submission">
+        SELECT *
+        FROM submission
+        WHERE submitter_user_id = #{userId};
+    </select>
 </mapper>

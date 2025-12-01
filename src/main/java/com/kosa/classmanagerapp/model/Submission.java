@@ -15,6 +15,9 @@ public class Submission extends BaseEntity {
     // UI Property용, DB에는 저장 안함
     private final BooleanProperty submitted = new SimpleBooleanProperty(false);
 
+    // MyBatis가 객체 생성 시 사용하는 기본 생성자
+    public Submission() {}
+
     // --- Builder ---
     public static class Builder {
         private Long assignmentId;
@@ -33,10 +36,11 @@ public class Submission extends BaseEntity {
             return this;
         }
 
-        public Builder teamId(Long teamId){
+        public Builder teamId(Long teamId) {
             this.teamId = teamId;
             return this;
         }
+
         public Builder content(String content) {
             this.content = content;
             return this;
@@ -47,39 +51,67 @@ public class Submission extends BaseEntity {
             return this;
         }
 
-
         public Submission build() {
             return new Submission(this);
         }
     }
 
-    // --- private constructor ---
+    // --- Builder 전용 private 생성자 ---
     private Submission(Builder builder) {
         this.assignmentId = builder.assignmentId;
         this.submitterUserId = builder.submitterUserId;
+        this.teamId = builder.teamId;
         this.content = builder.content;
         this.submittedAt = builder.submittedAt;
-        this.teamId = builder.teamId;
 
-        // submittedAt 기준으로 Property 초기화
         this.submitted.set(this.submittedAt != null);
     }
 
-    // Getter,Setter
-    public LocalDateTime getSubmittedAt() {
-        return submittedAt;
-    }
+    // ===============================================================
+    // Getter + Setter
+    // ===============================================================
 
     public Long getAssignmentId() {
         return assignmentId;
     }
+
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+
     public Long getSubmitterUserId() {
         return submitterUserId;
     }
 
-    public Long getTeamId(){
+    public void setSubmitterUserId(Long submitterUserId) {
+        this.submitterUserId = submitterUserId;
+    }
+
+    public Long getTeamId() {
         return teamId;
     }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getSubmittedAt() {
+        return submittedAt;
+    }
+
+    public void setSubmittedAt(LocalDateTime submittedAt) {
+        this.submittedAt = submittedAt;
+        this.submitted.set(submittedAt != null);
+    }
+
     // BooleanProperty 기반 getter/setter
     public boolean isSubmitted() {
         return submitted.get();
@@ -94,5 +126,4 @@ public class Submission extends BaseEntity {
             this.submittedAt = null;
         }
     }
-
 }

@@ -17,13 +17,19 @@ public class SubmissionService {
 
     public SubmissionService() {}
 
-    public List<Submission> findByUserId(long userId) {
-        return submissions.stream()
-                .filter(s -> s.getSubmitterUserId() == userId)
-                .toList();
+    public List<Submission> findByUserId(Long userId) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            SubmissionMapper mapper = session.getMapper(SubmissionMapper.class);
+
+            // DB에서 조회
+            return mapper.findByUserId(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
-    public List<Submission> findByAssignmentId(long assignmentId) {
+    public List<Submission> findByAssignmentId(Long assignmentId) {
         return submissions.stream()
                 .filter(s -> s.getAssignmentId() == assignmentId)
                 .toList();
