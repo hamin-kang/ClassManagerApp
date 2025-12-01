@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,9 +118,11 @@ public class UserController {
                 new SimpleStringProperty("과제 " + cell.getValue().getAssignmentId())
         );
 
-        colDate.setCellValueFactory(cell ->
-                new SimpleObjectProperty<>(cell.getValue().getSubmittedAt())
-        );
+        colDate.setCellValueFactory(cell -> {
+            LocalDateTime dt = cell.getValue().getSubmittedAt();
+            LocalDate dateOnly = (dt != null) ? dt.toLocalDate() : null;
+            return new SimpleObjectProperty<>(dateOnly);
+        });
 
         // 여기서 한 번만 items 바인딩
         privateTaskTable.setItems(privateTaskItems);

@@ -30,7 +30,7 @@ public class SubmissionService {
     }
 
     public void save(Submission submission){
-        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
             SubmissionMapper mapper = session.getMapper(SubmissionMapper.class);
             mapper.save(submission);
         }
