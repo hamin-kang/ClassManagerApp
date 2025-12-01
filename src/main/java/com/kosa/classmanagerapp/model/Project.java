@@ -2,13 +2,13 @@ package com.kosa.classmanagerapp.model;
 
 public class Project extends BaseEntity {
 
-    private String project_name;
+    private String projectName;
 
     public Project() {
     }
 
     private Project(Builder builder) {
-        this.project_name = builder.project_name;
+        this.projectName = builder.projectName;
     }
 
     public static Builder builder() {
@@ -16,10 +16,10 @@ public class Project extends BaseEntity {
     }
 
     public static class Builder {
-        private String project_name;
+        private String projectName;
 
-        public Builder projectName(String project_name) {
-            this.project_name = project_name;
+        public Builder projectName(String projectName) {
+            this.projectName = projectName;
             return this;
         }
 
@@ -28,11 +28,11 @@ public class Project extends BaseEntity {
         }
     }
 
-    public String getProject_name() {
-        return project_name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setProject_name(String project_name) {
-        this.project_name = project_name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

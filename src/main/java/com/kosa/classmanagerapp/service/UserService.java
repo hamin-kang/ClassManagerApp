@@ -1,7 +1,7 @@
 package com.kosa.classmanagerapp.service;
 
 import com.kosa.classmanagerapp.model.User;
-import com.kosa.classmanagerapp.global.initData;
+import com.kosa.classmanagerapp.global.InitData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class UserService {
     public UserService() {
         // initData에서 더미 데이터 로드
         System.out.println("User Dummy Create");
-        users.addAll(initData.createDummyUsers());
+        users.addAll(InitData.createDummyUsers());
     }
 
     public List<User> findAll() {

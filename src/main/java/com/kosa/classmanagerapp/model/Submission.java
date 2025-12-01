@@ -6,28 +6,28 @@ import java.time.LocalDate;
 
 public class Submission extends BaseEntity {
 
-    private long assignment_id;
-    private long submitter_user_id;
+    private Long assignmentId;
+    private Long submitterdUserId;
     private String content;
-    private LocalDate submitted_at;
+    private LocalDate submittedAt;
 
     // UI Property용, DB에는 저장 안함
     private final BooleanProperty submitted = new SimpleBooleanProperty(false);
 
     // --- Builder ---
     public static class Builder {
-        private long assignment_id;
-        private long submitter_user_id;
+        private Long assignmentId;
+        private Long submitterdUserId;
         private String content;
-        private LocalDate submitted_at;
+        private LocalDate submittedAt;
 
-        public Builder assignmentId(long assignment_id) {
-            this.assignment_id = assignment_id;
+        public Builder assignmentId(Long assignmentId) {
+            this.assignmentId = assignmentId;
             return this;
         }
 
-        public Builder submitterUserId(long submitter_user_id) {
-            this.submitter_user_id = submitter_user_id;
+        public Builder submitterUserId(Long submitterdUserId) {
+            this.submitterdUserId = submitterdUserId;
             return this;
         }
 
@@ -36,8 +36,8 @@ public class Submission extends BaseEntity {
             return this;
         }
 
-        public Builder submittedAt(LocalDate submitted_at) {
-            this.submitted_at = submitted_at;
+        public Builder submittedAt(LocalDate submittedAt) {
+            this.submittedAt = submittedAt;
             return this;
         }
 
@@ -49,25 +49,25 @@ public class Submission extends BaseEntity {
 
     // --- private constructor ---
     private Submission(Builder builder) {
-        this.assignment_id = builder.assignment_id;
-        this.submitter_user_id = builder.submitter_user_id;
+        this.assignmentId = builder.assignmentId;
+        this.submitterdUserId = builder.submitterdUserId;
         this.content = builder.content;
-        this.submitted_at = builder.submitted_at;
+        this.submittedAt = builder.submittedAt;
 
-        // submitted_at 기준으로 Property 초기화
-        this.submitted.set(this.submitted_at != null);
+        // submittedAt 기준으로 Property 초기화
+        this.submitted.set(this.submittedAt != null);
     }
 
     // Getter,Setter
     public LocalDate getSubmittedAt() {
-        return submitted_at;
+        return submittedAt;
     }
 
-    public long getAssignmentId() {
-        return assignment_id;
+    public Long getAssignmentId() {
+        return assignmentId;
     }
-    public long getSubmitterUserId() {
-        return submitter_user_id;
+    public Long getSubmitterUserId() {
+        return submitterdUserId;
     }
     // BooleanProperty 기반 getter/setter
     public boolean isSubmitted() {
@@ -78,9 +78,9 @@ public class Submission extends BaseEntity {
         submitted.set(value);
 
         if (value) {
-            this.submitted_at = (this.submitted_at != null) ? this.submitted_at : LocalDate.now();
+            this.submittedAt = (this.submittedAt != null) ? this.submittedAt : LocalDate.now();
         } else {
-            this.submitted_at = null;
+            this.submittedAt = null;
         }
     }
 

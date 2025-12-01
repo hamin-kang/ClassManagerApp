@@ -2,7 +2,7 @@ package com.kosa.classmanagerapp.service;
 
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
-import com.kosa.classmanagerapp.global.initData;
+import com.kosa.classmanagerapp.global.InitData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class AssignmentService {
     private final List<Assignment> assignments = new ArrayList<>();
 
     public AssignmentService() {
-        assignments.addAll(initData.createDummyAssignments());
+        assignments.addAll(InitData.createDummyAssignments());
     }
 
     public List<Assignment> findAll() {

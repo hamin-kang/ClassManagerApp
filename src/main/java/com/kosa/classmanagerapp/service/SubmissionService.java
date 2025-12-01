@@ -1,7 +1,7 @@
 package com.kosa.classmanagerapp.service;
 
 import com.kosa.classmanagerapp.model.Submission;
-import com.kosa.classmanagerapp.global.initData;
+import com.kosa.classmanagerapp.global.InitData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class SubmissionService {
     private final List<Submission> submissions = new ArrayList<>();
 
     public SubmissionService() {
-        submissions.addAll(initData.createDummySubmissions());
+        submissions.addAll(InitData.createDummySubmissions());
     }
 
     public List<Submission> findByUserId(long userId) {
