@@ -15,14 +15,12 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException { // 앱 실행됐을 때 처음 나오는 화면
-        // DB 연결 테스트 코드: 클래스를 참조하여 static 블록을 강제 실행
-        // 이 코드를 추가하면 start() 메서드 초기에 DB 연결 시도
+        // start() 메서드 초기에 DB 연결
         SqlSessionManager.getSqlSessionFactory();
 
         System.out.println("path " + MainApplication.class.getResource("view/main-view.fxml"));
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-//                MainApplication.class.getResource("main-view.fxml")
                 MainApplication.class.getResource("view/main-view.fxml")
 
         );

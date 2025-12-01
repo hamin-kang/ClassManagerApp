@@ -1,7 +1,7 @@
 INSERT INTO user (user_name, password_hash, full_name, team_id, birthday, authorization)
 VALUES ( -- 관리자용 insert 문
            'admin',
-           '$2a$10$H1.xHwCVXknsbx2LccFDsuNyZ4hw/G9t29yzlA0o9E/Dfw489ZWlC', -- 1234
+           '$2a$10$H1.xHwCVXknsbx2LccFDsuNyZ4hw/G9t29yzlA0o9E/Dfw489ZWlC', -- 비번: 1234
            '관리자',
            NULL,
            '2000-01-01',
@@ -11,7 +11,7 @@ VALUES ( -- 관리자용 insert 문
 INSERT INTO user (user_name, password_hash, full_name, team_id, birthday, authorization)
 VALUES ( -- 유저용 insert 문
            'hamin1234',
-           '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', -- 1234
+           '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', -- 비번: 1234
            '강화민',
            NULL,
            '2000-02-08',
