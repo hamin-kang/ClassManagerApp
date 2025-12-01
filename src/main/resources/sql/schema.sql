@@ -45,6 +45,7 @@ CREATE TABLE `assignment` (
     `is_close` BOOLEAN DEFAULT FALSE,
     `due_date` DATETIME NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `presentation_order_team_id` TEXT,
 
     FOREIGN KEY (`creator_id`) REFERENCES `user`(`id`),
     FOREIGN KEY (`team_id`) REFERENCES `team`(`id`) ON DELETE SET NULL

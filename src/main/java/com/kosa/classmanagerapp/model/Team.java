@@ -2,7 +2,7 @@ package com.kosa.classmanagerapp.model;
 
 public class Team extends BaseEntity {
 
-    private String teamdName;
+    private String teamName;
     // Project
     private Long projectId;
     // User
@@ -12,7 +12,7 @@ public class Team extends BaseEntity {
     }
 
     private Team(Builder builder) {
-        this.teamdName = builder.teamdName;
+        this.teamName = builder.teamName;
         this.projectId = builder.projectId;
         this.leaderId = builder.leaderId;
     }
@@ -22,12 +22,12 @@ public class Team extends BaseEntity {
     }
 
     public static class Builder {
-        private String teamdName;
+        private String teamName;
         private Long projectId;
         private Long leaderId;
 
-        public Builder teamName(String teamdName) {
-            this.teamdName = teamdName;
+        public Builder teamName(String teamName) {
+            this.teamName = teamName;
             return this;
         }
 
@@ -47,12 +47,12 @@ public class Team extends BaseEntity {
     }
 
     // getter / setter
-    public String getTeamdName() {
-        return teamdName;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeamdName(String teamdName) {
-        this.teamdName = teamdName;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public Long getProjectId() {
