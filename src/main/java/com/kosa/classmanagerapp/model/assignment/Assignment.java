@@ -2,7 +2,7 @@ package com.kosa.classmanagerapp.model.assignment;
 
 import com.kosa.classmanagerapp.model.BaseEntity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Assignment extends BaseEntity {
 
@@ -15,7 +15,7 @@ public class Assignment extends BaseEntity {
     private Long teamId;
     private Boolean isClose;
     private String presentationOrderTeamId;
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
 
     // 기본 생성자
     public Assignment() {
@@ -90,11 +90,11 @@ public class Assignment extends BaseEntity {
         this.presentationOrderTeamId = presentationOrderTeamId;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -112,7 +112,7 @@ public class Assignment extends BaseEntity {
         private Long teamId;
         private Boolean isClose;
         private String presentationOrderTeamId;
-        private LocalDate dueDate;
+        private LocalDateTime dueDate;
 
         public Builder title(String title) {
             this.title = title;
@@ -149,7 +149,7 @@ public class Assignment extends BaseEntity {
             return this;
         }
 
-        public Builder dueDate(LocalDate dueDate) {
+        public Builder dueDate(LocalDateTime dueDate) {
             this.dueDate = dueDate;
             return this;
         }

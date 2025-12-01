@@ -1,14 +1,15 @@
-package com.kosa.classmanagerapp.global;
+package com.kosa.classmanagerapp.global.initData;
 
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitData {
+public class InitDataMemory {
 
     public static List<Project> createDummyProjects() {
         List<Project> list = new ArrayList<>();
@@ -63,7 +64,7 @@ public class InitData {
                         .creatorId(1L) // admin
                         .assignmentType(AssignmentType.INDIVIDUAL) // enum 값에 맞게
                         .isClose(false)
-                        .dueDate(LocalDate.now().plusDays(3))
+                        .dueDate(LocalDateTime.now().plusDays(3))
                         .build()
         );
 
@@ -75,7 +76,7 @@ public class InitData {
                         .assignmentType(AssignmentType.TEAM)
                         .isClose(false)
                         .presentationOrderTeamId("1,2")
-                        .dueDate(LocalDate.now().plusDays(7))
+                        .dueDate(LocalDateTime.now().plusDays(7))
                         .build()
         );
 
@@ -95,7 +96,7 @@ public class InitData {
                     .content("개인 과제 1 제출 - user" + (userId - 1));
 
             if (submitted) {
-                builder.submittedAt(LocalDate.now().minusDays(userId)); // 제출한 사람만 날짜 세팅
+                builder.submittedAt(LocalDateTime.now().minusDays(userId)); // 제출한 사람만 날짜 세팅
             }
             // 미제출이면 submittedAt 안 넣어서 null 유지
 
@@ -108,7 +109,7 @@ public class InitData {
                 .assignmentId(2L)
                 .submitterUserId(2L) // 팀1 리더
                 .content("팀1 팀 과제 제출본")
-                .submittedAt(LocalDate.now())
+                .submittedAt(LocalDateTime.now())
                 .build();
         list.add(team1Submission);
 

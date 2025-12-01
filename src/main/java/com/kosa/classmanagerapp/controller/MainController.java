@@ -4,14 +4,12 @@ import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.model.User;
 import com.kosa.classmanagerapp.model.UserAuthorization;
 import com.kosa.classmanagerapp.service.SessionService;
-import com.kosa.classmanagerapp.service.UserService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import com.kosa.classmanagerapp.global.AppContext;
 import java.io.IOException;
 
 public class MainController {
@@ -55,7 +53,6 @@ public class MainController {
         }
     }
     public void loadView(String path) throws IOException {
-        System.out.println("mainController " + MainApplication.class.getResource(path));
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(path));
         Parent view = loader.load();
         contentArea.getChildren().setAll(view);

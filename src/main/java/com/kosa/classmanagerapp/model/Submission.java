@@ -2,14 +2,15 @@ package com.kosa.classmanagerapp.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Submission extends BaseEntity {
 
     private Long assignmentId;
-    private Long submitterdUserId;
+    private Long submitterUserId;
+    private Long teamId;
     private String content;
-    private LocalDate submittedAt;
+    private LocalDateTime submittedAt;
 
     // UI Property용, DB에는 저장 안함
     private final BooleanProperty submitted = new SimpleBooleanProperty(false);
@@ -17,26 +18,31 @@ public class Submission extends BaseEntity {
     // --- Builder ---
     public static class Builder {
         private Long assignmentId;
-        private Long submitterdUserId;
+        private Long submitterUserId;
+        private Long teamId;
         private String content;
-        private LocalDate submittedAt;
+        private LocalDateTime submittedAt;
 
         public Builder assignmentId(Long assignmentId) {
             this.assignmentId = assignmentId;
             return this;
         }
 
-        public Builder submitterUserId(Long submitterdUserId) {
-            this.submitterdUserId = submitterdUserId;
+        public Builder submitterUserId(Long submitterUserId) {
+            this.submitterUserId = submitterUserId;
             return this;
         }
 
+        public Builder teamId(Long teamId){
+            this.teamId = teamId;
+            return this;
+        }
         public Builder content(String content) {
             this.content = content;
             return this;
         }
 
-        public Builder submittedAt(LocalDate submittedAt) {
+        public Builder submittedAt(LocalDateTime submittedAt) {
             this.submittedAt = submittedAt;
             return this;
         }
@@ -50,16 +56,17 @@ public class Submission extends BaseEntity {
     // --- private constructor ---
     private Submission(Builder builder) {
         this.assignmentId = builder.assignmentId;
-        this.submitterdUserId = builder.submitterdUserId;
+        this.submitterUserId = builder.submitterUserId;
         this.content = builder.content;
         this.submittedAt = builder.submittedAt;
+        this.teamId = builder.teamId;
 
         // submittedAt 기준으로 Property 초기화
         this.submitted.set(this.submittedAt != null);
     }
 
     // Getter,Setter
-    public LocalDate getSubmittedAt() {
+    public LocalDateTime getSubmittedAt() {
         return submittedAt;
     }
 
@@ -67,7 +74,11 @@ public class Submission extends BaseEntity {
         return assignmentId;
     }
     public Long getSubmitterUserId() {
-        return submitterdUserId;
+        return submitterUserId;
+    }
+
+    public Long getTeamId(){
+        return teamId;
     }
     // BooleanProperty 기반 getter/setter
     public boolean isSubmitted() {
@@ -78,7 +89,7 @@ public class Submission extends BaseEntity {
         submitted.set(value);
 
         if (value) {
-            this.submittedAt = (this.submittedAt != null) ? this.submittedAt : LocalDate.now();
+            this.submittedAt = (this.submittedAt != null) ? this.submittedAt : LocalDateTime.now();
         } else {
             this.submittedAt = null;
         }

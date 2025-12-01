@@ -15,6 +15,8 @@
         <typeAlias alias="Assignment" type="com.kosa.classmanagerapp.model.assignment.Assignment"/>
         <typeAlias alias="Submission" type="com.kosa.classmanagerapp.model.Submission"/>
         <typeAlias alias="Attendance" type="com.kosa.classmanagerapp.model.attendance.Attendance"/>
+        <typeAlias alias="Project" type="com.kosa.classmanagerapp.model.Project"/>
+        <typeAlias alias="Team" type="com.kosa.classmanagerapp.model.Team"/>
     </typeAliases>
 
     <environments default="development">
@@ -31,6 +33,12 @@
 
     <mappers>
         <mapper class="com.kosa.classmanagerapp.dao.UserMapper"/>
-        <mapper class="com.kosa.classmanagerapp.dao.AttendaneMapper"/>
+
+
+        <mapper class="com.kosa.classmanagerapp.dao.ProjectMapper"/>
+        <mapper class="com.kosa.classmanagerapp.dao.TeamMapper"/>
+        <mapper class="com.kosa.classmanagerapp.dao.SubmissionMapper"/>
+        <mapper class="com.kosa.classmanagerapp.dao.AssignmentMapper"/>
+
     </mappers>
 </configuration>
