@@ -1,8 +1,6 @@
 package com.kosa.classmanagerapp;
 
 import com.kosa.classmanagerapp.controller.MainController;
-import com.kosa.classmanagerapp.global.AppContext;
-import com.kosa.classmanagerapp.global.initData.InitDataDB;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,15 +17,9 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException { // 앱 실행됐을 때 처음 나오는 화면
         // DB 연결 테스트 코드: 클래스를 참조하여 static 블록을 강제 실행
         // 이 코드를 추가하면 start() 메서드 초기에 DB 연결 시도
-        InitDataDB init = new InitDataDB();
-        if (AppContext.PROJECT_SERVICE.isEmpty()) {
-            System.out.println("Creating initial data...");
-            init.initAll();
-            System.out.println("Initial data created.");
-        } else {
-            System.out.println("Initial data already exists.");
-        }
         SqlSessionManager.getSqlSessionFactory();
+
+        System.out.println("path " + MainApplication.class.getResource("view/main-view.fxml"));
 
         FXMLLoader fxmlLoader = new FXMLLoader(
 //                MainApplication.class.getResource("main-view.fxml")

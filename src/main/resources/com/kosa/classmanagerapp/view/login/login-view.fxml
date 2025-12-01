@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -22,11 +19,11 @@
                    promptText="비밀번호"
                    prefWidth="180" />
 
-        <Button text="확인"
+        <Button text="로그인"
                 onAction="#onLoginButtonClick"
                 prefWidth="100"
                 styleClass="black-button"/>
-
+        <Button text="회원가입" onAction="#onSignupButtonClick" prefWidth="100"/>
     </VBox>
 
 </StackPane>
