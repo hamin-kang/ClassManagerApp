@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class Attendance extends BaseEntity {
     //User(id)
-    private long user_id;
-    private LocalDate session_Date;
+    private Long userId;
+    private LocalDate sessionDate;
     private Status status;
 }

@@ -9,13 +9,13 @@ public class Assignment extends BaseEntity {
     private String title;
     private String content;
     // User(id)
-    private long creator_id;
+    private Long creatorId;
     private AssignmentType assignmentType;
     // Team(id)
-    private long team_id;
-    private boolean is_close;
-    private String presentation_order_team_id;
-    private LocalDate due_Date;
+    private Long teamId;
+    private Boolean isClose;
+    private String presentationOrderTeamId;
+    private LocalDate dueDate;
 
     // 기본 생성자
     public Assignment() {
@@ -25,12 +25,12 @@ public class Assignment extends BaseEntity {
     private Assignment(Builder builder) {
         this.title = builder.title;
         this.content = builder.content;
-        this.creator_id = builder.creator_id;
+        this.creatorId = builder.creatorId;
         this.assignmentType = builder.assignmentType;
-        this.team_id = builder.team_id;
-        this.is_close = builder.is_close;
-        this.presentation_order_team_id = builder.presentation_order_team_id;
-        this.due_Date = builder.due_Date;
+        this.teamId = builder.teamId;
+        this.isClose = builder.isClose;
+        this.presentationOrderTeamId = builder.presentationOrderTeamId;
+        this.dueDate = builder.dueDate;
     }
 
     // Getter / Setter (필요한 것만 골라서 써도 됨)
@@ -50,12 +50,12 @@ public class Assignment extends BaseEntity {
         this.content = content;
     }
 
-    public long getCreator_id() {
-        return creator_id;
+    public Long getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreator_id(long creator_id) {
-        this.creator_id = creator_id;
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
     }
 
     public AssignmentType getAssignmentType() {
@@ -66,36 +66,36 @@ public class Assignment extends BaseEntity {
         this.assignmentType = assignmentType;
     }
 
-    public long getTeam_id() {
-        return team_id;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam_id(long team_id) {
-        this.team_id = team_id;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
-    public boolean isIs_close() {
-        return is_close;
+    public Boolean isIsClose() {
+        return isClose;
     }
 
-    public void setIs_close(boolean is_close) {
-        this.is_close = is_close;
+    public void setIsClose(Boolean isClose) {
+        this.isClose = isClose;
     }
 
-    public String getPresentation_order_team_id() {
-        return presentation_order_team_id;
+    public String getPresentationdOrderTeamId() {
+        return presentationOrderTeamId;
     }
 
-    public void setPresentation_order_team_id(String presentation_order_team_id) {
-        this.presentation_order_team_id = presentation_order_team_id;
+    public void setPresentationdOrderTeamId(String presentationOrderTeamId) {
+        this.presentationOrderTeamId = presentationOrderTeamId;
     }
 
-    public LocalDate getDue_Date() {
-        return due_Date;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setDue_Date(LocalDate due_Date) {
-        this.due_Date = due_Date;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     // Builder 시작 메서드
@@ -107,12 +107,12 @@ public class Assignment extends BaseEntity {
     public static class Builder {
         private String title;
         private String content;
-        private long creator_id;
+        private Long creatorId;
         private AssignmentType assignmentType;
-        private long team_id;
-        private boolean is_close;
-        private String presentation_order_team_id;
-        private LocalDate due_Date;
+        private Long teamId;
+        private Boolean isClose;
+        private String presentationOrderTeamId;
+        private LocalDate dueDate;
 
         public Builder title(String title) {
             this.title = title;
@@ -124,8 +124,8 @@ public class Assignment extends BaseEntity {
             return this;
         }
 
-        public Builder creator_id(long creator_id) {
-            this.creator_id = creator_id;
+        public Builder creatorId(Long creatorId) {
+            this.creatorId = creatorId;
             return this;
         }
 
@@ -134,23 +134,23 @@ public class Assignment extends BaseEntity {
             return this;
         }
 
-        public Builder team_id(long team_id) {
-            this.team_id = team_id;
+        public Builder teamId(Long teamId) {
+            this.teamId = teamId;
             return this;
         }
 
-        public Builder is_close(boolean is_close) {
-            this.is_close = is_close;
+        public Builder isClose(Boolean isClose) {
+            this.isClose = isClose;
             return this;
         }
 
-        public Builder presentation_order_team_id(String presentation_order_team_id) {
-            this.presentation_order_team_id = presentation_order_team_id;
+        public Builder presentationOrderTeamId(String presentationOrderTeamId) {
+            this.presentationOrderTeamId = presentationOrderTeamId;
             return this;
         }
 
-        public Builder due_Date(LocalDate due_Date) {
-            this.due_Date = due_Date;
+        public Builder dueDate(LocalDate dueDate) {
+            this.dueDate = dueDate;
             return this;
         }
 

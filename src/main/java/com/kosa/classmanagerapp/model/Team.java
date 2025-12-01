@@ -2,19 +2,19 @@ package com.kosa.classmanagerapp.model;
 
 public class Team extends BaseEntity {
 
-    private String team_name;
+    private String teamdName;
     // Project
-    private long project_id;
+    private Long projectId;
     // User
-    private long leader_id;
+    private Long leaderId;
 
     public Team() {
     }
 
     private Team(Builder builder) {
-        this.team_name = builder.team_name;
-        this.project_id = builder.project_id;
-        this.leader_id = builder.leader_id;
+        this.teamdName = builder.teamdName;
+        this.projectId = builder.projectId;
+        this.leaderId = builder.leaderId;
     }
 
     public static Builder builder() {
@@ -22,22 +22,22 @@ public class Team extends BaseEntity {
     }
 
     public static class Builder {
-        private String team_name;
-        private long project_id;
-        private long leader_id;
+        private String teamdName;
+        private Long projectId;
+        private Long leaderId;
 
-        public Builder teamName(String team_name) {
-            this.team_name = team_name;
+        public Builder teamName(String teamdName) {
+            this.teamdName = teamdName;
             return this;
         }
 
-        public Builder projectId(long project_id) {
-            this.project_id = project_id;
+        public Builder projectId(Long projectId) {
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder leaderId(long leader_id) {
-            this.leader_id = leader_id;
+        public Builder leaderId(Long leaderId) {
+            this.leaderId = leaderId;
             return this;
         }
 
@@ -47,27 +47,27 @@ public class Team extends BaseEntity {
     }
 
     // getter / setter
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamdName() {
+        return teamdName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamdName(String teamdName) {
+        this.teamdName = teamdName;
     }
 
-    public long getProject_id() {
-        return project_id;
+    public Long getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(long project_id) {
-        this.project_id = project_id;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
-    public long getLeader_id() {
-        return leader_id;
+    public Long getLeaderId() {
+        return leaderId;
     }
 
-    public void setLeader_id(long leader_id) {
-        this.leader_id = leader_id;
+    public void setLeaderId(Long leaderId) {
+        this.leaderId = leaderId;
     }
 }
