@@ -14,17 +14,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class AdminController {
-    public TextArea adminTextArea;
+//    public TextArea adminTextArea;
+//    public VBox middlebox;
+//    public TextField title_admin;
+//    public TextField content_admin;
+//    public CheckBox assignmentType_team;
+//    public CheckBox assignmentType_person;
+//    public DatePicker dueDate;
+
+
 
 
     @FXML
@@ -132,32 +138,25 @@ public class AdminController {
     @FXML
     protected void teamCreateButtonClick() throws Exception {
         MainController main = MainApplication.getMainController();
-
         main.loadView("view/admin/team-create.fxml");
 
     }
 
     @FXML
     protected void taskCreateButtonClick(ActionEvent event) throws Exception {
-
         MainController main = MainApplication.getMainController();
+        main.loadView("view/admin/project-create.fxml");
 
-        main.loadView("view/admin/task-create.fxml");
+
 
     }
     @FXML
     protected void turnOrderButtonClick() throws Exception {
         MainController main = MainApplication.getMainController();
-        main.loadView("view/admin/task-create.fxml");
+        main.loadView("view/admin/turn-order.fxml");
 
     }
 
-    @FXML
-    protected void adminButtonClick() throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/admin/admin-view.fxml");
-
-    }
 
 
 
