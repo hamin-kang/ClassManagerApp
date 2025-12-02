@@ -44,14 +44,18 @@
         </HBox>
 
         <!-- 마감 날짜 -->
-        <HBox spacing="10" alignment="CENTER_LEFT"  style= "-fx-padding: 5; ">
+        <HBox spacing="10"  alignment="CENTER_LEFT"  style= "-fx-padding: 5; ">
             <Label text="마감 날짜:"/>
             <DatePicker fx:id="dueDate" prefWidth="150"/>
         </HBox>
 
         </VBox>
 
-<!--        <Button text="내용 가져오기" onAction="#handleFetchAssignment"/>-->
+        <HBox alignment="CENTER_RIGHT" layoutY="30" layoutX="200" prefWidth="600" spacing="10">
+            <Button text="과제생성" onAction="#handleFetchAssignment"/>
+        </HBox>
+
+
 
     </VBox>
 

@@ -22,15 +22,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AdminController {
-//    public TextArea adminTextArea;
-//    public VBox middlebox;
-//    public TextField title_admin;
-//    public TextField content_admin;
-//    public CheckBox assignmentType_team;
-//    public CheckBox assignmentType_person;
-//    public DatePicker dueDate;
-
-
 
 
     @FXML
@@ -133,8 +124,6 @@ public class AdminController {
         tableView.setItems(obsList);
     }
 
-
-
     @FXML
     protected void teamCreateButtonClick() throws Exception {
         MainController main = MainApplication.getMainController();
@@ -147,8 +136,6 @@ public class AdminController {
         MainController main = MainApplication.getMainController();
         main.loadView("view/admin/project-create.fxml");
 
-
-
     }
     @FXML
     protected void turnOrderButtonClick() throws Exception {
@@ -156,8 +143,6 @@ public class AdminController {
         main.loadView("view/admin/turn-order.fxml");
 
     }
-
-
 
 
 

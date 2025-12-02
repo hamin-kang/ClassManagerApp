@@ -36,9 +36,9 @@ public class projectCreateController {
         System.out.println("마감 날짜: " + deadline);
     }
 
-
+    // 뒤로가기 버튼
     @FXML
-    protected void adminButtonClick() throws Exception {
+    protected void adminButtonClick(ActionEvent event) throws Exception {
         MainController main = MainApplication.getMainController();
         main.loadView("view/admin/admin-view.fxml");
 

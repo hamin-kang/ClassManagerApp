@@ -11,6 +11,7 @@ module com.kosa.classmanagerapp {
     requires mysql.connector.j;
 
 
+
     // mybatis 가 model, util, controller 에 접근하여 매핑할 수 있도록 opens 추가
     opens com.kosa.classmanagerapp to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.util to javafx.fxml, org.mybatis;
