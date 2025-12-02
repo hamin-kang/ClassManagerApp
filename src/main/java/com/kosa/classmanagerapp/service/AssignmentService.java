@@ -19,7 +19,10 @@ public class AssignmentService {
     public AssignmentService() {}
 
     public List<Assignment> findAll() {
-        return assignments;
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            AssignmentMapper mapper = session.getMapper(AssignmentMapper.class);
+            return mapper.findAll(); // DB에서 가져옴
+        }
     }
 
     public List<Assignment> findByType(AssignmentType type) {
@@ -31,6 +34,14 @@ public class AssignmentService {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
             AssignmentMapper mapper = session.getMapper(AssignmentMapper.class);
             mapper.save(assignment);
+        }
+    }
+
+    // 발표 순서 업데이트
+    public void updatePresentationOrder(Long assignmentId, String orderString) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
+            AssignmentMapper mapper = session.getMapper(AssignmentMapper.class);
+            mapper.updatePresentationOrder(assignmentId, orderString);
         }
     }
 

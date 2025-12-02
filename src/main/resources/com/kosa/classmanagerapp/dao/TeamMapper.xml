@@ -6,9 +6,12 @@
 <mapper namespace="com.kosa.classmanagerapp.dao.TeamMapper">
     <insert id="save" parameterType="Team">
         INSERT INTO team (team_name, project_id, leader_id)
-        VALUES (#{teamName}, #{projectId}, #{leaderId});
+        VALUES (#{teamName}, #{projectId}, #{leaderId})
     </insert>
     <select id="count" resultType="int">
-        SELECT COUNT(*) FROM team;
+        SELECT COUNT(*) FROM team
+    </select>
+    <select id="findAll" resultType="Team">
+        SELECT * FROM team
     </select>
 </mapper>
