@@ -27,4 +27,10 @@ public class teamCreateConroller {
         // 기본 선택값
         teamComboBox.getSelectionModel().selectFirst();
     }
+
+      @FXML
+    public void initialize() { // 드롭다운
+          loadTeamList();
+
+    }
 }

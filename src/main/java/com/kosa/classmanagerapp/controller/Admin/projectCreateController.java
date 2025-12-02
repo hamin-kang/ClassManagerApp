@@ -47,10 +47,16 @@ public class projectCreateController {
         // 실제로 팀을 DB나 서비스에서 가져오는 것처럼 구성 가능
         // 여기서는 예제로 1~5팀 추가
         taskComboBox.getItems().addAll(
-                "알고리즘", "미니과제", "발표", "UML", "final프로젝트"
+                "개인과제","팀과제"
         );
 
         // 기본 선택값
         taskComboBox.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    public void initialize() { // 드롭다운
+        TaskList();
+
     }
 }
