@@ -12,8 +12,7 @@
             prefHeight="400.0" prefWidth="600.0">
 
 
-    <Button text="팀생성 페이지 입니다"
-            prefWidth="130" />
+
 
     <Button text="뒤로가기"
             onAction="#adminButtonClick"

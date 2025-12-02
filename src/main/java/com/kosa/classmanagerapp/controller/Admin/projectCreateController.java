@@ -4,10 +4,7 @@ import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class projectCreateController {
@@ -42,5 +39,18 @@ public class projectCreateController {
         MainController main = MainApplication.getMainController();
         main.loadView("view/admin/admin-view.fxml");
 
+    }
+
+    @FXML
+    private ComboBox<String> taskComboBox; //과제 드롭다운
+    private void TaskList() {
+        // 실제로 팀을 DB나 서비스에서 가져오는 것처럼 구성 가능
+        // 여기서는 예제로 1~5팀 추가
+        taskComboBox.getItems().addAll(
+                "알고리즘", "미니과제", "발표", "UML", "final프로젝트"
+        );
+
+        // 기본 선택값
+        taskComboBox.getSelectionModel().selectFirst();
     }
 }
