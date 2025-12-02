@@ -12,14 +12,27 @@ public class AttendanceService {
     public List<Attendance> getAttendanceList() {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
             AttendanceMapper mapper = session.getMapper(AttendanceMapper.class);
-             return mapper.getAttendance();
+            return mapper.getAttendance();
+         //   List<Attendance> list = mapper.getAttendance();
 
-
-
+//
+//            System.out.println("데이터 출력 !!");
+//            // 로그 출력
+//            for (Attendance a : list) {
+//                System.out.println(
+//                        "ID: " + a.getAttendanceId() +
+//                                ", UserID: " + a.getUserId() +
+//                                ", UserName: " + a.getUserName() +
+//                                ", Date: " + a.getSessionDate() +
+//                                ", Status: " + a.getStatus()
+//                );
+//            }
+//
+//            return list;
 
         }
     }
 }
 
-// LIST값 로그 찍기
+
 

@@ -24,18 +24,12 @@
 <!--        </HBox>-->
 
 <!--        &lt;!&ndash; ▼ 출석 &ndash;&gt;-->
-   <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">-->
-            <Label text="출석" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>-->
-
+   <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
 
             <!-- 출석 테이블 -->
-            <TableView fx:id="tableView" prefHeight="160" >
+            <TableView fx:id="tableView" prefHeight="160"  VBox.vgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn text="학생명" prefWidth="120" />
-                    <TableColumn text="출석일수" prefWidth="120"  />
-                    <TableColumn text="출석률" prefWidth="120"  />
-
 
              <!--   출석률 데이터      -->
                     <TableColumn fx:id="colId" text="출석 ID" prefWidth="80"/>

@@ -2,8 +2,10 @@ package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.model.attendance.Attendance;
+import com.kosa.classmanagerapp.model.attendance.Status;
 import com.kosa.classmanagerapp.service.AttendanceService;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AdminController {
@@ -115,6 +118,7 @@ public class AdminController {
 
     private final AttendanceService attendanceService = new AttendanceService();
 
+
     @FXML
     public void initialize() {
         colId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
@@ -122,6 +126,17 @@ public class AdminController {
         colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
         colSessionDate.setCellValueFactory(new PropertyValueFactory<>("sessionDate"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+
+        // LocalDate -> String
+        colSessionDate.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getSessionDate().toString())
+        );
+
+        // Enum -> String
+        colStatus.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getStatus().name())
+        );
 
         loadData();
     }
