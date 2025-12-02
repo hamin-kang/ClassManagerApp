@@ -8,7 +8,12 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,34 +26,6 @@ import java.util.List;
 public class AdminController {
     public TextArea adminTextArea;
 
-    @FXML
-    protected void teamCreateButtonClick() throws Exception {
-        MainController main = MainApplication.getMainController();
-
-         main.loadView("view/admin/team-create.fxml");
-
-    }
-
-    @FXML
-    protected void taskCreateButtonClick() throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/admin/task-create.fxml");
-
-    }
-
-    @FXML
-    protected void turnOrderButtonClick() throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/admin/task-create.fxml");
-
-    }
-
-    @FXML
-    protected void adminButtonClick() throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/admin/admin-view.fxml");
-
-    }
 
     @FXML
     private ComboBox<String> teamComboBox;
@@ -119,8 +96,10 @@ public class AdminController {
     private final AttendanceService attendanceService = new AttendanceService();
 
 
+    //출석 테이블 로드
     @FXML
     public void initialize() {
+        if (colId != null) {
         colId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
         colUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
@@ -138,13 +117,46 @@ public class AdminController {
                 new SimpleStringProperty(cellData.getValue().getStatus().name())
         );
 
-        loadData();
+       loadData();
+        }
     }
 
     private void loadData() {
         List<Attendance> list = attendanceService.getAttendanceList();
         ObservableList<Attendance> obsList = FXCollections.observableArrayList(list);
         tableView.setItems(obsList);
+    }
+
+
+
+    @FXML
+    protected void teamCreateButtonClick() throws Exception {
+        MainController main = MainApplication.getMainController();
+
+        main.loadView("view/admin/team-create.fxml");
+
+    }
+
+    @FXML
+    protected void taskCreateButtonClick(ActionEvent event) throws Exception {
+
+        MainController main = MainApplication.getMainController();
+
+        main.loadView("view/admin/task-create.fxml");
+
+    }
+    @FXML
+    protected void turnOrderButtonClick() throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/admin/task-create.fxml");
+
+    }
+
+    @FXML
+    protected void adminButtonClick() throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/admin/admin-view.fxml");
+
     }
 
 

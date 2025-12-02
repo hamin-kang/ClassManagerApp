@@ -10,24 +10,24 @@
             prefWidth="900" prefHeight="600">
 
 <!--    &lt;!&ndash; 좌측 버튼 메뉴 &ndash;&gt;-->
-<!--    <VBox spacing="15" layoutX="20" layoutY="20">-->
-<!--        <Button text="팀 생성" prefWidth="150" onAction="#teamCreateButtonClick"/>-->
-<!--        <Button text="과제 생성" prefWidth="150" onAction="#taskCreateButtonClick"/>-->
-<!--        <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick"/>-->
-<!--    </VBox>-->
+
+    <VBox spacing="15" layoutX="20" layoutY="20">
+        <Button text="팀 생성" prefWidth="150" onAction="#teamCreateButtonClick"/>
+        <Button text="과제 생성" prefWidth="150" onAction="#taskCreateButtonClick"/>
+        <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick"/>
+    </VBox>
 
 <!--    &lt;!&ndash; 메인 콘텐츠 &ndash;&gt;-->
 <!--    <VBox spacing="25" layoutX="200" layoutY="20" prefWidth="650">-->
 
-<!--        &lt;!&ndash; ▼ 팀 선택 &ndash;&gt;-->
-<!--        <HBox spacing="10">-->
-<!--        </HBox>-->
+        <!-- ▼ 팀 선택 -->
+        <HBox spacing="10">
+        </HBox>
 
 <!--        &lt;!&ndash; ▼ 출석 &ndash;&gt;-->
-   <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
 
             <!-- 출석 테이블 -->
-            <TableView fx:id="tableView" prefHeight="160"  VBox.vgrow="ALWAYS">
+            <TableView fx:id="tableView" layoutX="300" layoutY="150"  prefHeight="160"  VBox.vgrow="ALWAYS">
 
                 <columns>
 
@@ -39,7 +39,7 @@
                     <TableColumn fx:id="colStatus" text="상태" prefWidth="100"/>
                 </columns>
             </TableView>
-        </VBox>
+
 
         <!-- ▼ 과제 -->
 <!--        <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">-->
