@@ -2,9 +2,9 @@ package com.kosa.classmanagerapp.controller.admin;
 
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.controller.MainController;
-import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.service.TeamService;
-import com.kosa.classmanagerapp.service.UserService;
+import com.kosa.classmanagerapp.service.auth.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

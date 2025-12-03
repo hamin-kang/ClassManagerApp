@@ -23,9 +23,11 @@ module com.kosa.classmanagerapp {
     opens com.kosa.classmanagerapp.dao to org.mybatis;
     opens com.kosa.classmanagerapp.util.Toast to javafx.fxml;
     opens com.kosa.classmanagerapp.model.dto;
+
     exports com.kosa.classmanagerapp;
     exports com.kosa.classmanagerapp.controller;
     exports com.kosa.classmanagerapp.model.dto;
+    exports com.kosa.classmanagerapp.model.entity;
 
     opens com.kosa.classmanagerapp.model.assignment to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.model.attendance to javafx.fxml, org.mybatis, javafx.base;
