@@ -28,6 +28,6 @@ module com.kosa.classmanagerapp {
     exports com.kosa.classmanagerapp.model.dto;
 
     opens com.kosa.classmanagerapp.model.assignment to javafx.fxml, org.mybatis;
-    opens com.kosa.classmanagerapp.model.attendance to javafx.fxml, org.mybatis;
+    opens com.kosa.classmanagerapp.model.attendance to javafx.fxml, org.mybatis, javafx.base;
 
 }

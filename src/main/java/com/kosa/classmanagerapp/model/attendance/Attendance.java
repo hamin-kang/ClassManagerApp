@@ -69,12 +69,4 @@ public class Attendance extends BaseEntity {
         this.status = status;
     }
 
-
-//enum
-    public enum Status {
-        PRESENT,
-        ABSENT,
-        LEAVE_EARLY
-    }
-
 }
