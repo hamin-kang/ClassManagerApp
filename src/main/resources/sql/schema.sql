@@ -39,14 +39,12 @@ CREATE TABLE `assignment` (
     `content` TEXT NOT NULL,
     `creator_id` BIGINT NOT NULL,
     `assignment_type` ENUM('INDIVIDUAL', 'TEAM') NOT NULL,
-    `team_id` BIGINT, -- 특정 팀 전용 과제일 경우 사용 (전체 과제면 NULL 허용 필요), 필요한지 고민 필요
     `is_close` BOOLEAN DEFAULT FALSE,
     `due_date` DATETIME NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `presentation_order_team_id` TEXT,
 
-    FOREIGN KEY (`creator_id`) REFERENCES `user`(`id`),
-    FOREIGN KEY (`team_id`) REFERENCES `team`(`id`) ON DELETE SET NULL
+    FOREIGN KEY (`creator_id`) REFERENCES `user`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 5. submission
