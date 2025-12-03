@@ -72,4 +72,10 @@ CREATE TABLE `attendance` (
     UNIQUE KEY `unique_attendance` (`user_id`, `session_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 7. notice
+CREATE TABLE `notice` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `content` TEXT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 SET FOREIGN_KEY_CHECKS = 1;

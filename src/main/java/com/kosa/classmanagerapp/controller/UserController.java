@@ -1,8 +1,10 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
+import com.kosa.classmanagerapp.model.Notice;
 import com.kosa.classmanagerapp.model.User;
 import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
+import com.kosa.classmanagerapp.service.NoticeService;
 import com.kosa.classmanagerapp.service.SessionService;
 import com.kosa.classmanagerapp.service.SubmissionService;
 
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -25,7 +28,8 @@ import java.util.List;
 public class UserController {
 
     SubmissionService submissionService = new SubmissionService();
-
+    NoticeService NoticeService = new NoticeService();
+    @FXML private ListView<Notice> noticeListView;
     @FXML private TableView<SubmissionStatusResponse> individualTaskTable;
     @FXML private TableView<SubmissionStatusResponse> teamTaskTable;
 
@@ -45,11 +49,13 @@ public class UserController {
 
     @FXML
     public void initialize() throws Exception {
+        loadNoticeList();
         setupIndividualTableColumns();
         setupTeamTableColumns();
 
         loadIndividualTableData();
         loadTeamTableData();
+
         individualTaskTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 SubmissionStatusResponse selected = individualTaskTable.getSelectionModel().getSelectedItem();
@@ -198,4 +204,7 @@ public class UserController {
             e.printStackTrace();
         }
     }
-}
+    private void loadNoticeList() {
+        List<Notice> notices = NoticeService.findAll();
+        noticeListView.getItems().setAll(notices);
+    }}
