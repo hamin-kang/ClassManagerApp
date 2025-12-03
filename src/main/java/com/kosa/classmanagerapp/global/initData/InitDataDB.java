@@ -47,13 +47,11 @@ public class InitDataDB {
         Team team1 = Team.builder()
                 .teamName("1팀")
                 .projectId(1L)
-                .leaderId(2L)
                 .build();
 
         Team team2 = Team.builder()
                 .teamName("2팀")
                 .projectId(1L)
-                .leaderId(4L)
                 .build();
 
         int result1 =  teamService.save(team1);

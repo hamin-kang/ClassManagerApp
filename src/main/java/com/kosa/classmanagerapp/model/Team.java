@@ -5,8 +5,6 @@ public class Team extends BaseEntity {
     private String teamName;
     // Project
     private Long projectId;
-    // User
-    private Long leaderId;
 
     public Team() {
     }
@@ -14,7 +12,6 @@ public class Team extends BaseEntity {
     private Team(Builder builder) {
         this.teamName = builder.teamName;
         this.projectId = builder.projectId;
-        this.leaderId = builder.leaderId;
     }
 
     public static Builder builder() {
@@ -24,7 +21,6 @@ public class Team extends BaseEntity {
     public static class Builder {
         private String teamName;
         private Long projectId;
-        private Long leaderId;
 
         public Builder teamName(String teamName) {
             this.teamName = teamName;
@@ -36,10 +32,6 @@ public class Team extends BaseEntity {
             return this;
         }
 
-        public Builder leaderId(Long leaderId) {
-            this.leaderId = leaderId;
-            return this;
-        }
 
         public Team build() {
             return new Team(this);
@@ -63,11 +55,5 @@ public class Team extends BaseEntity {
         this.projectId = projectId;
     }
 
-    public Long getLeaderId() {
-        return leaderId;
-    }
 
-    public void setLeaderId(Long leaderId) {
-        this.leaderId = leaderId;
-    }
 }
