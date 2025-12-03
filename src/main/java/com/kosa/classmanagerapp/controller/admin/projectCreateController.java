@@ -2,10 +2,16 @@ package com.kosa.classmanagerapp.controller.admin;
 
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.controller.MainController;
+import com.kosa.classmanagerapp.model.assignment.Assignment;
+import com.kosa.classmanagerapp.model.assignment.AssignmentType;
+import com.kosa.classmanagerapp.service.AssignmentService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class projectCreateController {
     public TextArea adminTextArea;
@@ -23,14 +29,26 @@ public class projectCreateController {
         String title = title_admin.getText();
         String content = content_admin.getText();
         boolean isTeam = assignmentType_team.isSelected();
+        AssignmentType type = isTeam ? AssignmentType.TEAM : AssignmentType.INDIVIDUAL;
         boolean isPerson = assignmentType_person.isSelected();
-        String deadline = (dueDate.getValue() != null) ? dueDate.getValue().toString() : "날짜 미선택";
+        boolean isClose = false; // 필요에 따라 체크박스로 지정 가능
+        LocalDateTime due = (dueDate.getValue() != null) ?
+                dueDate.getValue().atTime(23, 59, 59) : LocalDateTime.now().plusDays(7);
 
-        System.out.println("과제 제목: " + title);
-        System.out.println("내용: " + content);
-        System.out.println("팀과제: " + isTeam);
-        System.out.println("개인과제: " + isPerson);
-        System.out.println("마감 날짜: " + deadline);
+        Assignment assignment = Assignment.builder()
+                .title(title)
+                .content(content)
+                .creatorId(1L) // 현재 로그인한 사용자 ID로 변경
+                .assignmentType(type)
+                .isClose(isClose)
+                .dueDate(due)
+                .build();
+
+        AssignmentService service = new AssignmentService();
+        service.save(assignment);
+
+        System.out.println("과제 저장 완료: " + title);
+
     }
 
     // 뒤로가기 버튼
