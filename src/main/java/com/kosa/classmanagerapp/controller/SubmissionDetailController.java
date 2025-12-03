@@ -4,7 +4,7 @@ package com.kosa.classmanagerapp.controller;
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.global.AppContext;
 import com.kosa.classmanagerapp.model.Submission;
-import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
 import com.kosa.classmanagerapp.model.dto.SubmissionRequest;
 import com.kosa.classmanagerapp.service.SessionService;
