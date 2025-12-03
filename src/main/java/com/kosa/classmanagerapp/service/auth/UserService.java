@@ -19,9 +19,7 @@ public class UserService {
         users.addAll(InitDataMemory.createDummyUsers());
     }
 
-    public List<User> findAll() {
-        return users;
-    }
+
 
     public User findById(long id) {
         return users.stream()
@@ -71,4 +69,12 @@ public class UserService {
             return result;
         }
     }
+//user테이블 가져오기
+    public List<User> findAllUser() {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            return mapper.findAllUser();
+        }
+    }
+
 }

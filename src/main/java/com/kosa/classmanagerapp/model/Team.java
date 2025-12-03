@@ -18,6 +18,15 @@ public class Team extends BaseEntity {
         return new Builder();
     }
 
+    public String getFullName() {
+        return "";
+    }
+
+    public String getUserName() {
+
+        return "";
+    }
+
     public static class Builder {
         private String teamName;
         private Long projectId;
