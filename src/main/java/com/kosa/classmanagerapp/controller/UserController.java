@@ -3,6 +3,7 @@ package com.kosa.classmanagerapp.controller;
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.model.Submission;
 import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
 import com.kosa.classmanagerapp.service.SessionService;
 import com.kosa.classmanagerapp.service.SubmissionService;
 
@@ -14,6 +15,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -27,30 +30,57 @@ import java.util.Map;
 public class UserController {
 
     SubmissionService submissionService = new SubmissionService();
-    //체크박스 임시 저장용 Map, 제출 버튼 클릭 시 실제 값 반영
-    private final Map<Long, Boolean> pendingSubmittedMap = new HashMap<>();
-    @FXML private TableView<Submission> privateTaskTable;
-    @FXML private TableColumn<Submission, Boolean> colSubmitted;
-    @FXML private TableColumn<Submission, String> colTitle;
-    @FXML private TableColumn<Submission, LocalDate> colDate;
+
+    @FXML private TableView<SubmissionStatusResponse> individualTaskTable;
+    @FXML private TableView<SubmissionStatusResponse> teamTaskTable;
+
+    @FXML private TableColumn<SubmissionStatusResponse, Boolean> colIndividualSubmitted;
+    @FXML private TableColumn<SubmissionStatusResponse, String> colIndividualTitle;
+    @FXML private TableColumn<SubmissionStatusResponse, LocalDate> colIndividualDate;
+
+    @FXML private TableColumn<SubmissionStatusResponse, Boolean> colTeamSubmitted;
+    @FXML private TableColumn<SubmissionStatusResponse, String> colTeamTitle;
+    @FXML private TableColumn<SubmissionStatusResponse, LocalDate> colTeamDate;
 
     // 테이블 데이터 전용 리스트
-    private final javafx.collections.ObservableList<Submission> privateTaskItems =
+    private final javafx.collections.ObservableList<SubmissionStatusResponse> individualTaskItems =
+            FXCollections.observableArrayList();
+    private final javafx.collections.ObservableList<SubmissionStatusResponse> teamTaskItems =
             FXCollections.observableArrayList();
 
     @FXML
     public void initialize() throws Exception {
-        setupPrivateTableColumns();
-        loadPrivateTableData();
+        setupIndividualTableColumns();
+        setupTeamTableColumns();
+
+        loadIndividualTableData();
+        loadTeamTableData();
+        individualTaskTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                SubmissionStatusResponse selected = individualTaskTable.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    openDetailPage(selected);
+                }
+            }
+        });
+
+        teamTaskTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                SubmissionStatusResponse selected = teamTaskTable.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    openDetailPage(selected);
+                }
+            }
+        });
 
     }
     @FXML
-    public void refreshPrivate() throws Exception {
-        loadPrivateTableData();
+    public void refreshIndividual() {
+        loadIndividualTableData();
     }
     @FXML
-    public void refreshTeam() throws Exception {
-        loadPrivateTableData();
+    public void refreshTeam() {
+        loadTeamTableData();
     }
     @FXML
     protected void logoutClick() throws Exception {
@@ -62,91 +92,130 @@ public class UserController {
     }
 
     @FXML
-    protected void submitPrivate() throws Exception {
-        // 테이블에 있는 모든 행 기준으로
-        for (Submission s : privateTaskItems) {
-            Boolean newVal = pendingSubmittedMap.get(s.getAssignmentId());
-            if (newVal != null && newVal != s.isSubmitted()) {
-                // 실제 엔티티에 반영
-                s.setSubmitted(newVal);
-                // DB 반영 (메서드 이름은 프로젝트에 맞게 수정)
-//                submissionService.updateSubmittedStatus(s.getId(), newVal);
-            }
-        }
+    protected void setupIndividualTableColumns() {
 
-        // 임시 변경사항 비우기
-        pendingSubmittedMap.clear();
-
-        // 필요하면 새로 로딩
-        loadPrivateTableData();
-
-    }
-
-    @FXML
-    protected void submitTeam() throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/login/login-view.fxml");
-
-    }
-
-    @FXML
-    protected void setupPrivateTableColumns() {
-        privateTaskTable.setEditable(true);
-        colSubmitted.setEditable(true);
-
-        colSubmitted.setCellValueFactory(cellData -> {
-            Submission s = cellData.getValue();
-
-            // 이미 바꾼 값이 있으면 그 값, 없으면 원래 DB 값 사용
-            boolean initialValue = pendingSubmittedMap.getOrDefault(
-                    s.getAssignmentId(),
-                    s.isSubmitted()
-            );
-
-            BooleanProperty prop = new SimpleBooleanProperty(initialValue);
-
-            // 체크박스 클릭해서 값 바뀔 때마다 임시 Map 에만 반영
-            prop.addListener((obs, oldVal, newVal) -> {
-                pendingSubmittedMap.put(s.getAssignmentId(), newVal);
-            });
-
-            return prop;
+        colIndividualSubmitted.setCellValueFactory(cellData -> {
+            SubmissionStatusResponse s = cellData.getValue();
+            return new SimpleBooleanProperty(s.getSubmitted());
         });
-        colSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colSubmitted));
+        colIndividualSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colIndividualSubmitted));
 
-        colTitle.setCellValueFactory(cell ->
+        colIndividualTitle.setCellValueFactory(cell ->
+                new SimpleStringProperty("과제 " + cell.getValue().getAssignmentName())
+        );
+
+        colIndividualDate.setCellValueFactory(cell -> {
+            LocalDate dt = cell.getValue().getDueDate();
+            return new SimpleObjectProperty<>(dt);
+        });
+        applyIndividualColumnResizePolicy();
+
+        individualTaskTable.setItems(individualTaskItems);
+    }
+
+    //표 사이즈 조정
+    private void applyIndividualColumnResizePolicy() {
+        individualTaskTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        colIndividualSubmitted.prefWidthProperty().bind(
+                individualTaskTable.widthProperty().multiply(0.20) // 20%
+        );
+        colIndividualTitle.prefWidthProperty().bind(
+                individualTaskTable.widthProperty().multiply(0.50) // 50%
+        );
+        colIndividualDate.prefWidthProperty().bind(
+                individualTaskTable.widthProperty().multiply(0.30) // 30%
+        );
+    }
+    private void applyTeamColumnResizePolicy() {
+        teamTaskTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        colTeamSubmitted.prefWidthProperty().bind(
+                teamTaskTable.widthProperty().multiply(0.20)
+        );
+        colTeamTitle.prefWidthProperty().bind(
+                teamTaskTable.widthProperty().multiply(0.50)
+        );
+        colTeamDate.prefWidthProperty().bind(
+                teamTaskTable.widthProperty().multiply(0.30)
+        );
+    }
+    @FXML
+    protected void setupTeamTableColumns() {
+        colTeamSubmitted.setCellValueFactory(cellData -> {
+            SubmissionStatusResponse s = cellData.getValue();
+            return new SimpleBooleanProperty(s.getSubmitted());
+        });
+        colTeamSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colTeamSubmitted));
+
+        colTeamTitle.setCellValueFactory(cell ->
                 new SimpleStringProperty("과제 " + cell.getValue().getAssignmentId())
         );
 
-        colDate.setCellValueFactory(cell -> {
-            LocalDateTime dt = cell.getValue().getSubmittedAt();
-            LocalDate dateOnly = (dt != null) ? dt.toLocalDate() : null;
-            return new SimpleObjectProperty<>(dateOnly);
+        colTeamDate.setCellValueFactory(cell -> {
+            LocalDate dt = cell.getValue().getDueDate();
+            return new SimpleObjectProperty<>(dt);
         });
+        applyTeamColumnResizePolicy();
 
-        // 여기서 한 번만 items 바인딩
-        privateTaskTable.setItems(privateTaskItems);
+        teamTaskTable.setItems(teamTaskItems);
     }
-
-    private void loadPrivateTableData() {
-        System.out.println("***Load***");
-        pendingSubmittedMap.clear();
+    private void loadIndividualTableData() {
+        System.out.println("***Load Individual***");
         User user = SessionService.getUser();
         if (user == null) {
-            privateTaskItems.clear();
+            individualTaskItems.clear();
             return;
         }
 
-        List<Submission> userSubmissions =
-                submissionService.findByUserId(user.getId());
-        for (int i = 0; i < userSubmissions.size(); i++) {
+        List<SubmissionStatusResponse> userSubmissions =
+                submissionService.findByUserIdIndividualSubmissions(user.getId());
+        System.out.println("UserController::loadIndividualTableData");
+        for (SubmissionStatusResponse userSubmission : userSubmissions) {
             System.out.println(
-                    userSubmissions.get(i).getAssignmentId() + " " +
-                            userSubmissions.get(i).isSubmitted()
+                    userSubmission.getAssignmentId() + " " +
+                            userSubmission.getSubmitted()
             );
         }
 
         // 기존 데이터 싹 지우고 새로 채움 (clear + addAll과 같음)
-        privateTaskItems.setAll(userSubmissions);
+        individualTaskItems.setAll(userSubmissions);
+    }
+
+    private void loadTeamTableData() {
+        User user = SessionService.getUser();
+        if (user == null) {
+            teamTaskItems.clear();
+            return;
+        }
+
+        List<SubmissionStatusResponse> userSubmissions =
+                submissionService.findByUserIdTeamSubmissions(user.getId());
+        System.out.println("UserController::loadTeamTableData");
+        for (SubmissionStatusResponse userSubmission : userSubmissions) {
+            System.out.println(
+                    userSubmission.getAssignmentId() + " " +
+                            userSubmission.getSubmitted()
+            );
+        }
+
+        teamTaskItems.setAll(userSubmissions);
+    }
+    private void openDetailPage(SubmissionStatusResponse submission) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/kosa/classmanagerapp/view/user/submission-detail-view.fxml")
+            );
+            Parent root = loader.load();
+
+            MainController main = MainApplication.getMainController();
+            main.setContent(root);
+
+            SubmissionDetailController controller = loader.getController();
+            controller.setSubmissionDetail(submission);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

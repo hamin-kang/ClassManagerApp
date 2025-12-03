@@ -1,4 +1,4 @@
-package com.kosa.classmanagerapp.controller.Admin;
+package com.kosa.classmanagerapp.controller.admin;
 
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.controller.MainController;

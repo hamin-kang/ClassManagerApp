@@ -58,4 +58,7 @@ public class MainController {
         contentArea.getChildren().setAll(view);
     }
 
+    public void setContent(Parent root) {
+        contentArea.getChildren().setAll(root);
+    }
 }

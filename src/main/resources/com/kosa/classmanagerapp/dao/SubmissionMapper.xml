@@ -4,7 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kosa.classmanagerapp.dao.SubmissionMapper">
-
+    <resultMap id="SubmissionStatusMap" type="SubmissionStatusResponse">
+        <result column="submitted_id" property="submittedId"/>
+        <result column="assignment_id" property="assignmentId"/>
+        <result column="submitted" property="isSubmitted"/>
+        <result column="assignment_name" property="assignmentName"/>
+        <result column="due_date" property="dueDate"/>
+    </resultMap>
     <insert id="save" parameterType="Submission">
         INSERT INTO submission (
         assignment_id,
@@ -19,7 +25,44 @@
         #{teamId},
         #{content},
         #{submittedAt}
-        );
+        )
     </insert>
-
+    <select id="findByUserId" parameterType="Long" resultType="Submission">
+        SELECT *
+        FROM submission
+        WHERE submitter_user_id = #{userId}
+    </select>
+    <select id="findByUserIdIndividualSubmissions" parameterType="Long" resultMap="SubmissionStatusMap">
+        SELECT
+            s.id AS submitted_id,
+            a.id AS assignment_id,
+            CASE
+                WHEN s.id IS NULL THEN FALSE
+                ELSE TRUE
+            END AS submitted,
+            a.title AS assignment_name,
+            a.due_date
+        FROM assignment a
+        LEFT JOIN submission s
+            ON s.assignment_id = a.id
+            AND s.submitter_user_id = #{userId}
+        WHERE a.assignment_type = 'INDIVIDUAL'
+    </select>
+    <select id="findByUserIdTeamSubmissions" parameterType="Long" resultMap="SubmissionStatusMap">
+        SELECT
+            s.id AS submitted_id,
+            a.id AS assignment_id,
+        CASE
+            WHEN s.id IS NULL THEN FALSE
+            ELSE TRUE
+        END AS submitted,
+            a.title AS assignment_name,
+            a.due_date
+        FROM assignment a
+        JOIN user u ON u.id = #{userId}
+        LEFT JOIN submission s
+        ON s.assignment_id = a.id
+        AND s.team_id = u.team_id
+        WHERE a.assignment_type = 'TEAM';
+    </select>
 </mapper>

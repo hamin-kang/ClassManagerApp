@@ -17,7 +17,10 @@ public class TeamService {
     public TeamService() {}
 
     public List<Team> findAll() {
-        return teams;
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            TeamMapper mapper = session.getMapper(TeamMapper.class);
+            return mapper.findAll(); // DB에서 가져옴
+        }
     }
 
     public List<Team> findByProjectId(long projectId) {
@@ -26,10 +29,11 @@ public class TeamService {
                 .toList();
     }
 
-    public void save(Team team){
+    public int save(Team team){
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
             TeamMapper mapper = session.getMapper(TeamMapper.class);
-            mapper.save(team);
+            int result = mapper.save(team);
+            return result;
         }
     }
     public boolean isEmpty() {
