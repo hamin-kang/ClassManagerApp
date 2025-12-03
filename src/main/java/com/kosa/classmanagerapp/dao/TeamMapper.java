@@ -2,6 +2,7 @@ package com.kosa.classmanagerapp.dao;
 
 import com.kosa.classmanagerapp.model.Project;
 import com.kosa.classmanagerapp.model.Team;
+import com.kosa.classmanagerapp.model.User;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ public interface TeamMapper {
 
     int count();
     List<Team> findAll();
+
+
 }

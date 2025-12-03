@@ -22,7 +22,6 @@ public class AdminController {
     @FXML
     protected void teamCreateButtonClick() throws Exception {
         MainController main = MainApplication.getMainController();
-
          main.loadView("view/admin/team-create.fxml");
 
     }
@@ -47,19 +46,7 @@ public class AdminController {
 
     }
 
-    @FXML
-    private ComboBox<String> teamComboBox;
-    private void loadTeamList() {
-        // 실제로 팀을 DB나 서비스에서 가져오는 것처럼 구성 가능
-        // 여기서는 예제로 1~5팀 추가
-        if (teamComboBox == null) return;
-        teamComboBox.getItems().addAll(
-                "1팀", "2팀", "3팀", "4팀", "5팀"
-        );
 
-        // 기본 선택값
-        teamComboBox.getSelectionModel().selectFirst();
-    }
 
     @FXML
     private ComboBox<String> taskComboBox; //과제 드롭다운
@@ -122,7 +109,7 @@ public class AdminController {
         }
         // FXML 로딩 후 안전하게 실행
         Platform.runLater(() -> {
-            loadTeamList();
+
             TaskList();
         });
         
