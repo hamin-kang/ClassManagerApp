@@ -12,7 +12,7 @@ VALUES ( -- 유저용 insert 문
            'user1',
            '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', -- 1234
            'user1',
-           NULL,
+           1,
            '2000-02-08',
            'USER'
        );
@@ -21,7 +21,7 @@ VALUES ( -- 유저용 insert 문
            'user2',
            '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', -- 1234
            'user2',
-           NULL,
+           1,
            '2000-02-08',
            'USER'
        );
@@ -30,7 +30,7 @@ VALUES ( -- 유저용 insert 문
            'user3',
            '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', -- 1234
            'user3',
-           NULL,
+           2,
            '2000-02-08',
            'USER'
        );
@@ -39,7 +39,7 @@ VALUES ( -- 유저용 insert 문
            'user4',
            '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', -- 1234
            'user4',
-           NULL,
+           2,
            '2000-02-08',
            'USER'
        );
