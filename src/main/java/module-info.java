@@ -13,6 +13,7 @@ module com.kosa.classmanagerapp {
     opens com.kosa.classmanagerapp.util to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.model to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.controller to javafx.fxml, org.mybatis;
+    opens com.kosa.classmanagerapp.controller.admin to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.dao to org.mybatis;
     opens com.kosa.classmanagerapp.util.Toast to javafx.fxml;
 

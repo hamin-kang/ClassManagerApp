@@ -1,11 +1,8 @@
 package com.kosa.classmanagerapp.service;
 
 import com.kosa.classmanagerapp.dao.AssignmentMapper;
-import com.kosa.classmanagerapp.dao.TeamMapper;
-import com.kosa.classmanagerapp.model.Team;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
-import com.kosa.classmanagerapp.global.initData.InitDataMemory;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.session.SqlSession;
 

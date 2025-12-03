@@ -6,7 +6,7 @@
 <StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="root"
-            fx:controller="com.kosa.classmanagerapp.controller.AdminController"
+            fx:controller="com.kosa.classmanagerapp.controller.admin.TurnOrderController"
             prefHeight="400.0" prefWidth="600.0">
     <VBox layoutX="100" layoutY="100" spacing="20" prefWidth="600" alignment="CENTER"
           style="-fx-border-color: #cccccc; -fx-padding: 30; -fx-background-radius: 10; -fx-border-radius: 10;">
@@ -16,7 +16,7 @@
         <ComboBox fx:id="teamAssignmentComboBox" prefWidth="300" promptText="과제 선택"/>
 
         <HBox spacing="10" alignment="CENTER">
-            <Button text="🎲 순서 섞기 (Shuffle)" onAction="#onShuffleButtonClick"
+            <Button text="🎲 순서 섞기" onAction="#onShuffleButtonClick"
                     style="-fx-font-size: 14px; -fx-background-color: #ff9900; -fx-text-fill: white;"/>
             <Button text="💾 결과 저장" onAction="#onSaveOrderClick"
                     styleClass="black-button"/>
