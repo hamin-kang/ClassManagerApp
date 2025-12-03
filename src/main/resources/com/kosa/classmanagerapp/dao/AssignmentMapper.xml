@@ -12,6 +12,14 @@
         VALUES (#{title}, #{content},
         #{creatorId}, #{assignmentType}, #{teamId},
         #{isClose}, #{presentationOrderTeamId},
-        #{dueDate});
+        #{dueDate})
     </insert>
+    <update id="updatePresentationOrder" parameterType="map">
+        UPDATE assignment
+        SET presentation_order_team_id = #{orderString}
+        WHERE id = #{id}
+    </update>
+    <select id="findAll" resultType="Assignment">
+        SELECT * FROM assignment
+    </select>
 </mapper>

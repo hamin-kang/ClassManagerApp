@@ -26,11 +26,9 @@ CREATE TABLE `team` (
     `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `team_name` VARCHAR(50) NOT NULL,
     `project_id` BIGINT NOT NULL,
-    `leader_id` BIGINT NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (`project_id`) REFERENCES `project`(`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`leader_id`) REFERENCES `user`(`id`)
+    FOREIGN KEY (`project_id`) REFERENCES `project`(`id`)
     -- 리더가 삭제된다고 팀이 삭제되는 것은 위험할 수 있으므로 ON DELETE 제약조건 신중히 결정
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -41,7 +39,7 @@ CREATE TABLE `assignment` (
     `content` TEXT NOT NULL,
     `creator_id` BIGINT NOT NULL,
     `assignment_type` ENUM('INDIVIDUAL', 'TEAM') NOT NULL,
-    `team_id` BIGINT, -- 특정 팀 전용 과제일 경우 사용 (전체 과제면 NULL 허용 필요)
+    `team_id` BIGINT, -- 특정 팀 전용 과제일 경우 사용 (전체 과제면 NULL 허용 필요), 필요한지 고민 필요
     `is_close` BOOLEAN DEFAULT FALSE,
     `due_date` DATETIME NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -49,18 +47,6 @@ CREATE TABLE `assignment` (
 
     FOREIGN KEY (`creator_id`) REFERENCES `user`(`id`),
     FOREIGN KEY (`team_id`) REFERENCES `team`(`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- [추가] 과제 발표 순서
--- 정규화를 통해 팀 ID의 무결성을 보장하고 조회를 용이하게 함
-CREATE TABLE `presentation_order` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `assignment_id` BIGINT NOT NULL,
-    `team_id` BIGINT NOT NULL,
-    `order_index` INT NOT NULL, -- 발표 순서 (1, 2, 3...)
-
-    FOREIGN KEY (`assignment_id`) REFERENCES `assignment`(`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`team_id`) REFERENCES `team`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 5. submission
