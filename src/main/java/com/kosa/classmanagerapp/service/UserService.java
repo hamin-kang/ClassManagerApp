@@ -59,4 +59,13 @@ public class UserService {
             return false;
         }
     }
+
+    public int updateTeam(User user) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            int result = mapper.updateTeam(user);
+            session.commit();
+            return result;
+        }
+    }
 }

@@ -11,4 +11,10 @@
         INSERT INTO user (user_name, password_hash, full_name, birthday, authorization)
         VALUES (#{userName}, #{passwordHash}, #{fullName}, #{birthday}, 'USER')
     </insert>
+    <update id="updateTeam" parameterType="User">
+        UPDATE user
+        SET team_id = #{teamId}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

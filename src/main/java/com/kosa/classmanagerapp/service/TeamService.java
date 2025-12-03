@@ -29,10 +29,11 @@ public class TeamService {
                 .toList();
     }
 
-    public void save(Team team){
+    public int save(Team team){
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
             TeamMapper mapper = session.getMapper(TeamMapper.class);
-            mapper.save(team);
+            int result = mapper.save(team);
+            return result;
         }
     }
     public boolean isEmpty() {

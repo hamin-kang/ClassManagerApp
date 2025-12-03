@@ -6,7 +6,8 @@ import com.kosa.classmanagerapp.model.Team;
 import java.util.List;
 
 public interface TeamMapper {
-    void save(Team team);
+    int save(Team team);
+
     int count();
     List<Team> findAll();
 }
