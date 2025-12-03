@@ -16,7 +16,8 @@ public class TeamService {
 
     private final List<Team> teams = new ArrayList<>();
 
-    public TeamService() {}
+    public TeamService() {
+    }
 
     public List<Team> findAll() {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
@@ -31,13 +32,14 @@ public class TeamService {
                 .toList();
     }
 
-    public int save(Team team){
+    public int save(Team team) {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
             TeamMapper mapper = session.getMapper(TeamMapper.class);
             int result = mapper.save(team);
             return result;
         }
     }
+
     public boolean isEmpty() {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
             TeamMapper mapper = session.getMapper(TeamMapper.class);
@@ -45,9 +47,17 @@ public class TeamService {
         }
     }
 
+    //  --- 팀 update---
+    public int updateTeamMember(Team team) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            TeamMapper mapper = session.getMapper(TeamMapper.class);
+            int result = mapper.updateTeamMember(team);
+            session.commit();
+            return result;
+        }
 
 
-
+    }
 }
 
 

@@ -8,9 +8,36 @@
         INSERT INTO team (team_name, project_id)
         VALUES (#{teamName}, #{projectId})
     </insert>
+
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM team
     </select>
+
+    <select id="findByUserName" resultType="User">
+        SELECT * FROM user WHERE user_name = #{userName}
+    </select>
+
+
+    <!--  user 테이블 조회 → team 만들 때 사용자 목록 가져오기 -->
+    <select id="findAllUser" resultType="User">
+        SELECT id, user_name AS userName, full_name AS fullName, team_id AS teamId
+        FROM user;
+    </select>
+
+    <!-- 팀 이름으로 존재 여부 확인 -->
+    <select id="countByTeamName" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM team
+        WHERE team_name = #{teamName}
+    </select>
+
+    <!-- 팀 멤버 정보 업데이트 -->
+    <update id="updateTeamMember" parameterType="Team">
+        UPDATE team
+        SET team_name = #{teamName},
+        project_id = #{projectId}
+        WHERE id = #{teamId}
+    </update>
 
 
 </mapper>

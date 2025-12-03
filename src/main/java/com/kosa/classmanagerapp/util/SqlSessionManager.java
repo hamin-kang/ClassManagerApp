@@ -1,6 +1,7 @@
 package com.kosa.classmanagerapp.util;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
@@ -41,5 +42,8 @@ public class SqlSessionManager {
         return sqlSessionFactory;
     }
 
-
+    // SqlSession 가져오기  팀생성
+    public static SqlSession getSession() {
+        return sqlSessionFactory.openSession();
+    }
 }

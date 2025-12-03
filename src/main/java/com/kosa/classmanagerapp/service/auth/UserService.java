@@ -5,6 +5,7 @@ import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.global.initData.InitDataMemory;
 import com.kosa.classmanagerapp.model.dto.auth.SignupRequest;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
+import org.apache.ibatis.jdbc.SqlRunner;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
@@ -20,16 +21,16 @@ public class UserService {
     }
 
 
-
     public User findById(long id) {
         return users.stream()
                 .filter(u -> u.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
+
     public User findByUserName(String user_name) {
         return users.stream()
-                .filter(u -> u.getUserName().equals(user_name) )
+                .filter(u -> u.getUserName().equals(user_name))
                 .findFirst()
                 .orElse(null);
     }
@@ -69,7 +70,8 @@ public class UserService {
             return result;
         }
     }
-//user테이블 가져오기
+
+    //user테이블 가져오기
     public List<User> findAllUser() {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
@@ -77,4 +79,14 @@ public class UserService {
         }
     }
 
+
+    public User findUserById(long userId) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            return mapper.findUserById(userId); // Mapper 인터페이스 사용
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

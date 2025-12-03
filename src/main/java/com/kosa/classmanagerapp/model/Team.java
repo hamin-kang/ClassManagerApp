@@ -1,13 +1,22 @@
 package com.kosa.classmanagerapp.model;
 
 public class Team extends BaseEntity {
-
+    private int teamId;
     private String teamName;
-    // Project
     private Long projectId;
+
 
     public Team() {
     }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
 
     private Team(Builder builder) {
         this.teamName = builder.teamName;
@@ -26,6 +35,10 @@ public class Team extends BaseEntity {
 
         return "";
     }
+
+    public void setUserId(Long userId) {
+    }
+
 
     public static class Builder {
         private String teamName;

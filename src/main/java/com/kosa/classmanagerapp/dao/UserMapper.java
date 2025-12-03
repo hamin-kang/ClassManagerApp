@@ -14,4 +14,6 @@ public interface UserMapper {
 
     //모든 사용자 조회 (팀 생성용)
     List<User> findAllUser();
+
+    User findUserById(long userId);
 }

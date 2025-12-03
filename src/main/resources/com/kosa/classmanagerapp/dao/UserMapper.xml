@@ -7,6 +7,7 @@
     <select id="findByUserName" resultType="User">
         SELECT * FROM user WHERE user_name = #{userName}
     </select>
+
     <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (user_name, password_hash, full_name, birthday, authorization)
         VALUES (#{userName}, #{passwordHash}, #{fullName}, #{birthday}, 'USER')
@@ -21,6 +22,13 @@
     <select id="findAllUser" resultType="User">
         SELECT id, user_name AS userName, full_name AS fullName, team_id AS teamId
         FROM user;
+    </select>
+
+
+    <select id="findUserById" parameterType="long" resultType="com.kosa.classmanagerapp.model.entity.User">
+        SELECT id, user_name AS userName, full_name AS fullName, team_id AS teamId
+        FROM user
+        WHERE id = #{userId}  <!-- value → userId -->
     </select>
 
 </mapper>
