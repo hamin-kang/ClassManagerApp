@@ -1,8 +1,9 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
-import com.kosa.classmanagerapp.model.User;
-import com.kosa.classmanagerapp.service.UserService;
+import com.kosa.classmanagerapp.model.dto.auth.SignupRequest;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.service.auth.UserService;
 import com.kosa.classmanagerapp.util.Toast.Toast;
 import com.kosa.classmanagerapp.util.Toast.ToastColor;
 import javafx.fxml.FXML;
@@ -31,14 +32,16 @@ public class SignupController {
             Toast.show((Stage) root.getScene().getWindow(), "모든 정보를 입력해주세요.", ToastColor.ERROR);
             return;
         }
-        // User 객체 생성
-        User user = new User();
-        user.setUserName(userNameField.getText());
-        user.setFullName(fullNameField.getText());
-        user.setBirthday(birthdayPicker.getValue());
+        // DTO 생성하여 데이터 넣기
+        SignupRequest request = new SignupRequest(
+                userNameField.getText(),
+                passwordField.getText(),
+                fullNameField.getText(),
+                birthdayPicker.getValue()
+        );
 
         // 서비스 호출(회원가입)
-        boolean isSuccess = userService.save(user, passwordField.getText());
+        boolean isSuccess = userService.signup(request);
 
         if (isSuccess) {
             Toast.show((Stage) root.getScene().getWindow(), "회원가입 성공! 로그인 해주세요.", ToastColor.SUCCESS);

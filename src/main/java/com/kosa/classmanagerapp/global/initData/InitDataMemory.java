@@ -3,6 +3,8 @@ package com.kosa.classmanagerapp.global.initData;
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,12 +26,10 @@ public class InitDataMemory {
         Team team1 = Team.builder()
                 .teamName("1팀")
                 .projectId(1L)
-                .leaderId(2L)
                 .build();
         Team team2 = Team.builder()
                 .teamName("2팀")
                 .projectId(1L)
-                .leaderId(4L)
                 .build();
         list.add(team1);
         list.add(team2);

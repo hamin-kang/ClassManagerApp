@@ -5,11 +5,15 @@
 
 <mapper namespace="com.kosa.classmanagerapp.dao.SubmissionMapper">
     <resultMap id="SubmissionStatusMap" type="SubmissionStatusResponse">
-        <result column="submitted_id" property="submittedId"/>
-        <result column="assignment_id" property="assignmentId"/>
-        <result column="submitted" property="isSubmitted"/>
-        <result column="assignment_name" property="assignmentName"/>
-        <result column="due_date" property="dueDate"/>
+        <constructor>
+            <idArg column="submitted_id" javaType="Long"/>
+            <arg column="assignment_id" javaType="Long"/>
+            <arg column="team_id" javaType="Long"/>
+            <arg column="submitted" javaType="Boolean"/>
+            <arg column="assignment_name" javaType="String"/>
+            <arg column="due_date" javaType="LocalDate"/>
+            <arg column="is_close" javaType="Boolean"/>
+        </constructor>
     </resultMap>
     <insert id="save" parameterType="Submission">
         INSERT INTO submission (
@@ -27,6 +31,11 @@
         #{submittedAt}
         )
     </insert>
+    <select id="findById" parameterType="Long" resultType="Submission">
+        SELECT *
+        FROM submission
+        WHERE id = #{id}
+    </select>
     <select id="findByUserId" parameterType="Long" resultType="Submission">
         SELECT *
         FROM submission
@@ -36,12 +45,14 @@
         SELECT
             s.id AS submitted_id,
             a.id AS assignment_id,
+            s.team_id AS team_id,
             CASE
                 WHEN s.id IS NULL THEN FALSE
                 ELSE TRUE
             END AS submitted,
             a.title AS assignment_name,
-            a.due_date
+            a.due_date,
+            a.is_close as is_close
         FROM assignment a
         LEFT JOIN submission s
             ON s.assignment_id = a.id
@@ -52,12 +63,14 @@
         SELECT
             s.id AS submitted_id,
             a.id AS assignment_id,
+            s.team_id AS team_id,
         CASE
             WHEN s.id IS NULL THEN FALSE
             ELSE TRUE
         END AS submitted,
             a.title AS assignment_name,
-            a.due_date
+            a.due_date,
+            a.is_close as is_close
         FROM assignment a
         JOIN user u ON u.id = #{userId}
         LEFT JOIN submission s
@@ -65,4 +78,12 @@
         AND s.team_id = u.team_id
         WHERE a.assignment_type = 'TEAM';
     </select>
+    <update id="update" parameterType="Submission">
+        UPDATE submission
+        SET
+        content = #{content},
+        submitted_at = NOW()
+        WHERE submitter_user_id = #{submitterUserId}
+        AND assignment_id = #{assignmentId}
+    </update>
 </mapper>

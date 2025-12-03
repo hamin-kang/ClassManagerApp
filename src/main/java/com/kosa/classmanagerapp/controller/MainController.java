@@ -1,8 +1,8 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
-import com.kosa.classmanagerapp.model.User;
-import com.kosa.classmanagerapp.model.UserAuthorization;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.service.SessionService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

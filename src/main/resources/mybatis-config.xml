@@ -11,14 +11,16 @@
     </settings>
 
     <typeAliases>
-        <typeAlias alias="User" type="com.kosa.classmanagerapp.model.User"/>
+        <typeAlias alias="User" type="com.kosa.classmanagerapp.model.entity.User"/>
         <typeAlias alias="Assignment" type="com.kosa.classmanagerapp.model.assignment.Assignment"/>
         <typeAlias alias="Submission" type="com.kosa.classmanagerapp.model.Submission"/>
         <typeAlias alias="SubmissionStatusResponse" type="com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse"/>
+        <typeAlias alias="Notice" type="com.kosa.classmanagerapp.model.Notice"/>
 
         <typeAlias alias="Attendance" type="com.kosa.classmanagerapp.model.attendance.Attendance"/>
         <typeAlias alias="Project" type="com.kosa.classmanagerapp.model.Project"/>
         <typeAlias alias="Team" type="com.kosa.classmanagerapp.model.Team"/>
+        <typeAlias alias="LocalDate" type="java.time.LocalDate"/>
     </typeAliases>
 
     <environments default="development">
@@ -40,6 +42,7 @@
         <mapper class="com.kosa.classmanagerapp.dao.SubmissionMapper"/>
         <mapper class="com.kosa.classmanagerapp.dao.AssignmentMapper"/>
         <mapper class = "com.kosa.classmanagerapp.dao.AttendanceMapper"/>
+        <mapper class = "com.kosa.classmanagerapp.dao.NoticeMapper"/>
 
     </mappers>
 </configuration>

@@ -4,12 +4,13 @@ import com.kosa.classmanagerapp.global.AppContext;
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.service.*;
+import com.kosa.classmanagerapp.service.auth.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime ;
-import java.util.ArrayList;
-import java.util.List;
 
 public class InitDataDB {
 
@@ -47,13 +48,11 @@ public class InitDataDB {
         Team team1 = Team.builder()
                 .teamName("1팀")
                 .projectId(1L)
-                .leaderId(2L)
                 .build();
 
         Team team2 = Team.builder()
                 .teamName("2팀")
                 .projectId(1L)
-                .leaderId(4L)
                 .build();
 
         int result1 =  teamService.save(team1);
@@ -113,7 +112,7 @@ public class InitDataDB {
                 .content("개인 과제 1 내용")
                 .creatorId(1L)
                 .assignmentType(AssignmentType.INDIVIDUAL)
-                .isClose(false)
+                .isClose(true)
                 .dueDate(LocalDateTime .now().plusDays(3))
                 .build();
         Assignment a2 = Assignment.builder()
@@ -129,7 +128,7 @@ public class InitDataDB {
                 .content("팀 과제 1 내용")
                 .creatorId(1L)
                 .assignmentType(AssignmentType.TEAM)
-                .isClose(false)
+                .isClose(true)
                 .presentationOrderTeamId("1,2")
                 .dueDate(LocalDateTime .now().plusDays(7))
                 .build();
