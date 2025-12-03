@@ -1,13 +1,11 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
-import com.kosa.classmanagerapp.model.Submission;
-import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
 import com.kosa.classmanagerapp.service.SessionService;
 import com.kosa.classmanagerapp.service.SubmissionService;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,10 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UserController {
 

@@ -4,12 +4,13 @@ import com.kosa.classmanagerapp.global.AppContext;
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.service.*;
+import com.kosa.classmanagerapp.service.auth.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime ;
-import java.util.ArrayList;
-import java.util.List;
 
 public class InitDataDB {
 

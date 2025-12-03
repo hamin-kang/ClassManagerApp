@@ -1,8 +1,9 @@
-package com.kosa.classmanagerapp.service;
+package com.kosa.classmanagerapp.service.auth;
 
 import com.kosa.classmanagerapp.dao.UserMapper;
-import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.global.initData.InitDataMemory;
+import com.kosa.classmanagerapp.model.dto.auth.SignupRequest;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.session.SqlSession;
 
@@ -34,25 +35,27 @@ public class UserService {
                 .findFirst()
                 .orElse(null);
     }
-    
-    // 회원가입 저장
-    public boolean save(User user, String password) {
+
+    // DTO 를 받아서 처리(회원가입)
+    public boolean signup(SignupRequest request) {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
-            UserMapper mapper = session.getMapper(UserMapper.class);
+            UserMapper userMapper = session.getMapper(UserMapper.class);
 
             // 아이디 중복 체크
-            if (mapper.findByUserName(user.getUserName()) != null) {
-                return false; // 이미 존재하는 아이디
+            if (userMapper.findByUserName(request.getUserName()) != null) {
+                return false;
             }
-
-            // 비밀번호 암호화 (AuthService 활용)
-            String hashedPassword = AuthService.hashPassword(password);
-            user.setPasswordHash(hashedPassword);
-
+            // DTO -> Entity 변환
+            User user = new User();
+            user.setUserName(request.getUserName());
+            user.setFullName(request.getFullName());
+            user.setBirthday(request.getBirthday());
+            // 비밀번호 암호화
+            String passwordHash = AuthService.hashPassword(request.getPassword());
+            user.setPasswordHash(passwordHash);
             // DB 저장
-            int result = mapper.save(user);
-            session.commit(); // 커밋 필수!
-
+            int result = userMapper.save(user);
+            session.commit();
             return result > 0;
         } catch (Exception e) {
             System.err.println("회원가입에 실패했습니다" + e.getMessage());

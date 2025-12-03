@@ -47,9 +47,9 @@
                 <Button onAction="#refreshIndividual" styleClass="icon-button">
                     <graphic>
                         <ImageView fitWidth="18" fitHeight="18">
-                            <image>
-                                <Image url="@../../icons/refresh.png"/>
-                            </image>
+<!--                            <image>-->
+<!--                                <Image url="@../../icons/refresh.png"/>-->
+<!--                            </image>-->
                         </ImageView>
                     </graphic>
                 </Button>
@@ -71,9 +71,9 @@
                 <Button onAction="#refreshTeam" styleClass="icon-button">
                     <graphic>
                         <ImageView fitWidth="18" fitHeight="18">
-                            <image>
-                                <Image url="@../../icons/refresh.png"/>
-                            </image>
+<!--                            <image>-->
+<!--                                <Image url="@../../icons/refresh.png"/>-->
+<!--                            </image>-->
                         </ImageView>
                     </graphic>
                 </Button>

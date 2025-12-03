@@ -1,12 +1,11 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
-import com.kosa.classmanagerapp.dao.UserMapper;
-import com.kosa.classmanagerapp.model.User;
-import com.kosa.classmanagerapp.model.UserAuthorization;
-import com.kosa.classmanagerapp.service.AuthService;
+import com.kosa.classmanagerapp.model.dto.auth.LoginRequest;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
+import com.kosa.classmanagerapp.service.auth.AuthService;
 import com.kosa.classmanagerapp.service.SessionService;
-import com.kosa.classmanagerapp.util.SqlSessionManager;
 import com.kosa.classmanagerapp.util.Toast.Toast;
 import com.kosa.classmanagerapp.util.Toast.ToastColor;
 import javafx.fxml.FXML;
@@ -14,8 +13,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.apache.ibatis.session.SqlSession;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -53,7 +50,9 @@ public class LoginController {
 
         // 서비스 호출 및 결과 처리
         try {
-            User dbUser = authService.login(inputUserName, inputPassword);
+            // LoginRequest DTO 생성
+            LoginRequest request = new LoginRequest(inputUserName, inputPassword);
+            User dbUser = authService.login(request);
 
             // 세션 설정 및 화면 전환
             SessionService.setUser(dbUser);

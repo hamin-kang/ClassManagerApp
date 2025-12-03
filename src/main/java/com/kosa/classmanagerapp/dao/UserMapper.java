@@ -1,6 +1,6 @@
 package com.kosa.classmanagerapp.dao;
 
-import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.entity.User;
 
 // DB에 접근할 메소드를 정의하는 인터페이스
 public interface UserMapper {

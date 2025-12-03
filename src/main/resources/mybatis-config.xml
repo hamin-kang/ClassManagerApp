@@ -11,7 +11,7 @@
     </settings>
 
     <typeAliases>
-        <typeAlias alias="User" type="com.kosa.classmanagerapp.model.User"/>
+        <typeAlias alias="User" type="com.kosa.classmanagerapp.model.entity.User"/>
         <typeAlias alias="Assignment" type="com.kosa.classmanagerapp.model.assignment.Assignment"/>
         <typeAlias alias="Submission" type="com.kosa.classmanagerapp.model.Submission"/>
         <typeAlias alias="SubmissionStatusResponse" type="com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse"/>
