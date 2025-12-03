@@ -24,12 +24,10 @@ public class InitDataMemory {
         Team team1 = Team.builder()
                 .teamName("1팀")
                 .projectId(1L)
-                .leaderId(2L)
                 .build();
         Team team2 = Team.builder()
                 .teamName("2팀")
                 .projectId(1L)
-                .leaderId(4L)
                 .build();
         list.add(team1);
         list.add(team2);
