@@ -52,23 +52,14 @@ public class MainController {
             }
         }
     }
-//    public void loadView(String path) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(path));
-//        Parent view = loader.load();
-//        contentArea.getChildren().setAll(view);
-//    }
 
     public void loadView(String path) {
         try {
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(path));
             Parent view = loader.load();
             contentArea.getChildren().setAll(view);
-        } catch (Exception e) { // 임시로 예외를 잡아서 출력
-            System.err.println("!!!!!!!!!!!!!!!! FXML 로딩 실패: " + path + " !!!!!!!!!!!!!!!!");
-            e.printStackTrace(); // <--- 숨겨진 에러를 콘솔에 출력
-            // 실패 시 관리자 뷰 로딩 대신 로그인 뷰로 돌아가는 것도 고려 가능
-
-            // MainController.java에 throws IOException이 필요한 메서드에서 throws IOException을 제거해야 합니다.
+        } catch (Exception e) {
+            System.err.println("FXML 로딩 실패: " + e.getMessage());
         }
     }
 
