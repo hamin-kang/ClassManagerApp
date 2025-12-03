@@ -23,7 +23,7 @@
         #{assignmentId},
         #{submitterUserId},
         #{teamId},
-        #{content}
+        #{content},
         #{submittedAt}
         )
     </insert>
