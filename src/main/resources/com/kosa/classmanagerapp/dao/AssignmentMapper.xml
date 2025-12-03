@@ -6,11 +6,11 @@
 <mapper namespace="com.kosa.classmanagerapp.dao.AssignmentMapper">
     <insert id="save" parameterType="Assignment">
         INSERT INTO assignment (title, content,
-        creator_id, assignment_type, team_id,
+        creator_id, assignment_type,
         is_close, presentation_order_team_id,
         due_date)
         VALUES (#{title}, #{content},
-        #{creatorId}, #{assignmentType}, #{teamId},
+        #{creatorId}, #{assignmentType},
         #{isClose}, #{presentationOrderTeamId},
         #{dueDate})
     </insert>
