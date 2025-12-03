@@ -1,6 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
--- 1. 기존 데이터 초기화
+-- 기존 데이터 초기화
 TRUNCATE TABLE presentation_order;
 TRUNCATE TABLE submission;
 TRUNCATE TABLE attendance;
@@ -9,13 +9,12 @@ TRUNCATE TABLE user;
 TRUNCATE TABLE team;
 TRUNCATE TABLE project;
 
--- 2. Project 생성
+-- Project 생성
 INSERT INTO project (project_name) VALUES
     ('자바 미니 프로젝트'),
     ('자바 파이널 프로젝트');
 
--- 3. User 생성 (총 21명: 관리자 1 + 학생 20)
--- 비밀번호 '1234'의 해시값 사용
+-- User 생성 (총 21명: 관리자 1 + 학생 20)
 INSERT INTO user (user_name, password_hash, full_name, birthday, authorization)
 VALUES ('admin', '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', '관리자', '1990-01-01', 'ADMIN');
 
@@ -42,23 +41,22 @@ INSERT INTO user (user_name, password_hash, full_name, birthday, authorization) 
     ('student19', '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', '김태리', '1995-07-19', 'USER'),
     ('student20', '$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW', '현빈', '1997-08-20', 'USER');
 
--- 4. Team 데이터 생성 (5개 팀)
--- 팀장: 각 조의 첫 번째 학생으로 지정 (student1, 5, 9, 13, 17)
-INSERT INTO team (team_name, project_id, leader_id) VALUES
-    ('1조 - 자바킹', 1, 2),
-    ('2조 - 코딩마스터', 1, 6),
-    ('3조 - 버그헌터', 1, 10),
-    ('4조 - 풀스택', 1, 14),
-    ('5조 - 배포성공', 1, 18);
+-- Team 데이터 생성 (5개 팀)
+INSERT INTO team (team_name, project_id) VALUES
+    ('1조 - 자바킹', 1),
+    ('2조 - 코딩마스터', 1),
+    ('3조 - 버그헌터', 1),
+    ('4조 - 풀스택', 1),
+    ('5조 - 배포성공', 1);
 
--- 5. User에 팀 배정 (4명씩 5개 조)
+-- User 에 팀 배정 (4명씩 5개 조)
 UPDATE user SET team_id = 1 WHERE id BETWEEN 2 AND 5;   -- 1조
 UPDATE user SET team_id = 2 WHERE id BETWEEN 6 AND 9;   -- 2조
 UPDATE user SET team_id = 3 WHERE id BETWEEN 10 AND 13; -- 3조
 UPDATE user SET team_id = 4 WHERE id BETWEEN 14 AND 17; -- 4조
 UPDATE user SET team_id = 5 WHERE id BETWEEN 18 AND 21; -- 5조
 
--- 6. Assignment (과제) 데이터 생성 (개인 5개, 팀 2개)
+-- Assignment (과제) 데이터 생성 (개인 5개, 팀 2개)
 INSERT INTO assignment (title, content, creator_id, assignment_type, is_close, due_date) VALUES
 -- 개인 과제
 ('Java 기초 문법 정리', '변수, 자료형, 연산자에 대해 정리하여 제출하세요.', 1, 'INDIVIDUAL', TRUE, '2025-10-05 23:59:59'),
@@ -101,15 +99,7 @@ INSERT INTO submission (assignment_id, submitter_user_id, team_id, content, subm
     (6, 14, 4, '4조 프로젝트 기획', '2025-10-25 22:00:00'),
     (6, 18, 5, '5조 기획서 v1.0', '2025-10-23 09:00:00');
 
--- 8. Presentation Order (팀 과제 발표 순서)
-INSERT INTO presentation_order (assignment_id, team_id, order_index) VALUES
-    (6, 3, 1),
-    (6, 1, 2),
-    (6, 5, 3),
-    (6, 2, 4),
-    (6, 4, 5);
-
--- 9. Attendance (출석) 데이터 생성 (최근 5일치)
+-- Attendance (출석) 데이터 생성 (최근 5일치)
 -- 날짜별로 상황 다르게 설정
 
 -- Day 1: 전원 출석
