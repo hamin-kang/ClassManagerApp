@@ -113,7 +113,7 @@ public class InitDataDB {
                 .content("개인 과제 1 내용")
                 .creatorId(1L)
                 .assignmentType(AssignmentType.INDIVIDUAL)
-                .isClose(false)
+                .isClose(true)
                 .dueDate(LocalDateTime .now().plusDays(3))
                 .build();
         Assignment a2 = Assignment.builder()
@@ -129,7 +129,7 @@ public class InitDataDB {
                 .content("팀 과제 1 내용")
                 .creatorId(1L)
                 .assignmentType(AssignmentType.TEAM)
-                .isClose(false)
+                .isClose(true)
                 .presentationOrderTeamId("1,2")
                 .dueDate(LocalDateTime .now().plusDays(7))
                 .build();

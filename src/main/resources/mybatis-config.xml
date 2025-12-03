@@ -19,6 +19,7 @@
         <typeAlias alias="Attendance" type="com.kosa.classmanagerapp.model.attendance.Attendance"/>
         <typeAlias alias="Project" type="com.kosa.classmanagerapp.model.Project"/>
         <typeAlias alias="Team" type="com.kosa.classmanagerapp.model.Team"/>
+        <typeAlias alias="LocalDate" type="java.time.LocalDate"/>
     </typeAliases>
 
     <environments default="development">
