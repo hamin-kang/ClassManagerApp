@@ -82,6 +82,25 @@ public class TeamCreateController {
         }
     }
 
+    @FXML
+    private void createTeamButtonClick(ActionEvent event) {
+        // 1. 선택된 팀명 가져오기
+        String selectedTeam = teamComboBox.getSelectionModel().getSelectedItem();
+        if (selectedTeam != null) {
+            System.out.println("선택된 팀: " + selectedTeam);
+        } else {
+            System.out.println("팀이 선택되지 않았습니다.");
+        }
+
+        // 2. 선택된 멤버 가져오기
+        if (!selectedListView.getItems().isEmpty()) {
+            System.out.println("선택된 멤버:");
+            selectedListView.getItems().forEach(member -> System.out.println("- " + member));
+        } else {
+            System.out.println("선택된 멤버가 없습니다.");
+        }
+    }
+
 }
 
 

@@ -11,34 +11,44 @@
             fx:controller="com.kosa.classmanagerapp.controller.admin.TeamCreateController"
             prefHeight="400.0" prefWidth="600.0">
 
-
+    <!-- 뒤로가기 버튼 -->
     <Button text="뒤로가기"
             onAction="#adminButtonClick"
             prefWidth="100"
-            layoutY="50"
-    />
-
-    <ComboBox
-            fx:id="teamComboBox"
             layoutX="10"
-            layoutY="100"
-            prefWidth="150" />
-<!--팀원 선택 -->
-    <VBox spacing="10" layoutX="250" layoutY="100"
-          prefWidth="250" prefHeight="200"
-          style="-fx-padding: 10;">
+            layoutY="20"/>
 
+    <!-- 팀 선택 콤보박스 -->
+    <ComboBox fx:id="teamComboBox"
+              layoutX="250"
+              layoutY="50"
+              prefWidth="150"/>
 
+    <!-- 팀원 선택과 선택된 멤버를 가로 배치 -->
+    <HBox layoutX="250" layoutY="100" spacing="20">
 
-        <Label text="팀원 선택"/>
+        <!-- 팀원 선택 ScrollPane -->
+        <VBox spacing="10">
+            <Label text="팀원 선택"/>
+            <ScrollPane prefHeight="200" prefWidth="230" fitToWidth="true">
+                <content>
+                    <VBox fx:id="memberListContainer" spacing="5"/>
+                </content>
+            </ScrollPane>
+        </VBox>
 
-        <!-- 동적 리스트 표시 -->
-        <VBox fx:id="memberListContainer" spacing="5"/>
+        <!-- 선택된 멤버 ListView -->
+        <VBox spacing="10">
+            <Label text="선택된 멤버"/>
+            <ListView fx:id="selectedListView" prefWidth="200" prefHeight="200"/>
+        </VBox>
+    </HBox>
 
-        <Label text="선택된 멤버:"/>
-        <ListView fx:id="selectedListView" prefHeight="150"/>
-    </VBox>
-
-
-
+    <!-- 팀 생성 버튼 -->
+    <Button text="팀 생성"
+            fx:id="createTeamButton"
+            layoutX="250"
+            layoutY="350"
+            prefWidth="100"
+            onAction="#createTeamButtonClick"/>
 </AnchorPane>
