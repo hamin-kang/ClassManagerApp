@@ -3,5 +3,6 @@ package com.kosa.classmanagerapp.model.attendance;
 public enum Status {
     PRESENT,
     ABSENT,
-    LATE
+    LATE,
+    LEAVE_EARLY
 }

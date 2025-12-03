@@ -52,10 +52,15 @@ public class MainController {
             }
         }
     }
-    public void loadView(String path) throws IOException {
-        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(path));
-        Parent view = loader.load();
-        contentArea.getChildren().setAll(view);
+
+    public void loadView(String path) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(path));
+            Parent view = loader.load();
+            contentArea.getChildren().setAll(view);
+        } catch (Exception e) {
+            System.err.println("FXML 로딩 실패: " + e.getMessage());
+        }
     }
 
     public void setContent(Parent root) {
