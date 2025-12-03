@@ -8,4 +8,6 @@ public interface UserMapper {
     User findByUserName(String userName);
     // 회원가입 용 INSERT 메소드
     int save(User user);
+    int updateTeam(User user);
+
 }

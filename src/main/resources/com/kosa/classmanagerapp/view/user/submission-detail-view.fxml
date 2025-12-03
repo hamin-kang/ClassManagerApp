@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.kosa.classmanagerapp.controller.SubmissionDetailController"
+      spacing="15" style="-fx-padding: 20;">
+
+    <!-- 상단 제목 + 마감날짜 -->
+    <HBox spacing="20" alignment="CENTER_LEFT">
+        <Label fx:id="titleLabel"
+               style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+        <Label fx:id="deadlineLabel"
+               style="-fx-font-size: 16; -fx-text-fill: #555;"/>
+    </HBox>
+
+    <!-- WebView 에디터 -->
+    <WebView fx:id="editorWebView" prefHeight="600"/>
+
+    <!-- 제출 버튼 -->
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="제출"
+                fx:id="submitButton"
+                onAction="#handleSubmit"
+                styleClass="black-button"/>
+    </HBox>
+
+</VBox>
