@@ -1,6 +1,6 @@
 package com.kosa.classmanagerapp.service;
 
-import com.kosa.classmanagerapp.model.User;
+import com.kosa.classmanagerapp.model.entity.User;
 
 public class SessionService {
     private static User currentUser;

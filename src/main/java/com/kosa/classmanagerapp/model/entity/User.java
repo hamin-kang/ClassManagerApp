@@ -1,4 +1,4 @@
-package com.kosa.classmanagerapp.model;
+package com.kosa.classmanagerapp.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

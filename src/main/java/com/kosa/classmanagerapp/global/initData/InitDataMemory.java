@@ -3,6 +3,8 @@ package com.kosa.classmanagerapp.global.initData;
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
