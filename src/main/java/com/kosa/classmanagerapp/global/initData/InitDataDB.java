@@ -7,10 +7,11 @@ import com.kosa.classmanagerapp.model.assignment.AssignmentType;
 import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.service.*;
+import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import com.kosa.classmanagerapp.service.auth.UserService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime ;
+import java.time.LocalDateTime;
 
 public class InitDataDB {
 
@@ -20,20 +21,20 @@ public class InitDataDB {
     private final AssignmentService assignmentService = AppContext.ASSIGNMENT_SERVICE;
     private final SubmissionService submissionService = AppContext.SUBMISSION_SERVICE;
 
-
-    // 실행 시 전체 초기 데이터 넣는 메서드
     public void initAll() {
         createDummyProjects();
-//        createDummyUsers();
         createDummyTeams();
         updateDummyUsers();
 
         createDummyAssignments();
         createDummySubmissions();
-        System.out.println("==== InitDataDB: 전체 더미 데이터 DB에 삽입 완료 ====");
+
+        System.out.println("==== InitDataDB: 전체 더미 데이터 DB 삽입 완료 ====");
     }
 
-    // 1) 프로젝트
+    // -----------------------------
+    // 1) 프로젝트 생성
+    // -----------------------------
     public void createDummyProjects() {
         Project p1 = Project.builder()
                 .projectName("1차프로젝트")
@@ -42,7 +43,9 @@ public class InitDataDB {
         projectService.save(p1);
     }
 
-    // 2) 팀
+    // -----------------------------
+    // 2) 팀 생성 (1팀, 2팀)
+    // -----------------------------
     public void createDummyTeams() {
 
         Team team1 = Team.builder()
@@ -55,56 +58,34 @@ public class InitDataDB {
                 .projectId(1L)
                 .build();
 
-        int result1 =  teamService.save(team1);
-        int result2 = teamService.save(team2);
-        System.out.println("InitDataDB::createDummyTeams " + result1);
-        System.out.println("InitDataDB::createDummyTeams " + result2);
+        teamService.save(team1);
+        teamService.save(team2);
     }
 
-    // 3) 유저
-    public void createDummyUsers() {
-//
-//        // admin
-//        User admin = new User();
-//        admin.setId(1L);
-//        admin.setUserName("admin");
-//        admin.setBirthday(LocalDateTime .now());
-//        admin.setAuthorization(UserAuthorization.ADMIN);
-//        userService.save(admin);
-//
-//        // 일반 유저 4명
-//        for (long i = 2; i <= 5; i++) {
-//            User user = new User();
-//            user.setId(i);
-//            user.setUserName("user" + (i - 1));
-//            user.setBirthday(LocalDateTime .now());
-//            user.setAuthorization(UserAuthorization.USER);
-//
-//            userService.save(user);
-//        }
-    }
-    //user 팀 할당
+    // -----------------------------
+    // 3) 유저 팀 배정
+    // -----------------------------
     public void updateDummyUsers() {
 
         for (long i = 2; i <= 5; i++) {
+
             User user = new User();
             user.setId(i);
             user.setUserName("user" + (i - 1));
             user.setBirthday(LocalDate.now());
             user.setAuthorization(UserAuthorization.USER);
 
-            // 팀 배정 로직
-            if (i == 2 || i == 3) {
-                user.setTeamId(1L);
-            } else {
-                user.setTeamId(2L);
-            }
+            // 2번, 3번 → 1팀 / 4번, 5번 → 2팀
+            long teamId = (i <= 3) ? 1L : 2L;
+            user.setTeamId(teamId);
 
-            int result = userService.updateTeam(user);
-            System.out.println("InitDataDB::updateDummyUser " + i + " " +result);
+            userService.updateTeam(user);
         }
     }
-    // 4) 과제
+
+    // -----------------------------
+    // 4) 과제 생성 (개인 2개, 팀 2개)
+    // -----------------------------
     public void createDummyAssignments() {
 
         Assignment a1 = Assignment.builder()
@@ -113,73 +94,88 @@ public class InitDataDB {
                 .creatorId(1L)
                 .assignmentType(AssignmentType.INDIVIDUAL)
                 .isClose(true)
-                .dueDate(LocalDateTime .now().plusDays(3))
+                .dueDate(LocalDateTime.now().plusDays(3))
                 .build();
+
         Assignment a2 = Assignment.builder()
                 .title("개인 과제 2")
                 .content("개인 과제 2 내용")
                 .creatorId(1L)
                 .assignmentType(AssignmentType.INDIVIDUAL)
                 .isClose(false)
-                .dueDate(LocalDateTime .now().plusDays(3))
+                .dueDate(LocalDateTime.now().plusDays(3))
                 .build();
+
         Assignment a3 = Assignment.builder()
                 .title("팀 과제 1")
                 .content("팀 과제 1 내용")
                 .creatorId(1L)
+                .presentationOrderTeamId("1,2")
                 .assignmentType(AssignmentType.TEAM)
                 .isClose(true)
-                .presentationOrderTeamId("1,2")
-                .dueDate(LocalDateTime .now().plusDays(7))
+                .dueDate(LocalDateTime.now().plusDays(7))
                 .build();
+
         Assignment a4 = Assignment.builder()
                 .title("팀 과제 2")
                 .content("팀 과제 2 내용")
                 .creatorId(1L)
+                .presentationOrderTeamId("1,2")
                 .assignmentType(AssignmentType.TEAM)
                 .isClose(false)
-                .presentationOrderTeamId("1,2")
-                .dueDate(LocalDateTime .now().plusDays(7))
+                .dueDate(LocalDateTime.now().plusDays(7))
                 .build();
 
         assignmentService.save(a1);
         assignmentService.save(a2);
         assignmentService.save(a3);
         assignmentService.save(a4);
-
     }
 
-    // 5) 제출물
+    // -----------------------------
+    // 5) 제출물 생성
+    // -----------------------------
     public void createDummySubmissions() {
 
-        // 개인 과제 (assignmentId = 1)
-        Submission user1 = new Submission.Builder()
-                .assignmentId(1L)
-                .submitterUserId(2L)
-                .content("개인 과제 1 제출 - user1" )
-                .submittedAt(LocalDateTime .now())
-                .build();
+        // ---------- 개인 과제 ----------
+        createPersonalSubmission(1L);
+        createPersonalSubmission(2L);
 
-        Submission user3 = new Submission.Builder()
-                .assignmentId(1L)
-                .submitterUserId(4L)
-                .content("개인 과제 1 제출 - user3" )
-                .submittedAt(LocalDateTime .now())
-                .build();
+        // ---------- 팀 과제 ----------
+        createTeamSubmission(3L);  // 팀 과제 1
+        createTeamSubmission(4L);  // 팀 과제 2
+    }
 
-        submissionService.save(user1);
-        submissionService.save(user3);
+    // 개인 과제 제출물 생성
+    private void createPersonalSubmission(Long assignmentId) {
+        for (long userId = 2; userId <= 5; userId++) {
+            Submission submission = new Submission.Builder()
+                    .assignmentId(assignmentId)
+                    .submitterUserId(userId)
+                    .isSubmitted(false)
+                    .build();
 
+            submissionService.save(submission);
+        }
+    }
 
-        // 팀과제 (assignmentId = 3)
-        Submission team1 = new Submission.Builder()
-                .assignmentId(3L)
-                .submitterUserId(2L)
-                .content("팀1 팀 과제 제출본")
+    // 팀 과제 제출물 생성 (팀당 1개만)
+    private void createTeamSubmission(Long assignmentId) {
+
+        // 팀 1
+        Submission s1 = new Submission.Builder()
+                .assignmentId(assignmentId)
                 .teamId(1L)
-                .submittedAt(LocalDateTime .now())
+                .isSubmitted(false)
                 .build();
+        submissionService.save(s1);
 
-        submissionService.save(team1);
+        // 팀 2
+        Submission s2 = new Submission.Builder()
+                .assignmentId(assignmentId)
+                .teamId(2L)
+                .isSubmitted(false)
+                .build();
+        submissionService.save(s2);
     }
 }

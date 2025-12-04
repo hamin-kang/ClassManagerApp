@@ -10,7 +10,6 @@ module com.kosa.classmanagerapp {
     requires javafx.base;
     requires mysql.connector.j;
 
-
     requires javafx.web;
     requires jdk.jsobject;
 
@@ -22,15 +21,16 @@ module com.kosa.classmanagerapp {
     opens com.kosa.classmanagerapp.controller.admin to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.dao to org.mybatis;
     opens com.kosa.classmanagerapp.util.Toast to javafx.fxml;
-    opens com.kosa.classmanagerapp.model.dto;
+    opens com.kosa.classmanagerapp.model.dto.submission;
 
     exports com.kosa.classmanagerapp;
     exports com.kosa.classmanagerapp.controller;
-    exports com.kosa.classmanagerapp.model.dto;
     exports com.kosa.classmanagerapp.model.entity;
 
     opens com.kosa.classmanagerapp.model.assignment to javafx.fxml, org.mybatis;
     opens com.kosa.classmanagerapp.model.attendance to javafx.fxml, org.mybatis, javafx.base;
     opens com.kosa.classmanagerapp.model.entity to javafx.fxml, org.mybatis;
+    exports com.kosa.classmanagerapp.model.dto.submission;
+    opens com.kosa.classmanagerapp.dao.submission to org.mybatis;
 
 }

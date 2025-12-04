@@ -1,7 +1,6 @@
 package com.kosa.classmanagerapp.service;
 
 import com.kosa.classmanagerapp.dao.NoticeMapper;
-import com.kosa.classmanagerapp.dao.SubmissionMapper;
 import com.kosa.classmanagerapp.model.Notice;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.session.SqlSession;
