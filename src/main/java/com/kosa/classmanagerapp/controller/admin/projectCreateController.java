@@ -5,6 +5,7 @@ import com.kosa.classmanagerapp.controller.MainController;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
 import com.kosa.classmanagerapp.service.AssignmentService;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class projectCreateController {
     public TextArea adminTextArea;
@@ -22,8 +24,20 @@ public class projectCreateController {
     public CheckBox assignmentType_person;
     public DatePicker dueDate;
 
+    // 과제 insert
+  //  @FXML private ComboBox<String> taskComboBox; // 과제 드롭다운
+    @FXML private TableView<Assignment> TaskTable;
+    @FXML private TableColumn<Assignment, Integer> colId;
+    @FXML private TableColumn<Assignment, String> colTitle;
+    @FXML private TableColumn<Assignment, String> colContent;
+    @FXML private TableColumn<Assignment, String> colType;
+    @FXML private TableColumn<Assignment, String> colDueDate;
 
-    // 버튼 클릭 시 호출
+
+    private final AssignmentService assignmentService = new AssignmentService();
+
+
+    // 과제 생성 (insert)
     @FXML
     private void handleFetchAssignment() {
         String title = title_admin.getText();
@@ -59,8 +73,9 @@ public class projectCreateController {
 
     }
 
+    //과제 드롭다운
     @FXML
-    private ComboBox<String> taskComboBox; //과제 드롭다운
+    private ComboBox<String> taskComboBox;
     private void TaskList() {
         // 실제로 팀을 DB나 서비스에서 가져오는 것처럼 구성 가능
         // 여기서는 예제로 1~5팀 추가
@@ -72,9 +87,30 @@ public class projectCreateController {
         taskComboBox.getSelectionModel().selectFirst();
     }
 
+
+    // 실행
     @FXML
-    public void initialize() { // 드롭다운
-        TaskList();
+    public void initialize() {
+        // TableView 컬럼 연결
+        colId.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getIdInt()));
+        colTitle.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getTitle()));
+        colContent.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getContent()));
+        colType.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(data.getValue().getAssignmentType().name()));
+        colDueDate.setCellValueFactory(data -> new ReadOnlyObjectWrapper<>(
+                data.getValue().getDueDate() != null ? data.getValue().getDueDate().toString() : ""
+        ));
+
+        loadAssignments(); // DB에서 과제 불러오기
+        TaskList();       // 드롭다운 초기화
+
 
     }
+
+    // 과제 끌고오기 (select)
+    private void loadAssignments() {
+        List<Assignment> assignments = assignmentService.findAll();
+        TaskTable.getItems().setAll(assignments);
+    }
+
+
 }

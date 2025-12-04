@@ -36,7 +36,7 @@ public class Assignment extends BaseEntity {
 
     // Getter / Setter (필요한 것만 골라서 써도 됨)
 
-    public Long getId() { return (long) id; }
+    public  Long getId() { return (long) id; }
     public void setId(int id) { this.id = id; }
 
     public String getTitle() {

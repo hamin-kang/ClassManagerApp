@@ -10,4 +10,6 @@ public interface AssignmentMapper {
     void updatePresentationOrder(@Param("id") Long id, @Param("orderString") String orderString);
     List<Assignment> findAll();
 
+    int insertAssignment(Assignment assignment);
+    List<Assignment> findAllAssignments();
 }
