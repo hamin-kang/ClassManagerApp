@@ -24,12 +24,6 @@
         SELECT * FROM assignment
     </select>
 
-<!--    <insert id="save" parameterType="com.kosa.classmanagerapp.model.assignment">-->
-<!--        INSERT INTO assignment-->
-<!--            (title, content, creator_id, assignment_type, is_close, due_date)-->
-<!--        VALUES-->
-<!--            (#{title}, #{content}, #{creatorId}, #{assignmentType}, #{isClose}, #{dueDate})-->
-<!--    </insert>-->
 
 
 </mapper>
