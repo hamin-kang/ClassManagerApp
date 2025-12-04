@@ -126,4 +126,14 @@ public class UserService {
             }
         }
     }
+
+    public int updateUserTeam(Long userId, int teamId) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            int result = mapper.updateUserTeam(userId, teamId);
+            session.commit();
+            return result;
+        }
+    }
+
 }

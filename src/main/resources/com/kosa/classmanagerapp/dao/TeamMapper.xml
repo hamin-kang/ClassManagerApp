@@ -41,4 +41,18 @@
     </update>
 
 
+    <!-- 팀 존재 여부 체크   -->
+    <select id="existsTeam" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM team
+        WHERE id = #{id}
+    </select>
+
+<!--  team테이블에 팀id가 없으면 insert  -->
+
+    <insert id="insertTeamMember" parameterType="Team" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO team (team_name, project_id, created_at)
+        VALUES (#{teamName}, 1, NOW())
+    </insert>
+
 </mapper>

@@ -55,9 +55,31 @@ public class TeamService {
             session.commit();
             return result;
         }
+    } // end updateTeamMember
 
+    // team update or insert
+    public int saveOrUpdateTeamMember(Team team) {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
 
+            TeamMapper mapper = session.getMapper(TeamMapper.class);
+
+            // teamId 존재 여부 체크
+            int exists = mapper.existsTeam(team.getIdInt());
+
+            int result;
+            if (exists > 0) {
+                // UPDATE
+                result = mapper.updateTeamMember(team);
+            } else {
+                // INSERT
+                result = mapper.insertTeamMember(team);
+            }
+
+            session.commit();
+            return result;
+        }
     }
+
 }
 
 
