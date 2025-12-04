@@ -2,12 +2,14 @@ package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.model.Notice;
+import com.kosa.classmanagerapp.model.dto.auth.ChangePasswordRequest;
 import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
 import com.kosa.classmanagerapp.service.NoticeService;
 import com.kosa.classmanagerapp.service.SessionService;
 import com.kosa.classmanagerapp.service.SubmissionService;
 
+import com.kosa.classmanagerapp.service.auth.UserService;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,18 +19,22 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class UserController {
 
     SubmissionService submissionService = new SubmissionService();
     NoticeService NoticeService = new NoticeService();
+    private final UserService userService = new UserService();
+
+    @FXML private Label welcomeLabel;
     @FXML private ListView<Notice> noticeListView;
     @FXML private TableView<SubmissionStatusResponse> individualTaskTable;
     @FXML private TableView<SubmissionStatusResponse> teamTaskTable;
@@ -49,6 +55,10 @@ public class UserController {
 
     @FXML
     public void initialize() throws Exception {
+        User user = SessionService.getUser();
+        if (user != null && welcomeLabel != null) {
+            welcomeLabel.setText(user.getFullName() + "님");
+        }
         loadNoticeList();
         setupIndividualTableColumns();
         setupTeamTableColumns();
@@ -207,4 +217,97 @@ public class UserController {
     private void loadNoticeList() {
         List<Notice> notices = NoticeService.findAll();
         noticeListView.getItems().setAll(notices);
-    }}
+    }
+
+    @FXML
+    protected void onChangePasswordClick() {
+        User user = SessionService.getUser();
+        if (user == null) return;
+
+        // 다이얼로그 생성
+        Dialog<PasswordForm> dialog = new Dialog<>(); // 아래에 정의할 내부 클래스(Record) 사용
+        dialog.setTitle("비밀번호 변경");
+        dialog.setHeaderText("보안을 위해 현재 비밀번호와 새 비밀번호를 입력해주세요.");
+
+        // 버튼 타입 설정
+        ButtonType changeButtonType = new ButtonType("변경", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(changeButtonType, ButtonType.CANCEL);
+
+        // 그리드 레이아웃 및 입력 필드 3개 생성
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));
+
+        PasswordField oldPasswordField = new PasswordField();
+        oldPasswordField.setPromptText("현재 비밀번호");
+
+        PasswordField newPasswordField = new PasswordField();
+        newPasswordField.setPromptText("새로운 비밀번호");
+
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("새로운 비밀번호 확인");
+
+        grid.add(new Label("현재 비밀번호:"), 0, 0);
+        grid.add(oldPasswordField, 1, 0);
+        grid.add(new Label("새 비밀번호:"), 0, 1);
+        grid.add(newPasswordField, 1, 1);
+        grid.add(new Label("비밀번호 확인:"), 0, 2);
+        grid.add(confirmPasswordField, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // 결과 컨버터 (입력된 3개의 값을 묶어서 반환)
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == changeButtonType) {
+                return new PasswordForm(
+                        oldPasswordField.getText(),
+                        newPasswordField.getText(),
+                        confirmPasswordField.getText()
+                );
+            }
+            return null;
+        });
+
+        // 다이얼로그 실행 및 검증 로직
+        Optional<PasswordForm> result = dialog.showAndWait();
+
+        result.ifPresent(form -> {
+            // (1) 빈 값 검사
+            if (form.oldPw.isEmpty() || form.newPw.isEmpty() || form.confirmPw.isEmpty()) {
+                showAlert("오류", "모든 항목을 입력해주세요.");
+                return;
+            }
+
+            // (2) 새 비밀번호 일치 여부 검사
+            if (!form.newPw.equals(form.confirmPw)) {
+                showAlert("오류", "새 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+                return; // 여기서 중단 (서비스 호출 안 함)
+            }
+
+            // (3) 서비스 호출 (검증 통과 시 실행)
+            try {
+                // DTO 생성 (확인용 비번은 서비스에 보낼 필요 없음)
+                ChangePasswordRequest request = new ChangePasswordRequest(user.getId(), form.oldPw, form.newPw);
+
+                userService.changePassword(request);
+                showAlert("성공", "비밀번호가 성공적으로 변경되었습니다.");
+
+            } catch (Exception e) {
+                // 기존 비밀번호 불일치 등의 에러 처리
+                showAlert("변경 실패: ", e.getMessage());
+            }
+        });
+    }
+    // 다이얼로그 데이터를 전달하기 위한 임시 Record (클래스 내부에 작성)
+    private record PasswordForm(String oldPw, String newPw, String confirmPw) {}
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+}

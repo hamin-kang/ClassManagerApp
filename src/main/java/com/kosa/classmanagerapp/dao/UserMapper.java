@@ -7,6 +7,9 @@ import java.util.List;
 
 // DB에 접근할 메소드를 정의하는 인터페이스
 public interface UserMapper {
+    // 비밀번호 변경
+    int updatePassword(@org.apache.ibatis.annotations.Param("id") Long id,
+                        @org.apache.ibatis.annotations.Param("passwordHash") String passwordHash);
     // 아이디로 회원 정보 조회
     User findByUserName(String userName);
     // 회원가입 용 INSERT 메소드
@@ -20,4 +23,5 @@ public interface UserMapper {
 
     int updateUserTeam(@Param("userId") Long userId, @Param("teamId") int teamId);
 
+    User findUserById(@org.apache.ibatis.annotations.Param("id") Long id);
 }

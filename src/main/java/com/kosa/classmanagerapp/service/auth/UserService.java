@@ -1,12 +1,14 @@
 package com.kosa.classmanagerapp.service.auth;
 
 import com.kosa.classmanagerapp.dao.UserMapper;
+import com.kosa.classmanagerapp.model.dto.auth.ChangePasswordRequest;
 import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.global.initData.InitDataMemory;
 import com.kosa.classmanagerapp.model.dto.auth.SignupRequest;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.jdbc.SqlRunner;
 import org.apache.ibatis.session.SqlSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,13 +82,48 @@ public class UserService {
     }
 
 
-    public User findUserById(long userId) {
-        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+    public void changePassword(ChangePasswordRequest request) throws Exception {
+        // SqlSession 을 수동으로 관리
+        SqlSession session = null;
+        try {
+            // openSession()을 호출하면 기본적으로 auto-commit=false (수동 커밋)로 열림
+            session = SqlSessionManager.getSqlSessionFactory().openSession();
+
             UserMapper mapper = session.getMapper(UserMapper.class);
-            return mapper.findUserById(userId); // Mapper 인터페이스 사용
+
+            // DB 에서 현재 유저 정보 조회 및 검증 로직
+            User user = mapper.findUserById(request.getId());
+            if (user == null || user.getPasswordHash() == null) {
+                throw new Exception("사용자 비밀번호 정보를 찾을 수 없습니다. (DB 오류)");
+            }
+
+            if (!BCrypt.checkpw(request.getOldPassword(), user.getPasswordHash())) {
+                throw new Exception("현재 비밀번호가 일치하지 않습니다.");
+            }
+
+            // 새 비밀번호 암호화 및 업데이트
+            String newHash = AuthService.hashPassword(request.getNewPassword());
+            int rowsAffected = mapper.updatePassword(user.getId(), newHash);
+
+            if (rowsAffected == 0) {
+                // 이 예외는 WHERE id=#{id}가 유저를 찾지 못했다는 뜻입니다.
+                throw new Exception("비밀번호 변경 실패: 데이터베이스에 사용자 정보가 없거나 ID 오류입니다.");
+            }
+
+            // UPDATE 쿼리가 성공적으로 실행된 후, DB에 영구적으로 저장합니다.
+            session.commit();
+
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            // 오류 발생 시 롤백 (변경 사항 취소)
+            if (session != null) {
+                session.rollback();
+            }
+            throw e; // Controller 로 예외를 다시 던져서 사용자에게 실패를 알립니다.
+        } finally {
+            // 세션 닫기
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
