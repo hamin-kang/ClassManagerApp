@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosa.classmanagerapp.dao.submission.SubmissionContentMapper">
+    <insert id="save" parameterType="SubmissionContent">
+        INSERT INTO submission_content (
+        submission_id,
+        content
+        )
+        VALUES (
+        #{submissionId},
+        #{content}
+        )
+    </insert>
+    <select id="findBySubmissionId" parameterType="Long" resultType="SubmissionContent">
+        SELECT *
+        FROM submission_content
+        WHERE submission_id = #{submissionId}
+    </select>
+    <select id="findById" parameterType="Long" resultType="SubmissionContent">
+        SELECT *
+        FROM submission_content
+        WHERE id = #{id}
+    </select>
+    <update id="update" parameterType="SubmissionContent">
+        UPDATE submission_content
+        SET
+        content = #{content}
+        WHERE id = #{id}
+    </update>
+</mapper>

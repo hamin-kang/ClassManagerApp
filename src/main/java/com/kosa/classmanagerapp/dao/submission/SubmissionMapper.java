@@ -1,7 +1,8 @@
-package com.kosa.classmanagerapp.dao;
+package com.kosa.classmanagerapp.dao.submission;
 
 import com.kosa.classmanagerapp.model.Submission;
-import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
+import com.kosa.classmanagerapp.model.dto.submission.SubmissionRequest;
+import com.kosa.classmanagerapp.model.dto.submission.SubmissionStatusResponse;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface SubmissionMapper {
     List<SubmissionStatusResponse> findByUserIdIndividualSubmissions(Long userId);
     List<SubmissionStatusResponse> findByUserIdTeamSubmissions(Long userId);
     int save(Submission submission);
-    int update(Submission submission);
+    int update(SubmissionRequest submission);
 }

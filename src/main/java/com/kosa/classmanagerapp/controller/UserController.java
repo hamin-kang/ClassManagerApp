@@ -4,10 +4,10 @@ import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.model.Notice;
 import com.kosa.classmanagerapp.model.dto.auth.ChangePasswordRequest;
 import com.kosa.classmanagerapp.model.entity.User;
-import com.kosa.classmanagerapp.model.dto.SubmissionStatusResponse;
+import com.kosa.classmanagerapp.model.dto.submission.SubmissionStatusResponse;
 import com.kosa.classmanagerapp.service.NoticeService;
 import com.kosa.classmanagerapp.service.SessionService;
-import com.kosa.classmanagerapp.service.SubmissionService;
+import com.kosa.classmanagerapp.service.submission.SubmissionService;
 
 import com.kosa.classmanagerapp.service.auth.UserService;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -104,11 +104,9 @@ public class UserController {
 
     @FXML
     protected void setupIndividualTableColumns() {
-
-        colIndividualSubmitted.setCellValueFactory(cellData -> {
-            SubmissionStatusResponse s = cellData.getValue();
-            return new SimpleBooleanProperty(s.isSubmitted());
-        });
+        colIndividualSubmitted.setCellValueFactory(cellData ->
+                new SimpleBooleanProperty(Boolean.TRUE.equals(cellData.getValue().isSubmitted()))
+        );
         colIndividualSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colIndividualSubmitted));
 
         colIndividualTitle.setCellValueFactory(cell ->
@@ -116,7 +114,7 @@ public class UserController {
         );
 
         colIndividualDate.setCellValueFactory(cell -> {
-            LocalDate dt = cell.getValue().dueDate();
+            LocalDate dt = LocalDate.from(cell.getValue().dueDate());
             return new SimpleObjectProperty<>(dt);
         });
         applyIndividualColumnResizePolicy();
@@ -153,10 +151,9 @@ public class UserController {
     }
     @FXML
     protected void setupTeamTableColumns() {
-        colTeamSubmitted.setCellValueFactory(cellData -> {
-            SubmissionStatusResponse s = cellData.getValue();
-            return new SimpleBooleanProperty(s.isSubmitted());
-        });
+        colTeamSubmitted.setCellValueFactory(cellData ->
+                new SimpleBooleanProperty(Boolean.TRUE.equals(cellData.getValue().isSubmitted()))
+        );
         colTeamSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colTeamSubmitted));
 
         colTeamTitle.setCellValueFactory(cell ->
@@ -164,7 +161,7 @@ public class UserController {
         );
 
         colTeamDate.setCellValueFactory(cell -> {
-            LocalDate dt = cell.getValue().dueDate();
+            LocalDate dt = LocalDate.from(cell.getValue().dueDate());
             return new SimpleObjectProperty<>(dt);
         });
         applyTeamColumnResizePolicy();
@@ -172,7 +169,6 @@ public class UserController {
         teamTaskTable.setItems(teamTaskItems);
     }
     private void loadIndividualTableData() {
-        System.out.println("***Load Individual***");
         User user = SessionService.getUser();
         if (user == null) {
             individualTaskItems.clear();

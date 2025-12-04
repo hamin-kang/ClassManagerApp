@@ -3,15 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kosa.classmanagerapp.dao.SubmissionMapper">
+<mapper namespace="com.kosa.classmanagerapp.dao.submission.SubmissionMapper">
+    <resultMap id="SubmissionRequestMap" type="SubmissionRequest">
+        <constructor>
+            <idArg column="submission_id" javaType="Long"/>
+            <arg column="assignment_id" javaType="Long"/>
+            <arg column="user_id" javaType="Long"/>
+            <arg column="team_id" javaType="Long"/>
+            <arg column="is_submitted" javaType="Boolean"/>
+            <arg column="content" javaType="String"/>
+        </constructor>
+    </resultMap>
     <resultMap id="SubmissionStatusMap" type="SubmissionStatusResponse">
         <constructor>
-            <idArg column="submitted_id" javaType="Long"/>
+            <idArg column="submission_id" javaType="Long"/>
             <arg column="assignment_id" javaType="Long"/>
+            <arg column="submitter_user_id" javaType="Long"/>
             <arg column="team_id" javaType="Long"/>
-            <arg column="submitted" javaType="Boolean"/>
+            <arg column="is_submitted" javaType="Boolean"/>
             <arg column="assignment_name" javaType="String"/>
-            <arg column="due_date" javaType="LocalDate"/>
+            <arg column="due_date" javaType="LocalDateTime"/>
             <arg column="is_close" javaType="Boolean"/>
         </constructor>
     </resultMap>
@@ -20,17 +31,16 @@
         assignment_id,
         submitter_user_id,
         team_id,
-        content,
-        submitted_at
+        is_submitted
         )
         VALUES (
         #{assignmentId},
         #{submitterUserId},
         #{teamId},
-        #{content},
-        #{submittedAt}
+        COALESCE(#{isSubmitted}, false)
         )
     </insert>
+
     <select id="findById" parameterType="Long" resultType="Submission">
         SELECT *
         FROM submission
@@ -43,47 +53,41 @@
     </select>
     <select id="findByUserIdIndividualSubmissions" parameterType="Long" resultMap="SubmissionStatusMap">
         SELECT
-            s.id AS submitted_id,
+            s.id AS submission_id,
             a.id AS assignment_id,
+            s.submitter_user_id AS submitter_user_id,
             s.team_id AS team_id,
-            CASE
-                WHEN s.id IS NULL THEN FALSE
-                ELSE TRUE
-            END AS submitted,
+            s.is_submitted AS is_submitted,
             a.title AS assignment_name,
-            a.due_date,
-            a.is_close as is_close
+            a.due_date AS due_date,
+            a.is_close AS is_close
         FROM assignment a
         LEFT JOIN submission s
             ON s.assignment_id = a.id
             AND s.submitter_user_id = #{userId}
-        WHERE a.assignment_type = 'INDIVIDUAL'
+        WHERE a.assignment_type = 'INDIVIDUAL';
     </select>
     <select id="findByUserIdTeamSubmissions" parameterType="Long" resultMap="SubmissionStatusMap">
         SELECT
-            s.id AS submitted_id,
-            a.id AS assignment_id,
-            s.team_id AS team_id,
-        CASE
-            WHEN s.id IS NULL THEN FALSE
-            ELSE TRUE
-        END AS submitted,
-            a.title AS assignment_name,
-            a.due_date,
-            a.is_close as is_close
+        s.id AS submission_id,
+        a.id AS assignment_id,
+        s.submitter_user_id AS submitter_user_id,
+        s.team_id AS team_id,
+        s.is_submitted AS is_submitted,
+        a.title AS assignment_name,
+        a.due_date AS due_date,
+        a.is_close AS is_close
         FROM assignment a
-        JOIN user u ON u.id = #{userId}
         LEFT JOIN submission s
         ON s.assignment_id = a.id
-        AND s.team_id = u.team_id
+        AND s.team_id = (SELECT team_id FROM user WHERE id = #{userId})
         WHERE a.assignment_type = 'TEAM';
     </select>
-    <update id="update" parameterType="Submission">
+    <update id="update" parameterType="SubmissionRequest">
         UPDATE submission
         SET
-        content = #{content},
-        submitted_at = NOW()
-        WHERE submitter_user_id = #{submitterUserId}
-        AND assignment_id = #{assignmentId}
+            is_submitted = #{isSubmitted},
+            submitter_user_id = #{userId}
+        WHERE id = #{submissionId}
     </update>
 </mapper>

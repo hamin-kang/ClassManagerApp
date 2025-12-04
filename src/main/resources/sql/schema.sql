@@ -3,21 +3,22 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- 1. project
 CREATE TABLE `project` (
    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `project_name` VARCHAR(50) NOT NULL
+   `project_name` VARCHAR(50) NOT NULL,
+   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 2. user
 CREATE TABLE `user` (
     `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `user_name` VARCHAR(100) NOT NULL UNIQUE, -- 이메일 등을 고려해 길이 확장
+    `user_name` VARCHAR(100) NOT NULL UNIQUE,
     `password_hash` VARCHAR(255) NOT NULL,
     `full_name` VARCHAR(100) NOT NULL,
     `team_id` BIGINT,
     `birthday` DATE,
     `authorization` ENUM('ADMIN', 'USER') NOT NULL DEFAULT 'USER',
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    -- 팀이 삭제되면 유저의 team_id는 NULL 로 변경 (팀원은 남음)
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`team_id`) REFERENCES `team`(`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -27,9 +28,8 @@ CREATE TABLE `team` (
     `team_name` VARCHAR(50) NOT NULL,
     `project_id` BIGINT NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`project_id`) REFERENCES `project`(`id`)
-    -- 리더가 삭제된다고 팀이 삭제되는 것은 위험할 수 있으므로 ON DELETE 제약조건 신중히 결정
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 4. assignment
@@ -41,9 +41,9 @@ CREATE TABLE `assignment` (
     `assignment_type` ENUM('INDIVIDUAL', 'TEAM') NOT NULL,
     `is_close` BOOLEAN DEFAULT FALSE,
     `due_date` DATETIME NOT NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `presentation_order_team_id` TEXT,
-
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`creator_id`) REFERENCES `user`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -51,31 +51,44 @@ CREATE TABLE `assignment` (
 CREATE TABLE `submission` (
     `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `assignment_id` BIGINT NOT NULL,
-    `submitter_user_id` BIGINT NOT NULL,
-    `team_id` BIGINT, -- 팀 과제일 경우 어느 팀의 제출인지 기록 (팀 변경 이력 문제 해결)
-    `content` TEXT NOT NULL,
-    `submitted_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
+    `submitter_user_id` BIGINT,
+    `team_id` BIGINT,
+    `is_submitted` BOOLEAN NOT NULL DEFAULT false,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`assignment_id`) REFERENCES `assignment`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`submitter_user_id`) REFERENCES `user`(`id`),
     FOREIGN KEY (`team_id`) REFERENCES `team`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 6. attendance
+-- 6. submission_content
+CREATE TABLE `submission_content` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `submission_id` BIGINT NOT NULL UNIQUE,
+    `content` TEXT NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`submission_id`) REFERENCES `submission`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 7. attendance
 CREATE TABLE `attendance` (
     `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user_id` BIGINT NOT NULL,
     `session_date` DATE NOT NULL,
-    `status` ENUM('PRESENT', 'ABSENT', 'LATE', 'LEAVE_EARLY') NOT NULL, -- 조퇴 추가 고려
+    `status` ENUM('PRESENT', 'ABSENT', 'LATE', 'LEAVE_EARLY') NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE,
-    -- 한 유저가 같은 날짜에 중복 출석 데이터가 생기지 않도록 유니크 제약 조건 추가 권장
     UNIQUE KEY `unique_attendance` (`user_id`, `session_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 7. notice
+-- 8. notice
 CREATE TABLE `notice` (
     `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `content` TEXT NOT NULL
+    `content` TEXT NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 SET FOREIGN_KEY_CHECKS = 1;

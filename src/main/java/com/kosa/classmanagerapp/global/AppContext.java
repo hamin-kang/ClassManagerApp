@@ -1,6 +1,7 @@
 package com.kosa.classmanagerapp.global;
 
 import com.kosa.classmanagerapp.service.*;
+import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import com.kosa.classmanagerapp.service.auth.UserService;
 
 public class AppContext {
