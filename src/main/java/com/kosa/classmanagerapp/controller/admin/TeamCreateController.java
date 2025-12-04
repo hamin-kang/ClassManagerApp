@@ -22,10 +22,10 @@ public class TeamCreateController {
 
     @FXML private VBox memberListContainer;
     @FXML private ListView<String> selectedListView;
-    @FXML
-    private ComboBox<String> teamComboBox;
+    @FXML private ComboBox<String> teamComboBox;
 
     private final UserService userService = new UserService();
+
 
 
     @FXML
@@ -139,20 +139,46 @@ public class TeamCreateController {
         TeamService teamService = new TeamService();
 
         // 4. 팀 업데이트 (각 유저의 teamId를 선택된 팀으로 업데이트)
+//        int updateCount = 0;
+//        for (Long userId : selectedUserIds) {
+//            try {
+//                Team team = new Team();
+//                team.setIdInt(teamId);      // 팀 ID
+//                team.setUserId(userId);
+//                team.setTeamName(team_name);// User ID
+//                updateCount += teamService.updateTeamMember(team);
+//                System.out.println("업데이트 대상 teamId = " + teamId +" 유저아이디 = " + userId  +"팀이름" + team_name);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+        //5. 팀id 존재여부에 따라 insert or update
         int updateCount = 0;
+
         for (Long userId : selectedUserIds) {
             try {
                 Team team = new Team();
-                team.setIdInt(teamId);      // 팀 ID
+                team.setIdInt(teamId);      // 팀 ID (없으면 0)
                 team.setUserId(userId);
-                team.setTeamName(team_name);// User ID
-                updateCount += teamService.updateTeamMember(team);
-                System.out.println("업데이트 대상 teamId = " + teamId +" 유저아이디 = " + userId  +"팀이름" + team_name);
+                team.setTeamName(team_name);
+
+                updateCount += userService.updateUserTeam(userId, teamId);
+
+                updateCount += teamService.saveOrUpdateTeamMember(team);
+
+                System.out.println("업데이트 또는 삽입 팀ID = " + teamId
+                        + " 유저ID = " + userId
+                        + " 팀이름 = " + team_name);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        System.out.println(updateCount + "건 처리 완료");
+
 
         System.out.println(updateCount + " 명의 팀 정보가 업데이트 되었습니다.");
     }
@@ -160,6 +186,9 @@ public class TeamCreateController {
     private int parseTeamId (String teamname){
         return Integer.parseInt(teamname.replace("팀", "")); // "1팀" → 1
     }
+
+
+
 
     }
 

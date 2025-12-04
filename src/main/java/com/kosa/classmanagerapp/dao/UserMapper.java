@@ -1,6 +1,7 @@
 package com.kosa.classmanagerapp.dao;
 
 import com.kosa.classmanagerapp.model.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface UserMapper {
     List<User> findAllUser();
 
     User findUserById(long userId);
+
+    int updateUserTeam(@Param("userId") Long userId, @Param("teamId") int teamId);
+
 }

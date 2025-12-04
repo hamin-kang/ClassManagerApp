@@ -20,4 +20,7 @@ public interface TeamMapper {
     int updateTeamMember(Team team);
 
 
+    int insertTeamMember(Team team);
+
+    int existsTeam(int idInt);
 }

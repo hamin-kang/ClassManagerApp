@@ -31,4 +31,12 @@
         WHERE id = #{userId}  <!-- value → userId -->
     </select>
 
+<!-- 팀정보 업데이트 -->
+    <update id="updateUserTeam" parameterType="map">
+        UPDATE user
+        SET team_id = #{teamId}
+        WHERE id = #{userId}
+    </update>
+
+
 </mapper>
