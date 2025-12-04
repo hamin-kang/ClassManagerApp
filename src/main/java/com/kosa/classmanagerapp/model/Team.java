@@ -1,9 +1,13 @@
 package com.kosa.classmanagerapp.model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Team extends BaseEntity {
     private int teamId;
     private String teamName;
     private Long projectId;
+
 
 
     public Team() {
@@ -77,5 +81,9 @@ public class Team extends BaseEntity {
         this.projectId = projectId;
     }
 
+     //int => long
+    public void setIdInt(int id){
+        super.setId((long)id);
+    }
 
 }

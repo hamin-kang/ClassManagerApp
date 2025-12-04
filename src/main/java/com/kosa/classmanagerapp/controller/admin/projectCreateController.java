@@ -104,7 +104,7 @@ public class projectCreateController {
 
 
         // ComboBox 초기화
-        taskComboBox.getItems().addAll("개인과제", "팀과제");
+//        taskComboBox.getItems().addAll("개인과제", "팀과제");
         taskComboBox.getSelectionModel().selectFirst();
 
         // 전체 과제 가져오기

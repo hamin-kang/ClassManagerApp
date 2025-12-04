@@ -143,9 +143,12 @@ public class TeamCreateController {
         for (Long userId : selectedUserIds) {
             try {
                 Team team = new Team();
-                team.setId((long) teamId);      // 팀 ID
-                team.setUserId(userId);  // User ID
+                team.setIdInt(teamId);      // 팀 ID
+                team.setUserId(userId);
+                team.setTeamName(team_name);// User ID
                 updateCount += teamService.updateTeamMember(team);
+                System.out.println("업데이트 대상 teamId = " + teamId +" 유저아이디 = " + userId  +"팀이름" + team_name);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

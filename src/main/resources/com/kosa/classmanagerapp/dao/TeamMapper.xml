@@ -35,8 +35,9 @@
     <update id="updateTeamMember" parameterType="Team">
         UPDATE team
         SET team_name = #{teamName},
-        project_id = #{projectId}
-        WHERE id = #{teamId}
+        project_id = 1,
+        created_at = NOW()
+        WHERE id = #{id}
     </update>
 
 
