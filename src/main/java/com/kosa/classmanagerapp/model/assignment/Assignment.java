@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public class Assignment extends BaseEntity {
 
+    private int id;
     private String title;
     private String content;
     // User(id)
@@ -34,6 +35,10 @@ public class Assignment extends BaseEntity {
     }
 
     // Getter / Setter (필요한 것만 골라서 써도 됨)
+
+    public  Long getId() { return (long) id; }
+    public void setId(int id) { this.id = id; }
+
     public String getTitle() {
         return title;
     }
@@ -97,6 +102,8 @@ public class Assignment extends BaseEntity {
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
+
+
 
     // Builder 시작 메서드
     public static Builder builder() {

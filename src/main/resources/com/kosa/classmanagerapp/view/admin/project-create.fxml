@@ -62,7 +62,7 @@
 
 
     <!-- ▼ 과제 -->
-    <VBox  layoutX="100" layoutY="200" spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
+    <VBox  layoutX="100" layoutY="240" spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
         <Label text="과제" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
         <HBox spacing="10">
@@ -72,15 +72,13 @@
 
         <TableView fx:id="TaskTable" prefHeight="160" prefWidth="600">
             <columns>
-                <TableColumn text="순번" prefWidth="50"/>
-                <TableColumn text="과제명" prefWidth="150"/>
-                <TableColumn text="내용" prefWidth="150"/>
-                <TableColumn text="마감날짜" prefWidth="150"/>
+                <TableColumn fx:id="colId" text="순번" prefWidth="50"/>
+                <TableColumn fx:id="colTitle" text="과제명" prefWidth="150"/>
+                <TableColumn fx:id="colContent" text="내용" prefWidth="200"/>
+                <TableColumn fx:id="colType" text="과제타입" prefWidth="100"/>
+                <TableColumn fx:id="colDueDate" text="마감날짜" prefWidth="100"/>
             </columns>
         </TableView>
-
-
-
     </VBox>
 
 

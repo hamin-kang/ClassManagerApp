@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kosa.classmanagerapp.dao.AssignmentMapper">
+
     <insert id="save" parameterType="Assignment">
         INSERT INTO assignment (title, content,
         creator_id, assignment_type,
@@ -22,4 +23,7 @@
     <select id="findAll" resultType="Assignment">
         SELECT * FROM assignment
     </select>
+
+
+
 </mapper>
