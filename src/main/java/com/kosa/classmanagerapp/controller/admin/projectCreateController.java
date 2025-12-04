@@ -25,7 +25,6 @@ public class projectCreateController {
     public DatePicker dueDate;
 
     // 과제 insert
-  //  @FXML private ComboBox<String> taskComboBox; // 과제 드롭다운
     @FXML private TableView<Assignment> TaskTable;
     @FXML private TableColumn<Assignment, Integer> colId;
     @FXML private TableColumn<Assignment, String> colTitle;
@@ -35,7 +34,7 @@ public class projectCreateController {
 
 
     private final AssignmentService assignmentService = new AssignmentService();
-
+    private List<Assignment> allAssignments; //db에서 가져온 전체과제
 
     // 과제 생성 (insert)
     @FXML
@@ -104,6 +103,20 @@ public class projectCreateController {
         TaskList();       // 드롭다운 초기화
 
 
+        // ComboBox 초기화
+        taskComboBox.getItems().addAll("개인과제", "팀과제");
+        taskComboBox.getSelectionModel().selectFirst();
+
+        // 전체 과제 가져오기
+        allAssignments = assignmentService.findAll();
+
+        // 처음 로딩 시 선택된 타입으로 필터링
+        filterAssignments();
+
+        // ComboBox 선택 변경 시 필터 적용
+        taskComboBox.setOnAction(e -> filterAssignments());
+
+
     }
 
     // 과제 끌고오기 (select)
@@ -112,5 +125,20 @@ public class projectCreateController {
         TaskTable.getItems().setAll(assignments);
     }
 
+
+
+    // ComboBox 선택에 따라 TableView 필터링
+    private void filterAssignments() {
+        String selected = taskComboBox.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
+        AssignmentType filterType = selected.equals("개인과제") ? AssignmentType.INDIVIDUAL : AssignmentType.TEAM;
+
+        List<Assignment> filtered = allAssignments.stream()
+                .filter(a -> a.getAssignmentType() == filterType)
+                .toList();
+
+        TaskTable.getItems().setAll(filtered);
+    }
 
 }

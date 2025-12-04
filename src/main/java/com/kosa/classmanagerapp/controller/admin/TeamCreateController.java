@@ -76,7 +76,7 @@ public class TeamCreateController {
                     if (!selectedListView.getItems().contains(display)) {
                         selectedListView.getItems().add(display);
                     }
-                    // 🔥 userName도 바로 가져오기
+                    //  userName도 바로 가져오기
                     String userName = user.getUserName();
                     System.out.println("선택된 멤버 userName: " + userName);
 
@@ -91,10 +91,8 @@ public class TeamCreateController {
     }
 
 
-
     @FXML
     private void createTeamButtonClick(ActionEvent event) {
-
 
         // 1. 선택된 팀명 가져오기
         String team_name = teamComboBox.getSelectionModel().getSelectedItem();
@@ -109,8 +107,6 @@ public class TeamCreateController {
             System.out.println("팀이 선택되지 않았습니다.");
             return;
         }
-
-
 
         // 2. 선택된 멤버 정보 출력
         if (selectedListView.getItems().isEmpty()) {
@@ -128,8 +124,7 @@ public class TeamCreateController {
         }
         //  }
 
-
-        //--------🔔------------
+        //--------------------
 
         List<Long> selectedUserIds = new ArrayList<>();
         for (String member : selectedListView.getItems()) {
