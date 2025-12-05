@@ -69,6 +69,12 @@ public class SubmissionService {
             return mapper.update(req);
         }
     }
-
+// admin 화면 총 제출 과제수
+    public List<Submission> getSubmissionSummary() {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            SubmissionMapper mapper = session.getMapper(SubmissionMapper.class);
+            return mapper.selectSubmissionSummary();
+        }
+    }
 
 }

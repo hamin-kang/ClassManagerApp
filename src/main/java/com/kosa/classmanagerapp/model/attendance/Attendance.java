@@ -14,6 +14,9 @@ public class Attendance extends BaseEntity {
     private LocalDate sessionDate;
     private Status status;
 
+   private Integer ranking;
+   private Integer presentCount;
+
 
     // --- 생성자 -
     public Attendance() {}
@@ -69,4 +72,13 @@ public class Attendance extends BaseEntity {
         this.status = status;
     }
 
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+
+    public Integer getRanking() { return ranking; }
+    public void setRanking(Integer ranking) { this.ranking = ranking; }
+
+    public Integer getPresentCount() { return presentCount; }
+    public void setPresentCount(Integer presentCount) { this.presentCount = presentCount; }
 }
+

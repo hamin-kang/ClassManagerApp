@@ -12,6 +12,9 @@ public class Submission extends BaseEntity {
     private Boolean isSubmitted;
     private LocalDateTime submittedAt;
 
+    private String fullName;
+    private Integer submissionCount;
+
     // MyBatis가 객체 생성 시 사용하는 기본 생성자
     public Submission() {}
 
@@ -98,4 +101,25 @@ public class Submission extends BaseEntity {
         this.submittedAt = submittedAt;
     }
 
+//    총 과제 수 조회 -admin page
+//    public Submission(String fullName, Integer submissionCount) {
+//        this.fullName = fullName;
+//        this.submissionCount = submissionCount;
+//    }
+
+    // Getter / Setter
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Integer getSubmissionCount() {
+        return submissionCount;
+    }
+    public void setSubmissionCount(int submissionCount) {
+        this.submissionCount = submissionCount;
+    }
 }

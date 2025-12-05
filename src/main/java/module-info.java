@@ -23,6 +23,7 @@ module com.kosa.classmanagerapp {
     opens com.kosa.classmanagerapp.util.Toast to javafx.fxml;
     opens com.kosa.classmanagerapp.model.dto.submission;
 
+
     exports com.kosa.classmanagerapp;
     exports com.kosa.classmanagerapp.controller;
     exports com.kosa.classmanagerapp.model.entity;

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface AttendanceMapper {
     List<Attendance> getAttendance();
+    List<Attendance> selectAttendanceRanking();
 
 }
