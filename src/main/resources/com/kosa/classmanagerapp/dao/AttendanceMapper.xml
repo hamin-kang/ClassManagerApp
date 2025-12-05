@@ -9,7 +9,7 @@
         SELECT
         a.id AS attendance_id,
         a.user_id,
-        u.user_name,
+        u.full_name,
         a.session_date,
         a.status
         FROM attendance a

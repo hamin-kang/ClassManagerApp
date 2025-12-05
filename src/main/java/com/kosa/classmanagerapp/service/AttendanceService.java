@@ -15,20 +15,7 @@ public class AttendanceService {
             return mapper.getAttendance();
          //   List<Attendance> list = mapper.getAttendance();
 
-//
-//            System.out.println("데이터 출력 !!");
-//            // 로그 출력
-//            for (Attendance a : list) {
-//                System.out.println(
-//                        "ID: " + a.getAttendanceId() +
-//                                ", UserID: " + a.getUserId() +
-//                                ", UserName: " + a.getUserName() +
-//                                ", Date: " + a.getSessionDate() +
-//                                ", Status: " + a.getStatus()
-//                );
-//            }
-//
-//            return list;
+
 
         }
     }

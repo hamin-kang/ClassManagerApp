@@ -10,7 +10,7 @@ public class Attendance extends BaseEntity {
 
     private int attendanceId;    // ← 정확한 필드명
     private Long userId;
-    private String userName;
+    private String fullName;
     private LocalDate sessionDate;
     private Status status;
 
@@ -21,7 +21,7 @@ public class Attendance extends BaseEntity {
     public Attendance(int attendanceId, Long userId, String userName, LocalDate sessionDate, Status status) {
         this.attendanceId = attendanceId;
         this.userId = userId;
-        this.userName = userName;
+        this.fullName = userName;
         this.sessionDate = sessionDate;
         this.status = status;
     }
@@ -46,11 +46,11 @@ public class Attendance extends BaseEntity {
     }
 
     public String getUserName() {
-        return userName;
+        return fullName;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.fullName = fullName;
     }
 
     public LocalDate getSessionDate() {
