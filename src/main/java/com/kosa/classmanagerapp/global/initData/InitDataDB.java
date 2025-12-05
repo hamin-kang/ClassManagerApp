@@ -1,5 +1,6 @@
 package com.kosa.classmanagerapp.global.initData;
 
+import com.kosa.classmanagerapp.dao.UserMapper;
 import com.kosa.classmanagerapp.global.AppContext;
 import com.kosa.classmanagerapp.model.*;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
@@ -9,6 +10,8 @@ import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.service.*;
 import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import com.kosa.classmanagerapp.service.auth.UserService;
+import com.kosa.classmanagerapp.util.SqlSessionManager;
+import org.apache.ibatis.session.SqlSession;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +26,7 @@ public class InitDataDB {
 
     public void initAll() {
         createDummyProjects();
+        createDummyUsers();
         createDummyTeams();
         updateDummyUsers();
 
@@ -43,6 +47,66 @@ public class InitDataDB {
         projectService.save(p1);
     }
 
+    public void createDummyUsers() {
+        User admin = User.builder()
+                .userName("admin")
+                .passwordHash("$2a$10$H1.xHwCVXknsbx2LccFDsuNyZ4hw/G9t29yzlA0o9E/Dfw489ZWlC")
+                .fullName("관리자")
+                .teamId(null)
+                .birthday(LocalDate.of(2000, 1, 1))
+                .authorization(UserAuthorization.ADMIN)
+                .build();
+        User user1 = User.builder()
+                .userName("user1")
+                .passwordHash("$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW")
+                .fullName("user1")
+                .teamId(null)
+                .birthday(LocalDate.of(2000, 2, 8))
+                .authorization(UserAuthorization.USER)
+                .build();
+        User user2 = User.builder()
+                .userName("user2")
+                .passwordHash("$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW")
+                .fullName("user2")
+                .teamId(null)
+                .birthday(LocalDate.of(2000, 2, 8))
+                .authorization(UserAuthorization.USER)
+                .build();
+        User user3 = User.builder()
+                .userName("user3")
+                .passwordHash("$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW")
+                .fullName("user3")
+                .teamId(null)
+                .birthday(LocalDate.of(2000, 2, 8))
+                .authorization(UserAuthorization.USER)
+                .build();
+        User user4 = User.builder()
+                .userName("user4")
+                .passwordHash("$2a$10$E4m98o7SEQA7oJOuNUms2O3sIdZQiyKbThwBKFJJAN1jd67zpWXiW")
+                .fullName("user4")
+                .teamId(null)
+                .birthday(LocalDate.of(2000, 2, 8))
+                .authorization(UserAuthorization.USER)
+                .build();
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(false)) {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+
+            userMapper.save(admin);
+            userMapper.save(user1);
+            userMapper.save(user2);
+            userMapper.save(user3);
+            userMapper.save(user4);
+
+            session.commit();
+
+            System.out.println("User Dummy Insert 성공");
+
+        } catch (Exception e) {
+            System.err.println("회원가입에 실패했습니다: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
     // -----------------------------
     // 2) 팀 생성 (1팀, 2팀)
     // -----------------------------
