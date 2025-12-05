@@ -72,77 +72,322 @@ INSERT INTO assignment (title, content, creator_id, assignment_type, is_close, d
 -- 7. Submission (제출) 데이터 대량 생성
 
 -- [과제 1: Java 기초 문법] - 전원 제출
-INSERT INTO submission (assignment_id, submitter_user_id, content, submitted_at)
-SELECT 1, id, CONCAT(full_name, ' - 기초 문법 정리 과제입니다.'), '2025-10-04 10:00:00' FROM user WHERE id BETWEEN 2 AND 21;
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
+SELECT 1, id, null, TRUE
+FROM user
+WHERE id BETWEEN 2 AND 21;
 
--- [과제 2: 객체지향의 이해] - 2명 미제출 (student19, 20)
-INSERT INTO submission (assignment_id, submitter_user_id, content, submitted_at)
-SELECT 2, id, CONCAT(full_name, ' - 객체지향 과제 제출'), '2025-10-11 15:30:00' FROM user WHERE id BETWEEN 2 AND 19;
+-- -- 생성된 submission.id 에 대해 내용 입력
+-- INSERT INTO submission_content (submission_id, content)
+-- SELECT s.id, CONCAT(u.full_name, ' - 기초 문법 정리 과제 제출 내용입니다.')
+-- FROM submission s
+--          JOIN user u ON s.submitter_user_id = u.id
+-- WHERE s.assignment_id = 1;
 
--- [과제 3: 컬렉션 프레임워크] - 절반만 제출 (홀수 ID 학생만)
-INSERT INTO submission (assignment_id, submitter_user_id, content, submitted_at)
-SELECT 3, id, '컬렉션 과제 제출합니다.', '2025-10-18 20:00:00' FROM user WHERE id BETWEEN 2 AND 21 AND (id % 2) = 1;
+-- 과제 2: 제출자만 등록
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
+SELECT 2, id, null, TRUE
+FROM user
+WHERE id BETWEEN 2 AND 21;
 
--- [과제 4: IO 및 네트워크] - 마감 안됨, 부지런한 5명만 미리 제출
-INSERT INTO submission (assignment_id, submitter_user_id, content, submitted_at) VALUES
-    (4, 2, '채팅 프로그램 소스코드', NOW()),
-    (4, 6, '소켓 통신 과제', NOW()),
-    (4, 10, 'IO 실습 파일', NOW()),
-    (4, 14, '네트워크 과제 완료', NOW()),
-    (4, 18, '채팅 구현 완료', NOW());
+-- -- 내용 입력
+-- INSERT INTO submission_content (submission_id, content)
+-- SELECT s.id, CONCAT(u.full_name, ' - 객체지향 과제 제출본입니다.')
+-- FROM submission s
+--          JOIN user u ON s.submitter_user_id = u.id
+-- WHERE s.assignment_id = 2;
 
--- [팀 과제 1: 기획서] - 5개 팀 팀장 모두 제출
-INSERT INTO submission (assignment_id, submitter_user_id, team_id, content, submitted_at) VALUES
-    (6, 2, 1, '1조 기획서.pdf', '2025-10-24 10:00:00'),
-    (6, 6, 2, '2조 주제 기획안', '2025-10-25 11:00:00'),
-    (6, 10, 3, '3조 기획서 최종', '2025-10-24 16:00:00'),
-    (6, 14, 4, '4조 프로젝트 기획', '2025-10-25 22:00:00'),
-    (6, 18, 5, '5조 기획서 v1.0', '2025-10-23 09:00:00');
+-- 과제 3
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
+SELECT 3, id, null, false
+FROM user
+WHERE id BETWEEN 2 AND 21;
 
--- Attendance (출석) 데이터 생성 (최근 5일치)
+-- -- 내용 입력
+-- INSERT INTO submission_content (submission_id, content)
+-- SELECT s.id, '컬렉션 프레임워크 과제 제출합니다.'
+-- FROM submission s
+-- WHERE s.assignment_id = 3;
+
+-- 과제 4
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
+SELECT 4, id, null, false
+FROM user
+WHERE id BETWEEN 2 AND 21;
+
+-- -- content
+-- INSERT INTO submission_content (submission_id, content)
+-- SELECT id, CONCAT('IO 및 네트워크 과제 제출 - 제출자 ID: ', submitter_user_id)
+-- FROM submission
+-- WHERE assignment_id = 4;
+
+-- 과제 5
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
+SELECT 5, id, null, false
+FROM user
+WHERE id BETWEEN 2 AND 21;
+
+-- 과제 6
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted) VALUES
+                                                                                     (6, 2, 1, TRUE),
+                                                                                     (6, 6, 2, TRUE),
+                                                                                     (6, 10, 3, TRUE),
+                                                                                     (6, 14, 4, TRUE),
+                                                                                     (6, 18, 5, TRUE);
+
+-- -- content
+-- INSERT INTO submission_content (submission_id, content)
+-- SELECT id, CONCAT(team_id, '조 기획서 제출본입니다.')
+-- FROM submission
+-- WHERE assignment_id = 6;
+
+-- 과제 7
+INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted) VALUES
+                                                                                     (7, null, 1, FALSE),
+                                                                                     (7, 6, 2, TRUE),
+                                                                                     (7, null, 3, FALSE),
+                                                                                     (7, 14, 4, TRUE),
+                                                                                     (7, null, 5, FALSE);
+
+
+
+-- Attendance (출석) 데이터 생성 (최근 25일치)
 -- 날짜별로 상황 다르게 설정
-
--- Day 1: 전원 출석
+-- Day 6
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-01', 'PRESENT' FROM user WHERE id BETWEEN 2 AND 21;
-
--- Day 2: 1명 결석, 1명 지각
-INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-02',
+SELECT id, '2025-11-06',
        CASE
-           WHEN id = 2 THEN 'ABSENT'
-           WHEN id = 3 THEN 'LATE'
+           WHEN id IN (7) THEN 'ABSENT'
+           WHEN id IN (3) THEN 'LATE'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
--- Day 3: 1조 단체 지각, 나머지 출석
+-- Day 7
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-03',
+SELECT id, '2025-11-07',
        CASE
-           WHEN team_id = 1 THEN 'LATE'
+           WHEN id IN (10, 17) THEN 'ABSENT'
+           WHEN id IN (4) THEN 'LATE'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
--- Day 4: 5명 조퇴 (각 조의 마지막 번호 학생들)
+-- Day 8
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-04',
+SELECT id, '2025-11-08',
        CASE
-           WHEN id IN (5, 9, 13, 17, 21) THEN 'LEAVE_EARLY'
+           WHEN id IN (6) THEN 'ABSENT'
+           WHEN id IN (12, 15) THEN 'LATE'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
--- Day 5: 랜덤 결석/지각 섞임
+-- Day 9
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-05',
+SELECT id, '2025-11-09',
        CASE
-           WHEN id IN (4, 8) THEN 'ABSENT'
-           WHEN id IN (12, 16) THEN 'LATE'
-           WHEN id = 20 THEN 'LEAVE_EARLY'
+           WHEN id IN (21) THEN 'ABSENT'
+           WHEN id IN (9) THEN 'LATE'
+           WHEN id IN (5) THEN 'LEAVE_EARLY'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
+-- Day 10
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-10',
+       CASE
+           WHEN id IN (4, 13) THEN 'ABSENT'
+           WHEN id IN (19) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 11
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-11',
+       CASE
+           WHEN id IN (3) THEN 'ABSENT'
+           WHEN id IN (8, 16) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 12
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-12',
+       CASE
+           WHEN id IN (11, 20) THEN 'ABSENT'
+           WHEN id IN (6) THEN 'LATE'
+           WHEN id IN (17) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 13
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-13',
+       CASE
+           WHEN id IN (5) THEN 'ABSENT'
+           WHEN id IN (2, 14) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 14
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-14',
+       CASE
+           WHEN id IN (19) THEN 'ABSENT'
+           WHEN id IN (9) THEN 'LATE'
+           WHEN id IN (21) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 15
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-15',
+       CASE
+           WHEN id IN (8, 18) THEN 'ABSENT'
+           WHEN id IN (3) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 16
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-16',
+       CASE
+           WHEN id IN (12) THEN 'ABSENT'
+           WHEN id IN (7) THEN 'LATE'
+           WHEN id IN (4) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 17
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-17',
+       CASE
+           WHEN id IN (6, 13) THEN 'ABSENT'
+           WHEN id IN (10) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 18
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-18',
+       CASE
+           WHEN id IN (2) THEN 'ABSENT'
+           WHEN id IN (11, 17) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 19
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-19',
+       CASE
+           WHEN id IN (14, 20) THEN 'ABSENT'
+           WHEN id IN (5) THEN 'LATE'
+           WHEN id IN (16) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 20
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-20',
+       CASE
+           WHEN id IN (9) THEN 'ABSENT'
+           WHEN id IN (18) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 21
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-21',
+       CASE
+           WHEN id IN (7, 15) THEN 'ABSENT'
+           WHEN id IN (3) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 22
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-22',
+       CASE
+           WHEN id IN (21) THEN 'ABSENT'
+           WHEN id IN (6, 12) THEN 'LATE'
+           WHEN id IN (10) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 23
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-23',
+       CASE
+           WHEN id IN (8) THEN 'ABSENT'
+           WHEN id IN (17) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 24
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-24',
+       CASE
+           WHEN id IN (4, 19) THEN 'ABSENT'
+           WHEN id IN (2) THEN 'LATE'
+           WHEN id IN (13) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 25
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-25',
+       CASE
+           WHEN id IN (6) THEN 'ABSENT'
+           WHEN id IN (15, 20) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+
+-- 9. Notice
+INSERT INTO notice (content) VALUES (
+                                        '**수업 정보**
+
+                                        이영희(도연) 강사님 : ai.edu.kingsmile@gmail.com
+                                        전화번호 : 010-9872-0202
+
+                                        **네트워크 공유폴더 위치** : 192.168.5.4 / DESKTOP-K2CFNHS
+                                        id : java
+                                        password : java
+
+                                        **네이버 공유 폴더** [링크](https://mybox.naver.com/share/list?shareKey=UqveG0e0HulOZeIWmhrXOJMOHRrQhvpPmx-xftIxgcQD&time=1762474256472)
+                                        pwd : kosa
+
+                                        **오픈채팅**
+                                        https://invite.kakao.com/tc/C6aawhRARR
+
+                                        **카페** [링크](https://cafe.naver.com/javajoblink?email=ac20639fc145357bd9d218511179a71e&iframe_url=https://cafe.naver.com/CafeApplyCheck.nhn?clubid=31601751)
+
+                                        **일자별 정리** [링크](https://docs.google.com/document/d/1kSutXoDQBuDjVuWRES2y8mYX9llnKIJE3WJJ2wUjCp8/edit?tab=t.0)
+
+                                        **Discord**
+                                        https://discord.gg/smGATKfm'
+                                    );
 SET FOREIGN_KEY_CHECKS = 1;

@@ -20,7 +20,7 @@ public class MainApplication extends Application {
         // DB 연결 테스트 코드: 클래스를 참조하여 static 블록을 강제 실행
         // 이 코드를 추가하면 start() 메서드 초기에 DB 연결 시도
         InitDataDB init = new InitDataDB();
-        if (AppContext.TEAM_SERVICE.isEmpty()) {
+        if (AppContext.PROJECT_SERVICE.isEmpty()) {
             System.out.println("Creating initial data...");
             init.initAll();
             System.out.println("Initial data created.");
