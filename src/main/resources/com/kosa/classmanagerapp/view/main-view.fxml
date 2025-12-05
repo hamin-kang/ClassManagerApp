@@ -5,19 +5,19 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<VBox alignment="CENTER" spacing="0"
+<VBox alignment="CENTER"
       stylesheets="@../style/main.css"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.kosa.classmanagerapp.controller.MainController"
       prefWidth="800" prefHeight="600">
     <!-- header -->
     <HBox fx:id="headerArea"
-          style="-fx-background-color: black;"
+          styleClass="header-bar"
           alignment="CENTER"
           prefHeight="70"
           onMouseClicked="#onHeaderClick">
         <Label text="Assignment Helper"
-               style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" />
+               styleClass="label-header, label-white" />
     </HBox>
     <!-- content 영역 -->
     <StackPane fx:id="contentArea"

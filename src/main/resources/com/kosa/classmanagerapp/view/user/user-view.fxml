@@ -1,84 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.kosa.classmanagerapp.controller.UserController"
-      spacing="20"
-      style="-fx-padding: 20;">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-    <!-- 출석 정보 + 로그아웃 -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label fx:id="attendanceLabel" text="출석 : 0 지각 : 0 외출 : 0 결석 : 0"/>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Label fx:id="welcomeLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-        <Button text="비밀번호 변경" onAction="#onChangePasswordClick"/>
-        <Button text="로그아웃" styleClass="black-button" onAction="#logoutClick"/>
-    </HBox>
+<VBox spacing="20" style="-fx-background-color: white;"
+      stylesheets="@../../style/main.css"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.kosa.classmanagerapp.controller.UserController">
 
-    <!-- 수업 공지 -->
-    <VBox spacing="10" style="-fx-border-color: black; -fx-padding: 15;">
-        <Label text="수업 공지" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
 
-        <ListView fx:id="noticeListView" prefHeight="150">
-        </ListView>
-    </VBox>
-
-    <!-- 개인 + 팀 과제를 좌우 배치 -->
-    <HBox spacing="20">
-
-        <!-- 개인 과제 -->
-        <VBox spacing="10" style="-fx-border-color:black; -fx-padding:15;" HBox.hgrow="ALWAYS">
-            <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Label text="개인 과제" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
-                <Button onAction="#refreshIndividual" styleClass="icon-button">
-                    <graphic>
-                        <ImageView fitWidth="18" fitHeight="18">
-                            <image>
-                                <Image url="@../../icons/refresh.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-            </HBox>
-
-            <TableView fx:id="individualTaskTable" prefHeight="200">
-                <columns>
-                    <TableColumn fx:id="colIndividualSubmitted" text="제출여부" prefWidth="120"/>
-                    <TableColumn fx:id="colIndividualTitle" text="과제이름" prefWidth="180"/>
-                    <TableColumn fx:id="colIndividualDate" text="마감날짜" prefWidth="180"/>
-                </columns>
-            </TableView>
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <VBox spacing="5">
+            <Label fx:id="welcomeLabel" text="반갑습니다" styleClass="label-header"/>
+            <Label fx:id="attendanceLabel" text="출석 정보를 불러오는 중..." styleClass="label-body"/>
         </VBox>
 
-        <!-- 팀 과제 -->
-        <VBox spacing="10" style="-fx-border-color:black; -fx-padding:15;" HBox.hgrow="ALWAYS">
-            <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Label text="팀 과제" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
-                <Button onAction="#refreshTeam" styleClass="icon-button">
-                    <graphic>
-                        <ImageView fitWidth="18" fitHeight="18">
-                            <image>
-                                <Image url="@../../icons/refresh.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-            </HBox>
-
-            <TableView fx:id="teamTaskTable" prefHeight="200">
-                <columns>
-                    <TableColumn fx:id="colTeamSubmitted" text="제출여부" prefWidth="120"/>
-                    <TableColumn fx:id="colTeamTitle" text="과제이름" prefWidth="180"/>
-                    <TableColumn fx:id="colTeamDate" text="마감날짜" prefWidth="180"/>
-                </columns>
-            </TableView>
-
-        </VBox>
-
+        <Region HBox.hgrow="ALWAYS" /> <Button text="비밀번호 변경" onAction="#onChangePasswordClick" styleClass="button-secondary"/>
+        <Button text="로그아웃" onAction="#logoutClick" styleClass="button-secondary"/>
     </HBox>
+
+    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" styleClass="simple-tab-pane">
+
+        <Tab text="📢 수업 공지">
+            <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
+                <Label text="최신 공지사항" styleClass="label-subheader"/>
+                <ListView fx:id="noticeListView" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+            </VBox>
+        </Tab>
+
+        <Tab text="👤 개인 과제">
+            <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="내 과제 목록" styleClass="label-subheader"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#refreshIndividual" styleClass="button-icon">
+                        <graphic>
+                            <ImageView fitWidth="16" fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../icons/refresh.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+
+                <TableView fx:id="individualTaskTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+                    <columns>
+                        <TableColumn fx:id="colIndividualSubmitted" text="상태" prefWidth="80" style="-fx-alignment: CENTER;"/>
+                        <TableColumn fx:id="colIndividualTitle" text="과제명" prefWidth="300"/>
+                        <TableColumn fx:id="colIndividualDate" text="마감기한" prefWidth="150" style="-fx-alignment: CENTER;"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <Tab text="👥 팀 과제">
+            <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="팀 프로젝트 과제" styleClass="label-subheader"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#refreshTeam" styleClass="button-icon">
+                        <graphic>
+                            <ImageView fitWidth="16" fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../icons/refresh.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+
+                <TableView fx:id="teamTaskTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+                    <columns>
+                        <TableColumn fx:id="colTeamSubmitted" text="상태" prefWidth="80" style="-fx-alignment: CENTER;"/>
+                        <TableColumn fx:id="colTeamTitle" text="과제명" prefWidth="300"/>
+                        <TableColumn fx:id="colTeamDate" text="마감기한" prefWidth="150" style="-fx-alignment: CENTER;"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </Tab>
+
+    </TabPane>
 
 </VBox>

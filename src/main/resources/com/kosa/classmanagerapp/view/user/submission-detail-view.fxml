@@ -12,21 +12,21 @@
     <!-- 상단 제목 + 마감날짜 -->
     <HBox spacing="20" alignment="CENTER_LEFT">
         <Label fx:id="titleLabel"
-               style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+               styleClass="label-header"/>
 
         <Label fx:id="deadlineLabel"
-               style="-fx-font-size: 16; -fx-text-fill: #555;"/>
+               styleClass="label-body"/>
     </HBox>
 
     <!-- WebView 에디터 -->
-    <WebView fx:id="editorWebView" prefHeight="600"/>
+    <WebView fx:id="editorWebView"/>
 
     <!-- 제출 버튼 -->
     <HBox alignment="CENTER_RIGHT">
         <Button text="제출"
                 fx:id="submitButton"
                 onAction="#handleSubmit"
-                styleClass="black-button"/>
+                styleClass="button-primary"/>
     </HBox>
 
 </VBox>

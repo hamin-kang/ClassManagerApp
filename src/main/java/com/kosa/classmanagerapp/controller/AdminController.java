@@ -79,10 +79,7 @@ public class AdminController {
     private TableColumn<Attendance, Integer> colUserId;
     @FXML
     private TableColumn<Attendance, String> colUserName;
-//    @FXML
-//    private TableColumn<Attendance, String> colSessionDate;
-//    @FXML
-//    private TableColumn<Attendance, String> colStatus;
+
 
     private final AttendanceService attendanceService = new AttendanceService();
 
@@ -113,26 +110,8 @@ private TableView<Attendance> attendanceRankingTable;
     @FXML
     public void initialize() {
         if (colId != null) {
-//            colId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
-//            colUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-//            colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
-//            colSessionDate.setCellValueFactory(new PropertyValueFactory<>("sessionDate"));
-//            colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-//
-//
-//            // LocalDate -> String
-//            colSessionDate.setCellValueFactory(cellData ->
-//                    new SimpleStringProperty(cellData.getValue().getSessionDate().toString())
-//            );
-//
-//            // Enum -> String
-//            colStatus.setCellValueFactory(cellData ->
-//                    new SimpleStringProperty(cellData.getValue().getStatus().name())
-//            );
-
             loadData();
         }
-//  ====================================================================
 
 
         // 출석 랭킹
@@ -148,8 +127,7 @@ private TableView<Attendance> attendanceRankingTable;
 //    -=== 과제 랭킹
 
         if (colSubmitFullName != null) {
-//            colSubmitFullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-//            colSubmissionCount.setCellValueFactory(new PropertyValueFactory<>("submissionCount"));
+//
             colSubmitFullName.setCellValueFactory(cellData ->
                     new SimpleStringProperty(cellData.getValue().getFullName())
             );
@@ -157,30 +135,21 @@ private TableView<Attendance> attendanceRankingTable;
             colSubmissionCount.setCellValueFactory(cellData ->
                     new SimpleIntegerProperty(cellData.getValue().getSubmissionCount()).asObject()
             );
-
             loadSubmissionSummary();
         }
 
-//    ====================================================================
         // FXML 로딩 후 안전하게 실행
         Platform.runLater(() -> {
-
             TaskList();
         });
         
     }
-//   ====================================================================
-
-
 
     private void loadRankingData() {
         List<Attendance> rankingList = attendanceService.selectAttendanceRanking(); // 랭킹 SQL 호출
         ObservableList<Attendance> obsList = FXCollections.observableArrayList(rankingList);
         attendanceRankingTable.setItems(obsList);
     }
-
-
-//    --------------------------------------------------------------------------------------------------
 
     private void loadData() {
         List<Attendance> list = attendanceService.getAttendanceList();
@@ -192,7 +161,6 @@ private TableView<Attendance> attendanceRankingTable;
     protected void taskCreateButtonClick(ActionEvent event) throws Exception {
         MainController main = MainApplication.getMainController();
         main.loadView("view/admin/project-create.fxml");
-
     }
 
     @FXML
@@ -201,5 +169,4 @@ private TableView<Attendance> attendanceRankingTable;
         ObservableList<Submission> obsList = FXCollections.observableArrayList(list);
         submissionSummaryTable.setItems(obsList);
     }
-
 }
