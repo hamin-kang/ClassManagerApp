@@ -10,16 +10,16 @@
            prefHeight="400.0" prefWidth="600.0">
 
     <VBox spacing="15" alignment="CENTER" maxWidth="300">
-        <Label text="회원가입" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <Label text="회원가입" styleClass="label-header"/>
 
-        <TextField fx:id="userNameField" promptText="아이디" />
-        <PasswordField fx:id="passwordField" promptText="비밀번호" />
-        <TextField fx:id="fullNameField" promptText="이름" />
+        <TextField fx:id="userNameField" promptText="아이디" styleClass="text-field"/>
+        <PasswordField fx:id="passwordField" promptText="비밀번호" styleClass="password-field"/>
+        <TextField fx:id="fullNameField" promptText="이름" styleClass="text-field"/>
         <DatePicker fx:id="birthdayPicker" promptText="생년월일" prefWidth="300"/>
 
         <HBox spacing="10" alignment="CENTER">
-            <Button text="가입하기" onAction="#onSignupClick" styleClass="black-button" prefWidth="100"/>
-            <Button text="취소" onAction="#onCancelClick" prefWidth="100"/>
+            <Button text="가입하기" onAction="#onSignupClick" styleClass="button-primary" prefWidth="100"/>
+            <Button text="취소" onAction="#onCancelClick" styleClass="button-secondary" prefWidth="100"/>
         </HBox>
     </VBox>
 </StackPane>

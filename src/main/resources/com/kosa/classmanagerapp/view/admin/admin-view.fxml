@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -12,9 +11,9 @@
 <!--    &lt;!&ndash; 좌측 버튼 메뉴 &ndash;&gt;-->
 
     <VBox spacing="15" layoutX="20" layoutY="20">
-        <Button text="팀 생성" prefWidth="150" onAction="#teamCreateButtonClick"/>
-        <Button text="과제 생성" prefWidth="150" onAction="#taskCreateButtonClick"/>
-        <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick"/>
+        <Button text="팀 생성" prefWidth="150" onAction="#teamCreateButtonClick" styleClass="button-secondary"/>
+        <Button text="과제 생성" prefWidth="150" onAction="#taskCreateButtonClick" styleClass="button-secondary"/>
+        <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick" styleClass="button-secondary"/>
     </VBox>
 
 <!--    &lt;!&ndash; 메인 콘텐츠 &ndash;&gt;-->
