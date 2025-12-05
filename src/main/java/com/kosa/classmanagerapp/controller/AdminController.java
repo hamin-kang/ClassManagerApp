@@ -4,6 +4,7 @@ import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.model.Submission;
 import com.kosa.classmanagerapp.model.attendance.Attendance;
 import com.kosa.classmanagerapp.service.AttendanceService;
+import com.kosa.classmanagerapp.service.SessionService;
 import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -79,6 +80,8 @@ public class AdminController {
     private TableColumn<Attendance, Integer> colUserId;
     @FXML
     private TableColumn<Attendance, String> colUserName;
+
+
 
 
     private final AttendanceService attendanceService = new AttendanceService();
@@ -162,6 +165,14 @@ private TableView<Attendance> attendanceRankingTable;
         MainController main = MainApplication.getMainController();
         main.loadView("view/admin/project-create.fxml");
     }
+    @FXML
+    protected void logoutClick() throws Exception {
+       SessionService.clear();
+
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/login/login-view.fxml");
+
+    }
 
     @FXML
     private void loadSubmissionSummary() {
@@ -169,4 +180,7 @@ private TableView<Attendance> attendanceRankingTable;
         ObservableList<Submission> obsList = FXCollections.observableArrayList(list);
         submissionSummaryTable.setItems(obsList);
     }
+
+
+
 }
