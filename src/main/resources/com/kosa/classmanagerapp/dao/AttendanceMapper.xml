@@ -16,4 +16,30 @@
         JOIN user u ON a.user_id = u.id;
 
     </select>
+
+    <select id="selectAttendanceRanking" resultType="AttendanceRank">
+        WITH score_calc AS (
+        SELECT
+        u.id AS user_id,
+        u.full_name,
+
+        SUM(CASE WHEN a.status = 'PRESENT' THEN 1 ELSE 0 END) AS present_count,
+        SUM(CASE WHEN a.status = 'ABSENT' THEN 1 ELSE 0 END) AS absent_count,
+        SUM(CASE WHEN a.status IN ('LATE', 'LEAVE_EARLY') THEN 1 ELSE 0 END) AS late_early_count,
+        FLOOR(SUM(CASE WHEN a.status IN ('LATE', 'LEAVE_EARLY') THEN 1 ELSE 0 END) / 3) AS late_penalty
+        FROM user u
+        LEFT JOIN attendance a ON u.id = a.user_id
+        GROUP BY u.id, u.full_name
+        )
+        SELECT
+        full_name,
+        present_count,
+        (present_count - absent_count - late_penalty) AS final_score,
+        DENSE_RANK() OVER (
+        ORDER BY (present_count - absent_count - late_penalty) DESC
+        ) AS ranking
+        FROM score_calc
+        ORDER BY ranking, full_name;
+    </select>
+
 </mapper>
