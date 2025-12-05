@@ -40,6 +40,7 @@
             <!-- 출석 랭킹 TableView -->
             <TableView fx:id="attendanceRankingTable" prefWidth="230" prefHeight="200">
                 <columns>
+
                     <TableColumn fx:id="colRanking" text="순위" prefWidth="50"/>
                     <TableColumn fx:id="colFullName" text="이름" prefWidth="100"/>
                     <TableColumn fx:id="colPresentCount" text="출석횟수" prefWidth="80"/>
