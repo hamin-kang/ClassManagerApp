@@ -5,19 +5,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kosa.classmanagerapp.dao.AttendanceMapper">
-    <select id="getAttendance" resultType="Attendance">
-        SELECT
-        a.id AS attendance_id,
-        a.user_id,
-        u.full_name,
-        a.session_date,
-        a.status
-        FROM attendance a
-        JOIN user u ON a.user_id = u.id;
 
-    </select>
+<!--    <select id="getAttendance" resultType="Attendance">-->
+<!--        SELECT-->
+<!--        a.id AS attendance_id,-->
+<!--        a.user_id,-->
+<!--        u.full_name,-->
+<!--        a.session_date,-->
+<!--        a.status-->
+<!--        FROM attendance a-->
+<!--        JOIN user u ON a.user_id = u.id;-->
 
-    <select id="selectAttendanceRanking" resultType="AttendanceRank">
+<!--    </select>-->
+
+    <select id="selectAttendanceRanking" resultType="Attendance">
         WITH score_calc AS (
         SELECT
         u.id AS user_id,

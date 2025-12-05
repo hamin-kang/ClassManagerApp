@@ -13,12 +13,21 @@ public class AttendanceService {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
             AttendanceMapper mapper = session.getMapper(AttendanceMapper.class);
             return mapper.getAttendance();
-         //   List<Attendance> list = mapper.getAttendance();
-
+            //   List<Attendance> list = mapper.getAttendance();
 
 
         }
     }
+
+    public List<Attendance> selectAttendanceRanking() {
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession()) {
+            AttendanceMapper mapper = session.getMapper(AttendanceMapper.class);
+            return mapper.selectAttendanceRanking();
+        }
+
+
+    }
+
 }
 
 

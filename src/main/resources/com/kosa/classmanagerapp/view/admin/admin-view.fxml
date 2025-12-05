@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.kosa.classmanagerapp.model.attendance.Attendance?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.kosa.classmanagerapp.controller.AdminController"
@@ -12,6 +13,7 @@
 <!--    &lt;!&ndash; 좌측 버튼 메뉴 &ndash;&gt;-->
 
     <VBox spacing="15" layoutX="20" layoutY="20">
+
         <Button text="팀 생성" prefWidth="150" onAction="#teamCreateButtonClick"/>
         <Button text="과제 생성" prefWidth="150" onAction="#taskCreateButtonClick"/>
         <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick"/>
@@ -26,21 +28,37 @@
 
 <!--        &lt;!&ndash; ▼ 출석 &ndash;&gt;-->
 
-            <!-- 출석 테이블 -->
-            <TableView fx:id="tableView" layoutX="300" layoutY="150"  prefHeight="160"  VBox.vgrow="ALWAYS">
 
+
+    <VBox spacing="15" layoutX="200" layoutY="100">
+
+        <HBox spacing="200" prefWidth="500" >
+        <Label  text="출석 요약" />
+        <Label text="과제 요약" />
+        </HBox>
+        <!-- 두 테이블을 가로로 배치 -->
+        <HBox spacing="15">
+
+            <!-- 출석 랭킹 TableView -->
+            <TableView fx:id="attendanceRankingTable" prefWidth="200" prefHeight="200">
                 <columns>
-
-             <!--   출석률 데이터      -->
-                    <TableColumn fx:id="colId" text="출석 ID" prefWidth="80"/>
-                    <TableColumn fx:id="colUserId" text="유저 ID" prefWidth="80"/>
-                    <TableColumn fx:id="colUserName" text="유저 이름" prefWidth="120"/>
-                    <TableColumn fx:id="colSessionDate" text="수업 날짜" prefWidth="120"/>
-                    <TableColumn fx:id="colStatus" text="상태" prefWidth="100"/>
+                    <TableColumn fx:id="colRanking" text="순위" prefWidth="50"/>
+                    <TableColumn fx:id="colFullName" text="이름" prefWidth="100"/>
+                    <TableColumn fx:id="colPresentCount" text="출석횟수" prefWidth="50"/>
                 </columns>
             </TableView>
 
+            <!-- 과제 요약 TableView -->
 
+            <TableView prefWidth="200" prefHeight="200">
+                <columns>
+                    <TableColumn text="제출 수" prefWidth="50"/>
+                    <TableColumn text="이름" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+        </HBox>
+    </VBox>
 
 
 </AnchorPane>

@@ -84,29 +84,56 @@ public class AdminController {
     private final AttendanceService attendanceService = new AttendanceService();
 
 
+@FXML
+private TableView<Attendance> attendanceRankingTable;
+
+    @FXML
+    private TableColumn<Attendance, Integer> colRanking;
+    @FXML
+    private TableColumn<Attendance, String> colFullName;
+    @FXML
+    private TableColumn<Attendance, Integer> colPresentCount;
+
+
+
     //출석 테이블 로드
     @FXML
     public void initialize() {
         if (colId != null) {
-            colId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
-            colUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-            colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
-            colSessionDate.setCellValueFactory(new PropertyValueFactory<>("sessionDate"));
-            colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-
-            // LocalDate -> String
-            colSessionDate.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getSessionDate().toString())
-            );
-
-            // Enum -> String
-            colStatus.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getStatus().name())
-            );
+//            colId.setCellValueFactory(new PropertyValueFactory<>("attendanceId"));
+//            colUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+//            colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
+//            colSessionDate.setCellValueFactory(new PropertyValueFactory<>("sessionDate"));
+//            colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+//
+//
+//            // LocalDate -> String
+//            colSessionDate.setCellValueFactory(cellData ->
+//                    new SimpleStringProperty(cellData.getValue().getSessionDate().toString())
+//            );
+//
+//            // Enum -> String
+//            colStatus.setCellValueFactory(cellData ->
+//                    new SimpleStringProperty(cellData.getValue().getStatus().name())
+//            );
 
             loadData();
         }
+//  ====================================================================
+
+
+        // 랭킹 TableView 세팅
+        if (colRanking != null) {
+            colRanking.setCellValueFactory(new PropertyValueFactory<>("ranking"));
+            colFullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+            colPresentCount.setCellValueFactory(new PropertyValueFactory<>("presentCount"));
+
+            loadRankingData(); // 랭킹 데이터 로드
+        }
+
+        Platform.runLater(this::TaskList);
+
+//    ====================================================================
         // FXML 로딩 후 안전하게 실행
         Platform.runLater(() -> {
 
@@ -114,6 +141,18 @@ public class AdminController {
         });
         
     }
+//   ====================================================================
+
+
+
+    private void loadRankingData() {
+        List<Attendance> rankingList = attendanceService.selectAttendanceRanking(); // 랭킹 SQL 호출
+        ObservableList<Attendance> obsList = FXCollections.observableArrayList(rankingList);
+        attendanceRankingTable.setItems(obsList);
+    }
+
+
+//    --------------------------------------------------------------------------------------------------
 
     private void loadData() {
         List<Attendance> list = attendanceService.getAttendanceList();
