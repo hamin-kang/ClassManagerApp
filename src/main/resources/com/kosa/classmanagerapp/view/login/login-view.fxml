@@ -9,21 +9,24 @@
             fx:controller="com.kosa.classmanagerapp.controller.LoginController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <VBox spacing="15" alignment="CENTER" maxWidth="300">
-        <Label text="아이디 입력" style="-fx-font-size: 16px;" />
-        <TextField fx:id="userNameField"
-                   promptText="아이디"
-                   prefWidth="180" />
-        <Label text="비밀번호 입력" style="-fx-font-size: 16px;"/>
-        <PasswordField fx:id="passwordField"
-                   promptText="비밀번호"
-                   prefWidth="180" />
+    <VBox spacing="20" alignment="CENTER" maxWidth="350">
+        <Label text="LOGIN" styleClass="label-body"/>
 
-        <Button text="로그인"
-                onAction="#onLoginButtonClick"
-                prefWidth="100"
-                styleClass="black-button"/>
-        <Button text="회원가입" onAction="#onSignupButtonClick" prefWidth="100"/>
+        <VBox spacing="5">
+            <Label text="ID" style="-fx-text-fill: #666;"/>
+            <TextField fx:id="userNameField" promptText="Enter your ID" styleClass="text-field"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="PASSWORD" styleClass="label-body"/>
+            <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="password-field"/>
+        </VBox>
+
+        <Button text="로그인" onAction="#onLoginButtonClick"
+                styleClass="button-primary" prefWidth="350" prefHeight="40"/>
+
+        <Button text="회원가입" onAction="#onSignupButtonClick"
+                styleClass="button-secondary" prefWidth="350"/>
     </VBox>
 
 </StackPane>

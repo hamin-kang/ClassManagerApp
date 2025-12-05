@@ -16,7 +16,8 @@
             onAction="#adminButtonClick"
             prefWidth="100"
             layoutX="10"
-            layoutY="20"/>
+            layoutY="20"
+            styleClass="button-secondary"/>
 
     <!-- 팀 선택 콤보박스 -->
     <ComboBox fx:id="teamComboBox"
@@ -29,7 +30,7 @@
 
         <!-- 팀원 선택 ScrollPane -->
         <VBox spacing="10">
-            <Label text="팀원 선택"/>
+            <Label text="팀원 선택" styleClass="label-subheader"/>
             <ScrollPane prefHeight="200" prefWidth="230" fitToWidth="true">
                 <content>
                     <VBox fx:id="memberListContainer" spacing="5"/>
@@ -39,7 +40,7 @@
 
         <!-- 선택된 멤버 ListView -->
         <VBox spacing="10">
-            <Label text="선택된 멤버"/>
+            <Label text="선택된 멤버" styleClass="label-subheader"/>
             <ListView fx:id="selectedListView" prefWidth="200" prefHeight="200"/>
         </VBox>
     </HBox>
