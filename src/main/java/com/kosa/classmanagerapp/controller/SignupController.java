@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class SignupController {
     @FXML private StackPane root;
@@ -23,6 +24,11 @@ public class SignupController {
     @FXML private DatePicker birthdayPicker;
 
     private final UserService userService = new UserService();
+
+    public void initialize() {
+        LocalDate twentyFiveYearsAgo = LocalDate.now().minusYears(25);
+        birthdayPicker.setValue(twentyFiveYearsAgo);
+    }
 
     @FXML
     protected void onSignupClick() throws IOException {
