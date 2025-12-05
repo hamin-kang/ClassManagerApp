@@ -52,7 +52,7 @@
 
         </VBox>
 
-        <HBox alignment="CENTER_RIGHT" layoutY="30" layoutX="200" prefWidth="600" spacing="10">
+        <HBox alignment="CENTER_RIGHT" layoutY="30" layoutX="150" prefWidth="600" spacing="10">
             <Button text="과제생성" onAction="#handleFetchAssignment" styleClass="button-primary"/>
         </HBox>
 
@@ -63,7 +63,7 @@
 
 
     <!-- ▼ 과제 -->
-    <VBox  layoutX="100" layoutY="240" spacing="10" styleClass="box-border">
+    <VBox  layoutX="100" layoutY="300" spacing="10" styleClass="box-border">
         <Label text="과제" styleClass="label-subheader"/>
 
         <HBox spacing="10">

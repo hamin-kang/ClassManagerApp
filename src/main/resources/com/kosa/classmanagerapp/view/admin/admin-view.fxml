@@ -10,6 +10,10 @@
             fx:controller="com.kosa.classmanagerapp.controller.AdminController"
             prefWidth="900" prefHeight="600">
 
+    <HBox layoutX="700" alignment="CENTER_LEFT" spacing="15">
+    <Button  text="로그아웃" onAction="#logoutClick" styleClass="button-secondary"/>
+    </HBox>
+
 <!--    &lt;!&ndash; 좌측 버튼 메뉴 &ndash;&gt;-->
 
     <VBox spacing="15" layoutX="20" layoutY="20">
@@ -19,16 +23,10 @@
         <Button text="발표순서" prefWidth="150" onAction="#turnOrderButtonClick"/>
     </VBox>
 
-<!--    &lt;!&ndash; 메인 콘텐츠 &ndash;&gt;-->
-<!--    <VBox spacing="25" layoutX="200" layoutY="20" prefWidth="650">-->
 
         <!-- ▼ 팀 선택 -->
         <HBox spacing="10">
         </HBox>
-
-<!--        &lt;!&ndash; ▼ 출석 &ndash;&gt;-->
-
-
 
     <VBox spacing="15" layoutX="200" layoutY="100">
 
@@ -37,25 +35,23 @@
         <Label text="과제 요약" />
         </HBox>
         <!-- 두 테이블을 가로로 배치 -->
-        <HBox spacing="15">
+        <HBox  alignment="CENTER_LEFT" spacing="30">
 
             <!-- 출석 랭킹 TableView -->
-            <TableView fx:id="attendanceRankingTable" prefWidth="200" prefHeight="200">
+            <TableView fx:id="attendanceRankingTable" prefWidth="230" prefHeight="200">
                 <columns>
                     <TableColumn fx:id="colRanking" text="순위" prefWidth="50"/>
                     <TableColumn fx:id="colFullName" text="이름" prefWidth="100"/>
-                    <TableColumn fx:id="colPresentCount" text="출석횟수" prefWidth="50"/>
+                    <TableColumn fx:id="colPresentCount" text="출석횟수" prefWidth="80"/>
                 </columns>
             </TableView>
 
             <!-- 과제 요약 TableView -->
 
-            <TableView fx:id="submissionSummaryTable" prefWidth="200" prefHeight="200">
+            <TableView fx:id="submissionSummaryTable" prefWidth="230" prefHeight="200">
                 <columns>
-                    <TableColumn  fx:id="colSubmissionCount" text="제출 수" prefWidth="50"/>
+                    <TableColumn  fx:id="colSubmissionCount" text="제출 수" prefWidth="80"/>
                     <TableColumn fx:id="colSubmitFullName" text="이름" prefWidth="150"/>
-
-
                 </columns>
             </TableView>
 
