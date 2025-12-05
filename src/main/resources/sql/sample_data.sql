@@ -149,51 +149,222 @@ INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
                                                                                      (7, 14, 4, TRUE),
                                                                                      (7, null, 5, FALSE);
 
--- Attendance (출석) 데이터 생성 (최근 5일치)
+
+
+-- Attendance (출석) 데이터 생성 (최근 25일치)
 -- 날짜별로 상황 다르게 설정
-
--- Day 1: 전원 출석
+-- Day 6
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-01', 'PRESENT' FROM user WHERE id BETWEEN 2 AND 21;
-
--- Day 2: 1명 결석, 1명 지각
-INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-02',
+SELECT id, '2025-11-06',
        CASE
-           WHEN id = 2 THEN 'ABSENT'
-           WHEN id = 3 THEN 'LATE'
+           WHEN id IN (7) THEN 'ABSENT'
+           WHEN id IN (3) THEN 'LATE'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
--- Day 3: 1조 단체 지각, 나머지 출석
+-- Day 7
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-03',
+SELECT id, '2025-11-07',
        CASE
-           WHEN team_id = 1 THEN 'LATE'
+           WHEN id IN (10, 17) THEN 'ABSENT'
+           WHEN id IN (4) THEN 'LATE'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
--- Day 4: 5명 조퇴 (각 조의 마지막 번호 학생들)
+-- Day 8
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-04',
+SELECT id, '2025-11-08',
        CASE
-           WHEN id IN (5, 9, 13, 17, 21) THEN 'LEAVE_EARLY'
+           WHEN id IN (6) THEN 'ABSENT'
+           WHEN id IN (12, 15) THEN 'LATE'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
 
--- Day 5: 랜덤 결석/지각 섞임
+-- Day 9
 INSERT INTO attendance (user_id, session_date, status)
-SELECT id, '2025-11-05',
+SELECT id, '2025-11-09',
        CASE
-           WHEN id IN (4, 8) THEN 'ABSENT'
-           WHEN id IN (12, 16) THEN 'LATE'
-           WHEN id = 20 THEN 'LEAVE_EARLY'
+           WHEN id IN (21) THEN 'ABSENT'
+           WHEN id IN (9) THEN 'LATE'
+           WHEN id IN (5) THEN 'LEAVE_EARLY'
            ELSE 'PRESENT'
-           END
+       END
 FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 10
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-10',
+       CASE
+           WHEN id IN (4, 13) THEN 'ABSENT'
+           WHEN id IN (19) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 11
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-11',
+       CASE
+           WHEN id IN (3) THEN 'ABSENT'
+           WHEN id IN (8, 16) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 12
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-12',
+       CASE
+           WHEN id IN (11, 20) THEN 'ABSENT'
+           WHEN id IN (6) THEN 'LATE'
+           WHEN id IN (17) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 13
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-13',
+       CASE
+           WHEN id IN (5) THEN 'ABSENT'
+           WHEN id IN (2, 14) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 14
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-14',
+       CASE
+           WHEN id IN (19) THEN 'ABSENT'
+           WHEN id IN (9) THEN 'LATE'
+           WHEN id IN (21) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 15
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-15',
+       CASE
+           WHEN id IN (8, 18) THEN 'ABSENT'
+           WHEN id IN (3) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 16
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-16',
+       CASE
+           WHEN id IN (12) THEN 'ABSENT'
+           WHEN id IN (7) THEN 'LATE'
+           WHEN id IN (4) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 17
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-17',
+       CASE
+           WHEN id IN (6, 13) THEN 'ABSENT'
+           WHEN id IN (10) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 18
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-18',
+       CASE
+           WHEN id IN (2) THEN 'ABSENT'
+           WHEN id IN (11, 17) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 19
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-19',
+       CASE
+           WHEN id IN (14, 20) THEN 'ABSENT'
+           WHEN id IN (5) THEN 'LATE'
+           WHEN id IN (16) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 20
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-20',
+       CASE
+           WHEN id IN (9) THEN 'ABSENT'
+           WHEN id IN (18) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 21
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-21',
+       CASE
+           WHEN id IN (7, 15) THEN 'ABSENT'
+           WHEN id IN (3) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 22
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-22',
+       CASE
+           WHEN id IN (21) THEN 'ABSENT'
+           WHEN id IN (6, 12) THEN 'LATE'
+           WHEN id IN (10) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 23
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-23',
+       CASE
+           WHEN id IN (8) THEN 'ABSENT'
+           WHEN id IN (17) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 24
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-24',
+       CASE
+           WHEN id IN (4, 19) THEN 'ABSENT'
+           WHEN id IN (2) THEN 'LATE'
+           WHEN id IN (13) THEN 'LEAVE_EARLY'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+-- Day 25
+INSERT INTO attendance (user_id, session_date, status)
+SELECT id, '2025-11-25',
+       CASE
+           WHEN id IN (6) THEN 'ABSENT'
+           WHEN id IN (15, 20) THEN 'LATE'
+           ELSE 'PRESENT'
+       END
+FROM user WHERE id BETWEEN 2 AND 21;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
 
 -- 9. Notice
 INSERT INTO notice (content) VALUES (
