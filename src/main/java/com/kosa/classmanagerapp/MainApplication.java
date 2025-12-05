@@ -8,9 +8,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainApplication extends Application {
     private static MainController mainController;
@@ -29,6 +31,13 @@ public class MainApplication extends Application {
             System.out.println("Initial data already exists.");
         }
         SqlSessionManager.getSqlSessionFactory();
+
+        try {
+            Image appIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("icons/kosa.png")));
+            stage.getIcons().add(appIcon);
+        } catch (Exception e) {
+            System.err.println("App Icon load failed: " + e.getMessage());
+        }
 
         FXMLLoader fxmlLoader = new FXMLLoader(
 //                MainApplication.class.getResource("main-view.fxml")
