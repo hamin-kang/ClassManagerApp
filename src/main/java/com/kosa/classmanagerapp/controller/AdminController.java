@@ -1,9 +1,12 @@
 package com.kosa.classmanagerapp.controller;
 
 import com.kosa.classmanagerapp.MainApplication;
+import com.kosa.classmanagerapp.model.Submission;
 import com.kosa.classmanagerapp.model.attendance.Attendance;
 import com.kosa.classmanagerapp.service.AttendanceService;
+import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,10 +79,10 @@ public class AdminController {
     private TableColumn<Attendance, Integer> colUserId;
     @FXML
     private TableColumn<Attendance, String> colUserName;
-    @FXML
-    private TableColumn<Attendance, String> colSessionDate;
-    @FXML
-    private TableColumn<Attendance, String> colStatus;
+//    @FXML
+//    private TableColumn<Attendance, String> colSessionDate;
+//    @FXML
+//    private TableColumn<Attendance, String> colStatus;
 
     private final AttendanceService attendanceService = new AttendanceService();
 
@@ -93,6 +96,16 @@ private TableView<Attendance> attendanceRankingTable;
     private TableColumn<Attendance, String> colFullName;
     @FXML
     private TableColumn<Attendance, Integer> colPresentCount;
+
+// ==================================================
+    @FXML
+    private TableView<Submission> submissionSummaryTable;
+    @FXML
+    private TableColumn<Submission, String> colSubmitFullName;
+    @FXML
+    private TableColumn<Submission, Integer> colSubmissionCount;
+
+    private final SubmissionService submissionService = new SubmissionService();
 
 
 
@@ -122,7 +135,7 @@ private TableView<Attendance> attendanceRankingTable;
 //  ====================================================================
 
 
-        // 랭킹 TableView 세팅
+        // 출석 랭킹
         if (colRanking != null) {
             colRanking.setCellValueFactory(new PropertyValueFactory<>("ranking"));
             colFullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -132,6 +145,21 @@ private TableView<Attendance> attendanceRankingTable;
         }
 
         Platform.runLater(this::TaskList);
+//    -=== 과제 랭킹
+
+        if (colSubmitFullName != null) {
+//            colSubmitFullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+//            colSubmissionCount.setCellValueFactory(new PropertyValueFactory<>("submissionCount"));
+            colSubmitFullName.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getFullName())
+            );
+
+            colSubmissionCount.setCellValueFactory(cellData ->
+                    new SimpleIntegerProperty(cellData.getValue().getSubmissionCount()).asObject()
+            );
+
+            loadSubmissionSummary();
+        }
 
 //    ====================================================================
         // FXML 로딩 후 안전하게 실행
@@ -165,6 +193,13 @@ private TableView<Attendance> attendanceRankingTable;
         MainController main = MainApplication.getMainController();
         main.loadView("view/admin/project-create.fxml");
 
+    }
+
+    @FXML
+    private void loadSubmissionSummary() {
+        List<Submission> list = submissionService.getSubmissionSummary();
+        ObservableList<Submission> obsList = FXCollections.observableArrayList(list);
+        submissionSummaryTable.setItems(obsList);
     }
 
 }

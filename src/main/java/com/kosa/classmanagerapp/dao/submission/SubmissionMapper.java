@@ -13,4 +13,7 @@ public interface SubmissionMapper {
     List<SubmissionStatusResponse> findByUserIdTeamSubmissions(Long userId);
     int save(Submission submission);
     int update(SubmissionRequest submission);
+
+
+    List<Submission> selectSubmissionSummary();
 }

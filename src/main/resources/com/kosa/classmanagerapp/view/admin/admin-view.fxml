@@ -50,10 +50,12 @@
 
             <!-- 과제 요약 TableView -->
 
-            <TableView prefWidth="200" prefHeight="200">
+            <TableView fx:id="submissionSummaryTable" prefWidth="200" prefHeight="200">
                 <columns>
-                    <TableColumn text="제출 수" prefWidth="50"/>
-                    <TableColumn text="이름" prefWidth="150"/>
+                    <TableColumn  fx:id="colSubmissionCount" text="제출 수" prefWidth="50"/>
+                    <TableColumn fx:id="colSubmitFullName" text="이름" prefWidth="150"/>
+
+
                 </columns>
             </TableView>
 

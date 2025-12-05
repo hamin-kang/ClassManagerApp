@@ -90,4 +90,20 @@
             submitter_user_id = #{userId}
         WHERE id = #{submissionId}
     </update>
+
+    <select id="selectSubmissionSummary" resultType="com.kosa.classmanagerapp.model.Submission">
+        SELECT
+        u.full_name AS fullName,
+        COUNT(s.id) AS submissionCount
+        FROM
+        user u
+        LEFT JOIN
+        submission s
+        ON
+        u.id = s.submitter_user_id
+        GROUP BY
+        u.full_name
+        ORDER BY
+        submissionCount DESC;
+    </select>
 </mapper>
