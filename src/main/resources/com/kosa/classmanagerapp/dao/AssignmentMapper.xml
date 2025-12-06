@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kosa.classmanagerapp.dao.AssignmentMapper">
 
-    <insert id="save" parameterType="Assignment">
+    <insert id="save" parameterType="Assignment" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO assignment (title, content,
         creator_id, assignment_type,
         is_close, presentation_order_team_id,

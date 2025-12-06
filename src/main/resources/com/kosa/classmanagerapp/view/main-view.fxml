@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.StackPane?>
 <VBox alignment="CENTER"
       stylesheets="@../style/main.css"
-      xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.kosa.classmanagerapp.controller.MainController"
       prefWidth="800" prefHeight="600">
     <!-- header -->

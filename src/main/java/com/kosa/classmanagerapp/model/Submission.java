@@ -18,6 +18,9 @@ public class Submission extends BaseEntity {
     // MyBatis가 객체 생성 시 사용하는 기본 생성자
     public Submission() {}
 
+    public static Builder builder() {
+        return new Builder();
+    }
     // --- Builder ---
     public static class Builder {
         private Long assignmentId;

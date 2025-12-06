@@ -5,11 +5,15 @@ import com.kosa.classmanagerapp.controller.MainController;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
 import com.kosa.classmanagerapp.service.AssignmentService;
+import com.kosa.classmanagerapp.util.Toast.Toast;
+import com.kosa.classmanagerapp.util.Toast.ToastColor;
+import com.sun.net.httpserver.Authenticator;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +27,7 @@ public class projectCreateController {
     public CheckBox assignmentType_team;
     public CheckBox assignmentType_person;
     public DatePicker dueDate;
+    public Button createAssignment;
 
     // 과제 insert
     @FXML private TableView<Assignment> TaskTable;
@@ -58,8 +63,16 @@ public class projectCreateController {
                 .build();
 
         AssignmentService service = new AssignmentService();
-        service.save(assignment);
+        int submissionCount =  service.saveTransaction(assignment);
 
+        if(submissionCount > 0) {
+            Toast.show((Stage)createAssignment.getScene().getWindow(), "과제 생성 완료!", ToastColor.SUCCESS);
+            loadAssignments();
+            filterAssignments();
+        }else{
+            Toast.show((Stage)createAssignment.getScene().getWindow(), "과제 생성 실패!", ToastColor.ERROR);
+
+        }
         System.out.println("과제 저장 완료: " + title);
 
     }

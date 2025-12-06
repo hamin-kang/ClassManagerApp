@@ -16,7 +16,7 @@
 
     <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (user_name, password_hash, full_name, birthday, authorization)
-        VALUES (#{userName}, #{passwordHash}, #{fullName}, #{birthday}, 'USER')
+        VALUES (#{userName}, #{passwordHash}, #{fullName}, #{birthday}, #{authorization})
     </insert>
     <update id="updateTeam" parameterType="User">
         UPDATE user
@@ -44,5 +44,13 @@
         WHERE id = #{userId}
     </update>
 
+    <select id="findByAuthorization"
+            parameterType="string"
+            resultType="User">
 
+        SELECT id, user_name, password_hash, full_name, team_id, authorization
+        FROM user
+        WHERE authorization = #{authorization}
+
+    </select>
 </mapper>

@@ -91,7 +91,7 @@
         WHERE id = #{submissionId}
     </update>
 
-    <select id="selectSubmissionSummary" resultType="com.kosa.classmanagerapp.model.Submission">
+    <select id="selectSubmissionSummary" resultType="Submission">
         SELECT
         u.full_name AS fullName,
         COUNT(s.id) AS submissionCount
@@ -101,6 +101,8 @@
         submission s
         ON
         u.id = s.submitter_user_id
+        WHERE
+            u.authorization != 'ADMIN'
         GROUP BY
         u.full_name
         ORDER BY

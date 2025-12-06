@@ -1,8 +1,15 @@
 package com.kosa.classmanagerapp.service;
 
 import com.kosa.classmanagerapp.dao.AssignmentMapper;
+import com.kosa.classmanagerapp.dao.TeamMapper;
+import com.kosa.classmanagerapp.dao.UserMapper;
+import com.kosa.classmanagerapp.dao.submission.SubmissionMapper;
+import com.kosa.classmanagerapp.model.Team;
 import com.kosa.classmanagerapp.model.assignment.Assignment;
 import com.kosa.classmanagerapp.model.assignment.AssignmentType;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
+import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.session.SqlSession;
 
@@ -12,7 +19,7 @@ import java.util.List;
 public class AssignmentService {
 
     private final List<Assignment> assignments = new ArrayList<>();
-
+    private SubmissionService submissionService = new SubmissionService();
     public AssignmentService() {}
 
     public List<Assignment> findAll() {
@@ -33,7 +40,15 @@ public class AssignmentService {
             mapper.save(assignment);
         }
     }
+    public int saveTransaction(Assignment assignment){
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
+            AssignmentMapper mapper = session.getMapper(AssignmentMapper.class);
+            mapper.save(assignment);
+            System.out.println("생성된 과제 ID = " + assignment.getId());
 
+            return submissionService.createSubmissions(session, assignment);        }
+
+    }
     // 발표 순서 업데이트
     public void updatePresentationOrder(Long assignmentId, String orderString) {
         try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
