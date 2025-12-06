@@ -30,6 +30,7 @@
         FLOOR(SUM(CASE WHEN a.status IN ('LATE', 'LEAVE_EARLY') THEN 1 ELSE 0 END) / 3) AS late_penalty
         FROM user u
         LEFT JOIN attendance a ON u.id = a.user_id
+        WHERE u.authorization != 'ADMIN'
         GROUP BY u.id, u.full_name
         )
         SELECT

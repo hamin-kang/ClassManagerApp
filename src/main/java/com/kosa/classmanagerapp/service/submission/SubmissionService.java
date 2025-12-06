@@ -1,9 +1,16 @@
 package com.kosa.classmanagerapp.service.submission;
 
+import com.kosa.classmanagerapp.dao.TeamMapper;
+import com.kosa.classmanagerapp.dao.UserMapper;
 import com.kosa.classmanagerapp.dao.submission.SubmissionMapper;
 import com.kosa.classmanagerapp.model.Submission;
+import com.kosa.classmanagerapp.model.Team;
+import com.kosa.classmanagerapp.model.assignment.Assignment;
+import com.kosa.classmanagerapp.model.assignment.AssignmentType;
 import com.kosa.classmanagerapp.model.dto.submission.SubmissionRequest;
 import com.kosa.classmanagerapp.model.dto.submission.SubmissionStatusResponse;
+import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.session.SqlSession;
 
@@ -75,6 +82,41 @@ public class SubmissionService {
             SubmissionMapper mapper = session.getMapper(SubmissionMapper.class);
             return mapper.selectSubmissionSummary();
         }
+    }
+
+    public int createSubmissions(SqlSession session, Assignment assignment) {
+        SubmissionMapper submissionMapper = session.getMapper(SubmissionMapper.class);
+        int count = 0;
+
+        if (assignment.getAssignmentType() == AssignmentType.INDIVIDUAL) {
+            List<User> users = session.getMapper(UserMapper.class)
+                    .findByAuthorization(UserAuthorization.USER.name());
+
+            for (User u : users) {
+                count += submissionMapper.save(
+                        Submission.builder()
+                                .assignmentId(assignment.getId())
+                                .submitterUserId(u.getId())
+                                .isSubmitted(false)
+                                .build()
+                );
+            }
+
+        } else {
+            List<Team> teams = session.getMapper(TeamMapper.class).findAll();
+
+            for (Team t : teams) {
+                count += submissionMapper.save(
+                        Submission.builder()
+                                .assignmentId(assignment.getId())
+                                .teamId(t.getId())
+                                .isSubmitted(false)
+                                .build()
+                );
+            }
+        }
+
+        return count;
     }
 
 }

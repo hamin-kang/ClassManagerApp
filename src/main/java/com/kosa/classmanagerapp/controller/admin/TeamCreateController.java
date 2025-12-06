@@ -4,6 +4,7 @@ import com.kosa.classmanagerapp.MainApplication;
 import com.kosa.classmanagerapp.controller.MainController;
 import com.kosa.classmanagerapp.model.Team;
 import com.kosa.classmanagerapp.model.entity.User;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
 import com.kosa.classmanagerapp.service.TeamService;
 import com.kosa.classmanagerapp.service.auth.UserService;
 import javafx.event.ActionEvent;
@@ -64,6 +65,9 @@ public class TeamCreateController {
             System.out.println("users !!!!!!! =" + users); // 디버깅용
 
             for (User user : users) {
+                if(user.getAuthorization() == UserAuthorization.ADMIN){
+                    continue;
+                }
                 HBox row = new HBox(10);
 
 //                System.out.println("userName = " + user.getUserName());

@@ -12,6 +12,7 @@ module com.kosa.classmanagerapp {
 
     requires javafx.web;
     requires jdk.jsobject;
+    requires jdk.httpserver;
 
 
     // mybatis 가 model, util, controller 에 접근하여 매핑할 수 있도록 opens 추가

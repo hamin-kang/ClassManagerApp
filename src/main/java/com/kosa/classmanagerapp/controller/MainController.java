@@ -60,6 +60,7 @@ public class MainController {
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {
             System.err.println("FXML 로딩 실패: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
