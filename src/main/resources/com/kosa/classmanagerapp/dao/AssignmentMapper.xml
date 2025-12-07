@@ -23,7 +23,9 @@
     <select id="findAll" resultType="Assignment">
         SELECT * FROM assignment
     </select>
-
-
-
+    <select id="findAllByClosedFalse" resultType="long">
+        SELECT id
+        FROM assignment
+        WHERE is_close = false
+    </select>
 </mapper>

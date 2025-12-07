@@ -110,7 +110,7 @@ public class UserController {
         colIndividualSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colIndividualSubmitted));
 
         colIndividualTitle.setCellValueFactory(cell ->
-                new SimpleStringProperty("과제 " + cell.getValue().assignmentName())
+                new SimpleStringProperty(cell.getValue().assignmentName())
         );
 
         colIndividualDate.setCellValueFactory(cell -> {
@@ -157,7 +157,7 @@ public class UserController {
         colTeamSubmitted.setCellFactory(CheckBoxTableCell.forTableColumn(colTeamSubmitted));
 
         colTeamTitle.setCellValueFactory(cell ->
-                new SimpleStringProperty("과제 " + cell.getValue().assignmentId())
+                new SimpleStringProperty( cell.getValue().assignmentName())
         );
 
         colTeamDate.setCellValueFactory(cell -> {

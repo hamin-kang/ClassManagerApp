@@ -1,10 +1,14 @@
 package com.kosa.classmanagerapp.service.auth;
 
 import com.kosa.classmanagerapp.dao.UserMapper;
+import com.kosa.classmanagerapp.model.Submission;
 import com.kosa.classmanagerapp.model.dto.auth.ChangePasswordRequest;
 import com.kosa.classmanagerapp.model.entity.User;
 import com.kosa.classmanagerapp.global.initData.InitDataMemory;
 import com.kosa.classmanagerapp.model.dto.auth.SignupRequest;
+import com.kosa.classmanagerapp.model.entity.UserAuthorization;
+import com.kosa.classmanagerapp.service.AssignmentService;
+import com.kosa.classmanagerapp.service.submission.SubmissionService;
 import com.kosa.classmanagerapp.util.SqlSessionManager;
 import org.apache.ibatis.jdbc.SqlRunner;
 import org.apache.ibatis.session.SqlSession;
@@ -15,7 +19,8 @@ import java.util.List;
 
 public class UserService {
     private final List<User> users = new ArrayList<>();
-
+    private final AssignmentService assignmentService = new AssignmentService();
+    private final SubmissionService submissionService = new SubmissionService();
     public UserService() {
     }
 
@@ -48,12 +53,23 @@ public class UserService {
             user.setUserName(request.getUserName());
             user.setFullName(request.getFullName());
             user.setBirthday(request.getBirthday());
+            user.setAuthorization(UserAuthorization.USER);
             // 비밀번호 암호화
             String passwordHash = AuthService.hashPassword(request.getPassword());
             user.setPasswordHash(passwordHash);
             // DB 저장
             int result = userMapper.save(user);
             session.commit();
+            //과제 마감 안된 거 찾아서 제출 테이블 생성
+            List<Long> assignmentIdLists = assignmentService.findAllByClosedFalse();
+            for(Long assignmentId : assignmentIdLists){
+              Submission submission = new Submission.Builder()
+                        .assignmentId(assignmentId)
+                        .submitterUserId(user.getId())
+                        .isSubmitted(false)
+                        .build();
+              submissionService.save(submission);
+            }
             return result > 0;
         } catch (Exception e) {
             System.err.println("회원가입에 실패했습니다" + e.getMessage());

@@ -12,4 +12,5 @@ public interface AssignmentMapper {
 
     int insertAssignment(Assignment assignment);
     List<Assignment> findAllAssignments();
+    List<Long> findAllByClosedFalse();
 }

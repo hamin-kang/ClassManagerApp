@@ -27,7 +27,8 @@
     <!--  user 테이블 조회 → team 만들 때 사용자 목록 가져오기 -->
     <select id="findAllUser" resultType="User">
         SELECT id, user_name AS userName, full_name AS fullName, team_id AS teamId
-        FROM user;
+        FROM user
+        where authorization = 'USER';
     </select>
 
 

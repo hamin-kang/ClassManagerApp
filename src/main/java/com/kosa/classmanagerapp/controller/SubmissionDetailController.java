@@ -86,57 +86,68 @@ public class SubmissionDetailController {
     @FXML
     private void handleSubmit() {
 
-        WebEngine engine = editorWebView.getEngine();
-        String content = (String) engine.executeScript("editor.getHTML();");
+        try {
+            WebEngine engine = editorWebView.getEngine();
+            String content = (String) engine.executeScript("editor.getHTML();");
 
-        Long submissionId = sres.submissionId();
-        System.out.println("submissionId " + submissionId);
+            Long submissionId = sres.submissionId();
+            System.out.println("submissionId " + submissionId);
 
-        int result;
+            int result;
 
-        // 신규 제출 여부 판단
-        if (submissionContent == null) {
-            // 신규 제출
-            SubmissionContent newContent = new SubmissionContent();
-            newContent.setSubmissionId(submissionId);
-            newContent.setContent(content);
+            // 신규 제출 여부 판단
+            if (submissionContent == null) {
+                // 신규 제출
+                SubmissionContent newContent = new SubmissionContent();
+                newContent.setSubmissionId(submissionId);
+                newContent.setContent(content);
 
-            result = submissionContentService.save(newContent);
+                result = submissionContentService.save(newContent);
 
-        } else {
-            // 기존 제출
-            submissionContent.setSubmissionId(submissionId);
-            submissionContent.setContent(content);
+            } else {
+                // 기존 제출
+                submissionContent.setSubmissionId(submissionId);
+                submissionContent.setContent(content);
 
-            result = submissionContentService.update(submissionContent);
-        }
+                result = submissionContentService.update(submissionContent);
+            }
 
-        // Submission 테이블 업데이트
-        if (result > 0) {
-            SubmissionRequest req = new SubmissionRequest(
-                    submissionId,
-                    sres.assignmentId(),
-                    user.getId(),
-                    user.getTeamId(),
-                    true,
-                    content
-            );
+            // Submission 테이블 업데이트
+            if (result > 0) {
+                SubmissionRequest req = new SubmissionRequest(
+                        submissionId,
+                        sres.assignmentId(),
+                        user.getId(),
+                        user.getTeamId(),
+                        true,
+                        content
+                );
 
-            result = submissionService.update(req);
+                result = submissionService.update(req);
 
-            if (result < 1) {
-                Toast.show((Stage) submitButton.getScene().getWindow(),
-                        "제출 상태 변경 실패", ToastColor.SUCCESS);
+                if (result < 1) {
+                    Toast.show((Stage) submitButton.getScene().getWindow(),
+                            "제출 상태 변경 실패", ToastColor.ERROR);
+                } else {
+                    Toast.show((Stage) submitButton.getScene().getWindow(),
+                            "제출 되었습니다", ToastColor.SUCCESS);
+                }
             } else {
                 Toast.show((Stage) submitButton.getScene().getWindow(),
-                        "제출 되었습니다", ToastColor.SUCCESS);
+                        "내용 저장 실패", ToastColor.ERROR);
             }
-        } else {
-            Toast.show((Stage) submitButton.getScene().getWindow(),
-                    "내용 저장 실패", ToastColor.ERROR);
-        }
 
-        moveUserPage();
+            moveUserPage();
+
+        } catch (Exception e) {
+            Toast.show(
+                    (Stage) submitButton.getScene().getWindow(),
+                    "제출 권한이 없습니다.",
+                    ToastColor.ERROR
+            );
+
+            System.out.println("제출 실패 사유: " + e.getMessage());
+        }
     }
 
     private void moveUserPage(){

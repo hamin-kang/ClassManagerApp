@@ -67,6 +67,7 @@ public class projectCreateController {
 
         if(submissionCount > 0) {
             Toast.show((Stage)createAssignment.getScene().getWindow(), "과제 생성 완료!", ToastColor.SUCCESS);
+            allAssignments = assignmentService.findAll();
             loadAssignments();
             filterAssignments();
         }else{
