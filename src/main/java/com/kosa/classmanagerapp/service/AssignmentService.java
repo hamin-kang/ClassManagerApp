@@ -56,5 +56,10 @@ public class AssignmentService {
             mapper.updatePresentationOrder(assignmentId, orderString);
         }
     }
-
+    public List<Long> findAllByClosedFalse(){
+        try (SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true)) {
+            AssignmentMapper mapper = session.getMapper(AssignmentMapper.class);
+            return mapper.findAllByClosedFalse();
+        }
+    }
 }

@@ -127,7 +127,7 @@ SELECT 5, id, null, false
 FROM user
 WHERE id BETWEEN 2 AND 21;
 
--- 과제 6
+-- 팀 과제 6
 INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted) VALUES
                                                                                      (6, 2, 1, TRUE),
                                                                                      (6, 6, 2, TRUE),
@@ -141,7 +141,7 @@ INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted)
 -- FROM submission
 -- WHERE assignment_id = 6;
 
--- 과제 7
+-- 팀 과제 7
 INSERT INTO submission (assignment_id, submitter_user_id, team_id, is_submitted) VALUES
                                                                                      (7, null, 1, FALSE),
                                                                                      (7, 6, 2, TRUE),
@@ -369,25 +369,19 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- 9. Notice
 INSERT INTO notice (content) VALUES (
 
-'**수업 정보**\n
-이영희(도연) 강사님 : ai.edu.kingsmile@gmail.com\n
-전화번호 : 010-9872-0202\n
-\n
-**네트워크 공유폴더 위치** : 192.168.5.4 / DESKTOP-K2CFNHS\n
-id : java\n
-password : java\n
-\n
-**네이버 공유 폴더** 링크: https://mybox.naver.com/share/list?shareKey=UqveG0e0HulOZeIWmhrXOJMOHRrQhvpPmx-xftIxgcQD\n
-pwd : kosa\n
-\n
-**오픈채팅**\n
-https://invite.kakao.com/tc/C6aawhRARR\n
-\n
-**카페** 링크: https://cafe.naver.com/javajoblink\n
-\n
-**일자별 정리** 링크: https://docs.google.com/document/d/1kSutXoDQBuDjVuWRES2y8mYX9llnKIJE3WJJ2wUjCp8/edit\n
-\n
-**Discord**\n
+'**수업 정보**
+이영희(도연) 강사님 : ai.edu.kingsmile@gmail.com
+전화번호 : 010-9872-0202
+**네트워크 공유폴더 위치** : 192.168.5.4 / DESKTOP-K2CFNHS
+id : java
+password : java
+**네이버 공유 폴더** 링크: https://mybox.naver.com/share/list?shareKey=UqveG0e0HulOZeIWmhrXOJMOHRrQhvpPmx-xftIxgcQD
+pwd : kosa
+**오픈채팅**
+https://invite.kakao.com/tc/C6aawhRARR
+**카페** 링크: https://cafe.naver.com/javajoblink
+**일자별 정리** 링크: https://docs.google.com/document/d/1kSutXoDQBuDjVuWRES2y8mYX9llnKIJE3WJJ2wUjCp8/edit
+**Discord**
 https://discord.gg/smGATKfm'
-                                    );
+);
 SET FOREIGN_KEY_CHECKS = 1;
