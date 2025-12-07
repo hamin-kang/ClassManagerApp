@@ -39,7 +39,7 @@ public class MainApplication extends Application {
         Parent root = fxmlLoader.load();
         mainController = fxmlLoader.getController();
 
-        Scene scene = new Scene(root, 1000, 800);
+        Scene scene = new Scene(root, 900, 700);
         stage.setTitle("KOSA");
         stage.setScene(scene);
         stage.show();
