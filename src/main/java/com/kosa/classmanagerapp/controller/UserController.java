@@ -223,7 +223,7 @@ public class UserController {
         // 다이얼로그 생성
         Dialog<PasswordForm> dialog = new Dialog<>(); // 아래에 정의할 내부 클래스(Record) 사용
         dialog.setTitle("비밀번호 변경");
-        dialog.setHeaderText("보안을 위해 현재 비밀번호와 새 비밀번호를 입력해주세요.");
+        dialog.setHeaderText("현재 비밀번호와 새 비밀번호를 입력해주세요.");
 
         // 버튼 타입 설정
         ButtonType changeButtonType = new ButtonType("변경", ButtonBar.ButtonData.OK_DONE);

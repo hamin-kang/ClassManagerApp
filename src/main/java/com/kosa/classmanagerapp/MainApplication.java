@@ -49,7 +49,7 @@ public class MainApplication extends Application {
         mainController = fxmlLoader.getController();
 
         Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Class Manager");
+        stage.setTitle("KOSA");
         stage.setScene(scene);
         stage.show();
     }

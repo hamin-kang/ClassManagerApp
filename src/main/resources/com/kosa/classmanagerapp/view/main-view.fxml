@@ -17,7 +17,7 @@
           alignment="CENTER"
           prefHeight="70"
           onMouseClicked="#onHeaderClick">
-        <Label text="Assignment Helper"
+        <Label text="KOSA"
                styleClass="label-header, label-white" />
     </HBox>
     <!-- content 영역 -->
