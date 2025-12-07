@@ -9,10 +9,7 @@ import com.kosa.classmanagerapp.service.TeamService;
 import com.kosa.classmanagerapp.service.auth.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -26,52 +23,28 @@ public class TeamCreateController {
     @FXML private ComboBox<String> teamComboBox;
 
     private final UserService userService = new UserService();
-
-
-
-    @FXML
-    protected void adminButtonClick(ActionEvent event) throws Exception {
-        MainController main = MainApplication.getMainController();
-        main.loadView("view/admin/admin-view.fxml");
-
-    }
-
+    private final TeamService teamService = new TeamService();
 
     @FXML
-    public void initialize() { // 드롭다운
+    public void initialize() {
         loadTeamList();
         loadMembers();
     }
 
-
-
     private void loadTeamList() {
-        // 실제로 팀을 DB나 서비스에서 가져오는 것처럼 구성 가능
-        // 여기서는 예제로 1~5팀 추가
-        teamComboBox.getItems().addAll(
-                "1팀", "2팀", "3팀", "4팀", "5팀"
-        );
-
-        // 기본 선택값
+        teamComboBox.getItems().addAll("1팀", "2팀", "3팀", "4팀", "5팀");
         teamComboBox.getSelectionModel().selectFirst();
     }
 
-    // 팀 로드
-
     private void loadMembers() {
         try {
-            // DB에서 실제 사용자 목록 가져오기
+            memberListContainer.getChildren().clear();
             List<User> users = userService.findAllUser();
-            System.out.println("users !!!!!!! =" + users); // 디버깅용
 
             for (User user : users) {
-                if(user.getAuthorization() == UserAuthorization.ADMIN){
-                    continue;
-                }
+                if(user.getAuthorization() == UserAuthorization.ADMIN) continue;
+
                 HBox row = new HBox(10);
-
-//                System.out.println("userName = " + user.getUserName());
-
                 Label nameLabel = new Label(user.getFullName() + " (" + user.getUserName() + ")" );
                 Button selectButton = new Button("선택");
 
@@ -80,10 +53,6 @@ public class TeamCreateController {
                     if (!selectedListView.getItems().contains(display)) {
                         selectedListView.getItems().add(display);
                     }
-                    //  userName도 바로 가져오기
-                    String userName = user.getUserName();
-                    System.out.println("선택된 멤버 userName: " + userName);
-
                 });
 
                 row.getChildren().addAll(nameLabel, selectButton);
@@ -94,126 +63,75 @@ public class TeamCreateController {
         }
     }
 
-
     @FXML
     private void createTeamButtonClick(ActionEvent event) {
-
-        // 1. 선택된 팀명 가져오기
         String team_name = teamComboBox.getSelectionModel().getSelectedItem();
-        int teamId = parseTeamId(team_name);
-        if (team_name != null) {
 
-
-          //  int teamId = parseTeamId(team_name); // ← 팀명에서 숫자 추출
-            System.out.println("선택된 팀: " + team_name);
-            System.out.println("team_id 값 = " + teamId);
-        } else {
-            System.out.println("팀이 선택되지 않았습니다.");
+        if (team_name == null || team_name.isEmpty()) {
+            showAlert("오류", "팀을 먼저 선택해주세요.");
             return;
         }
 
-        // 2. 선택된 멤버 정보 출력
         if (selectedListView.getItems().isEmpty()) {
-            System.out.println("선택된 멤버가 없습니다.");
+            showAlert("오류", "선택된 멤버가 없습니다.");
             return;
         }
 
-        System.out.println("선택된 멤버:");
-        for (String member : selectedListView.getItems()) {
+        try {
+            // 1. 팀 생성 또는 업데이트
+            // (DB에 없으면 만들고, 있으면 업데이트. project_id는 Mapper에서 1로 고정됨)
+            Team team = new Team();
+            // 주의: 여기서 setIdInt를 해도 insert 시에는 무시되고 Auto Increment 될 수 있습니다.
+            // 하지만 update 시에는 식별자가 필요하므로 일단 파싱한 ID를 넣습니다.
+            int parsedId = parseTeamId(team_name);
+            team.setIdInt(parsedId);
+            team.setTeamName(team_name);
 
-// --------------user_name 모두 추출--------------------------
-            String[] parts = member.split(" - ");
-            String userfullName = parts[1];
-            System.out.println(" user_name = " + userfullName);
-        }
-        //  }
+            teamService.saveOrUpdateTeamMember(team);
 
-        //--------------------
+            // 2. [핵심] DB에 실제 저장된 ID 확인
+            // MyBatis의 useGeneratedKeys 덕분에 insert 후 team 객체에 ID가 채워집니다.
+            // 만약 update였다면 parsedId가 그대로 유지됩니다.
+            long realTeamId = team.getId() != null ? team.getId() : parsedId;
 
-        List<Long> selectedUserIds = new ArrayList<>();
-        for (String member : selectedListView.getItems()) {
-            String[] parts = member.split(" - ");
-            long userId = Long.parseLong(parts[0]);
-            selectedUserIds.add(userId);
-            System.out.println("선택된 userId = " + userId);
-        }
-
-
-        // 3. TeamService 준비
-        TeamService teamService = new TeamService();
-
-        // 4. 팀 업데이트 (각 유저의 teamId를 선택된 팀으로 업데이트)
-//        int updateCount = 0;
-//        for (Long userId : selectedUserIds) {
-//            try {
-//                Team team = new Team();
-//                team.setIdInt(teamId);      // 팀 ID
-//                team.setUserId(userId);
-//                team.setTeamName(team_name);// User ID
-//                updateCount += teamService.updateTeamMember(team);
-//                System.out.println("업데이트 대상 teamId = " + teamId +" 유저아이디 = " + userId  +"팀이름" + team_name);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-
-        //5. 팀id 존재여부에 따라 insert or update
-        int updateCount = 0;
-
-        for (Long userId : selectedUserIds) {
-            try {
-                Team team = new Team();
-                team.setIdInt(teamId);      // 팀 ID (없으면 0)
-                team.setUserId(userId);
-                team.setTeamName(team_name);
-
-                updateCount += userService.updateUserTeam(userId, teamId);
-
-                updateCount += teamService.saveOrUpdateTeamMember(team);
-
-                System.out.println("업데이트 또는 삽입 팀ID = " + teamId
-                        + " 유저ID = " + userId
-                        + " 팀이름 = " + team_name);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            // 3. 유저 정보 업데이트
+            List<Long> selectedUserIds = new ArrayList<>();
+            for (String member : selectedListView.getItems()) {
+                String[] parts = member.split(" - ");
+                if (parts.length > 0) selectedUserIds.add(Long.parseLong(parts[0]));
             }
+
+            int updateCount = 0;
+            for (Long userId : selectedUserIds) {
+                // 아까 에러났던 부분 해결: DB에 존재하는 realTeamId를 넣습니다.
+                userService.updateUserTeam(userId, (int)realTeamId);
+                updateCount++;
+            }
+
+            showAlert("성공", team_name + " (ID: " + realTeamId + ") 구성 완료! (" + updateCount + "명)");
+            selectedListView.getItems().clear();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("에러 발생", "DB 오류: " + e.getMessage());
         }
-
-        System.out.println(updateCount + "건 처리 완료");
-
-
-        System.out.println(updateCount + " 명의 팀 정보가 업데이트 되었습니다.");
-    }
-    //    //----------------팀 id -----------------
-    private int parseTeamId (String teamname){
-        return Integer.parseInt(teamname.replace("팀", "")); // "1팀" → 1
     }
 
-
-
-
+    private int parseTeamId(String teamname){
+        return Integer.parseInt(teamname.replace("팀", ""));
     }
 
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @FXML
+    protected void adminButtonClick(ActionEvent event) throws Exception {
+        MainController main = MainApplication.getMainController();
+        main.loadView("view/admin/admin-view.fxml");
+    }
+}

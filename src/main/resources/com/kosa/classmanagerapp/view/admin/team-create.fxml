@@ -1,55 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.kosa.classmanagerapp.controller.admin.TeamCreateController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.kosa.classmanagerapp.controller.admin.TeamCreateController"
+      prefHeight="600.0" prefWidth="900.0"
+      stylesheets="@../../style/main.css"
+      style="-fx-background-color: white;">
 
-    <!-- 뒤로가기 버튼 -->
-    <Button text="뒤로가기"
-            onAction="#adminButtonClick"
-            prefWidth="100"
-            layoutX="10"
-            layoutY="20"
-            styleClass="button-secondary"/>
+    <StackPane prefHeight="70" style="-fx-background-color: white; -fx-padding: 10 20; -fx-border-color: #DDDDDD; -fx-border-width: 0 0 1 0;">
 
-    <!-- 팀 선택 콤보박스 -->
-    <ComboBox fx:id="teamComboBox"
-              layoutX="250"
-              layoutY="50"
-              prefWidth="150"/>
+        <Label text="팀 구성 및 관리" styleClass="label-header" style="-fx-font-size: 24px;"/>
 
-    <!-- 팀원 선택과 선택된 멤버를 가로 배치 -->
-    <HBox layoutX="250" layoutY="100" spacing="20">
+        <HBox alignment="CENTER_LEFT" pickOnBounds="false">
+            <Button text="← 뒤로가기"
+                    onAction="#adminButtonClick"
+                    styleClass="button-secondary"
+                    style="-fx-padding: 8 15;"/>
+        </HBox>
+    </StackPane>
 
-        <!-- 팀원 선택 ScrollPane -->
-        <VBox spacing="10">
-            <Label text="팀원 선택" styleClass="label-subheader"/>
-            <ScrollPane prefHeight="200" prefWidth="230" fitToWidth="true">
-                <content>
-                    <VBox fx:id="memberListContainer" spacing="5"/>
-                </content>
+    <HBox VBox.vgrow="ALWAYS" spacing="30" styleClass="content-padding">
+
+        <VBox styleClass="dashboard-card" prefWidth="400" spacing="15" HBox.hgrow="ALWAYS">
+            <Label text="사용자 목록" styleClass="label-subheader"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="배정할 팀 선택:"/>
+                <ComboBox fx:id="teamComboBox" prefWidth="150" promptText="팀 선택"/>
+            </HBox>
+
+            <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" styleClass="box-border" style="-fx-background-color: transparent; -fx-background-insets: 0;">
+                <VBox fx:id="memberListContainer" spacing="10" style="-fx-padding: 10;">
+                </VBox>
             </ScrollPane>
         </VBox>
 
-        <!-- 선택된 멤버 ListView -->
-        <VBox spacing="10">
+        <VBox styleClass="dashboard-card" prefWidth="350" spacing="15">
             <Label text="선택된 멤버" styleClass="label-subheader"/>
-            <ListView fx:id="selectedListView" prefWidth="200" prefHeight="200"/>
+
+            <ListView fx:id="selectedListView" VBox.vgrow="ALWAYS" styleClass="list-view">
+            </ListView>
+
+            <HBox alignment="CENTER">
+                <Button text="팀 구성 완료"
+                        fx:id="createTeamButton"
+                        onAction="#createTeamButtonClick"
+                        maxWidth="Infinity"
+                        HBox.hgrow="ALWAYS"
+                        styleClass="button-primary"
+                        style="-fx-padding: 12 0; -fx-font-weight: bold;"/>
+            </HBox>
         </VBox>
     </HBox>
 
-    <!-- 팀 생성 버튼 -->
-    <Button text="팀 생성"
-            fx:id="createTeamButton"
-            layoutX="250"
-            layoutY="350"
-            prefWidth="100"
-            onAction="#createTeamButtonClick"/>
-</AnchorPane>
+</VBox>

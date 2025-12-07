@@ -1,13 +1,14 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 기존 데이터 초기화
-TRUNCATE TABLE presentation_order;
+TRUNCATE TABLE submission_content;
 TRUNCATE TABLE submission;
 TRUNCATE TABLE attendance;
 TRUNCATE TABLE assignment;
 TRUNCATE TABLE user;
 TRUNCATE TABLE team;
 TRUNCATE TABLE project;
+TRUNCATE TABLE notice;
 
 -- Project 생성
 INSERT INTO project (project_name) VALUES

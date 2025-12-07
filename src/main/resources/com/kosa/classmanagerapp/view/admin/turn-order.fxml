@@ -1,33 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:id="root"
-            fx:controller="com.kosa.classmanagerapp.controller.admin.TurnOrderController"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox layoutX="100" layoutY="100" spacing="20" prefWidth="600" alignment="CENTER"
-          styleClass="box-border">
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.kosa.classmanagerapp.controller.admin.TurnOrderController"
+      prefHeight="600.0" prefWidth="900.0"
+      stylesheets="@../../style/main.css"
+      style="-fx-background-color: white;">
 
-        <Label text="팀 과제를 선택하세요" styleClass="label-body"/>
+    <StackPane prefHeight="70" style="-fx-background-color: white; -fx-padding: 10 20; -fx-border-color: #DDDDDD; -fx-border-width: 0 0 1 0;">
 
-        <ComboBox fx:id="teamAssignmentComboBox" prefWidth="300" promptText="과제 선택"/>
+        <Label text="발표 순서 관리" styleClass="label-header" style="-fx-font-size: 24px;"/>
 
-        <HBox spacing="10" alignment="CENTER">
-            <Button text="🎲 순서 섞기" onAction="#onShuffleButtonClick"
-                    styleClass="button-secondary"/>
-            <Button text="💾 결과 저장" onAction="#onSaveOrderClick"
-                    styleClass="button-primary"/>
+        <HBox alignment="CENTER_LEFT" pickOnBounds="false">
+            <Button text="← 뒤로가기"
+                    onAction="#adminButtonClick"
+                    styleClass="button-secondary"
+                    style="-fx-padding: 8 15;"/>
         </HBox>
+    </StackPane>
 
-        <Separator/>
+    <HBox VBox.vgrow="ALWAYS" spacing="30" styleClass="content-padding">
 
-        <Label text="▼ 발표 순서 결과 ▼" styleClass="label-subheader"/>
+        <VBox styleClass="dashboard-card" prefWidth="350" spacing="20">
+            <Label text="순서 추첨 설정" styleClass="label-subheader"/>
 
-        <TextArea fx:id="resultArea" prefHeight="200" prefWidth="400"
-                  editable="false" />
+            <VBox spacing="10" VBox.vgrow="ALWAYS">
+                <Label text="대상 과제 선택" styleClass="label-body"/>
+                <ComboBox fx:id="teamAssignmentComboBox" promptText="과제를 선택하세요" maxWidth="Infinity" style="-fx-font-size: 14px;"/>
 
-    </VBox>
-</StackPane>
+                <Region VBox.vgrow="ALWAYS" /> <VBox spacing="10">
+                <Button text="🎲 순서 섞기"
+                        onAction="#onShuffleButtonClick"
+                        maxWidth="Infinity"
+                        styleClass="button-secondary"
+                        style="-fx-padding: 12 0;"/>
+
+                <Button text="💾 결과 저장"
+                        onAction="#onSaveOrderClick"
+                        maxWidth="Infinity"
+                        styleClass="button-primary"
+                        style="-fx-padding: 12 0; -fx-font-weight: bold;"/>
+            </VBox>
+            </VBox>
+        </VBox>
+
+        <VBox styleClass="dashboard-card" HBox.hgrow="ALWAYS" spacing="15" alignment="TOP_CENTER">
+
+            <Label text="▼ 발표 순서 결과 ▼" styleClass="label-subheader"/>
+
+            <TextArea fx:id="resultArea"
+                      VBox.vgrow="ALWAYS"
+                      editable="false"
+                      wrapText="true"
+                      style="-fx-font-size: 16px; -fx-background-color: transparent; -fx-control-inner-background: #FAFAFA;"/>
+        </VBox>
+
+    </HBox>
+
+</VBox>
