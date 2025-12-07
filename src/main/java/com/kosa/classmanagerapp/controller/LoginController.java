@@ -27,7 +27,7 @@ public class LoginController {
     private TextField userNameField;  // userName 입력
 
     @FXML
-    private PasswordField passwordField;; // password 입력
+    private PasswordField passwordField; // password 입력
 
     private final AuthService authService = new AuthService();
 
