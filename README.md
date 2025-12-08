@@ -28,14 +28,17 @@
 ```bash
 git clone https://github.com/hamin-kang/ClassManagerApp.git
 cd classManagerApp
+```
 
 ### 📌 2) DB 설정 파일 작성
 ```bash
 db.url=jdbc:mysql://localhost:3306/your_database?serverTimezone=UTC
 db.username=your_username
 db.password=your_password
+```
 
 ### 📌 3) Gradle 빌드 및 실행
 ```bash
 ./gradlew build
 ./gradlew run
+```
